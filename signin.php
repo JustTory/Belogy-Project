@@ -37,22 +37,22 @@
 			<span>or use your account</span>
 
 			<input type="email" class="mb-0 <?php 
-                    if(isset($errorsSignIn['email'])) echo "border-error";
+                    if(isset($errorsSignIn['email'])) echo htmlspecialchars("border-error");
                 ?>" 
             name="email" id="inputEmail" placeholder="Email" value="<?php 
-                    if (isset($email)) echo $email;
+                    if (isset($email)) echo htmlspecialchars($email);
                 ?>">
             <p class="m-0 error-msg" id="errorEmail"><?php
-                    if(isset($errorsSignIn['email'])) echo $errorsSignIn['email'];
+                    if(isset($errorsSignIn['email'])) echo htmlspecialchars($errorsSignIn['email']);
                 ?>
             </p>
 
 			<input type="password" class="mb-0 <?php 
-                    if(isset($errorsSignIn['password'])) echo "border-error";
+                    if(isset($errorsSignIn['password'])) echo htmlspecialchars("border-error");
                 ?>" 
 			name="password" id="inputPassword" placeholder="Password">
 			<p class="m-0 error-msg" id="errorPassword"><?php
-                    if(isset($errorsSignIn['password'])) echo $errorsSignIn['password'];
+                    if(isset($errorsSignIn['password'])) echo htmlspecialchars($errorsSignIn['password']);
                 ?>
             </p>
 

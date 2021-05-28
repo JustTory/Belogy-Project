@@ -17,46 +17,46 @@
 			<span>or use your email for registration</span>
 
 			<input type="email" class="mb-0 <?php 
-                    if(isset($errorsSignUp['email'])) echo "border-error";
+                    if(isset($errorsSignUp['email'])) echo htmlspecialchars("border-error");
                 ?>" 
             name="email" id="inputEmail" placeholder="Email" value="<?php 
-                    if (isset($email)) echo $email;
+                    if (isset($email)) echo htmlspecialchars($email);
                 ?>">
             <p class="m-0 error-msg" id="errorEmail"><?php
-                    if(isset($errorsSignUp['email'])) echo $errorsSignUp['email'];
+                    if(isset($errorsSignUp['email'])) echo htmlspecialchars($errorsSignUp['email']);
                 ?>
             </p>
 
 			<input type="text" class="mb-0 <?php 
-                    if(isset($errorsSignUp['username'])) echo "border-error";
+                    if(isset($errorsSignUp['username'])) echo htmlspecialchars("border-error");
                 ?>" 
             name="username" id="inputUsername" placeholder="Username" value="<?php 
-                    if (isset($username)) echo $username;
+                    if (isset($username)) echo htmlspecialchars($username);
                 ?>">
             <p class="m-0 error-msg" id="errorUsername"><?php
-                    if(isset($errorsSignUp['username'])) echo $errorsSignUp['username'];
+                    if(isset($errorsSignUp['username'])) echo htmlspecialchars($errorsSignUp['username']);
                 ?>
             </p>
 
 			<input type="password" class="mb-0 <?php 
-                    if(isset($errorsSignUp['password1'])) echo "border-error";
+                    if(isset($errorsSignUp['password1'])) echo htmlspecialchars("border-error");
                 ?>" 
             name="password1" id="inputPassword1" placeholder="Password" value="<?php 
-                    if (isset($password1)) echo $password1;
+                    if (isset($password1)) echo htmlspecialchars($password1);
                 ?>">
             <p class="m-0 error-msg" id="errorPassword1"><?php
-                    if(isset($errorsSignUp['password1'])) echo $errorsSignUp['password1'];
+                    if(isset($errorsSignUp['password1'])) echo htmlspecialchars($errorsSignUp['password1']);
                 ?>
             </p>
 
 			<input type="password" class="mb-0 <?php 
-                    if(isset($errorsSignUp['password2'])) echo "border-error";
+                    if(isset($errorsSignUp['password2'])) echo htmlspecialchars("border-error");
                 ?>" 
             name="password2" id="inputPassword2" placeholder="Confirm password" value="<?php 
-                    if (isset($password2)) echo $password2;
+                    if (isset($password2)) echo htmlspecialchars($password2);
                 ?>">
             <p class="m-0 error-msg" id="errorPassword2"><?php
-                    if(isset($errorsSignUp['password2'])) echo $errorsSignUp['password2'];
+                    if(isset($errorsSignUp['password2'])) echo htmlspecialchars($errorsSignUp['password2']);
                 ?>
             </p>
 

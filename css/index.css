@@ -1,3 +1,14 @@
+body {
+    background: rgb(246, 246, 246);
+}
+
+.navbar  {
+    height: 65px;
+}
+
+.main-cont {
+    margin-top: 100px;
+}
 .avatar {
     width: 40px;
 }
