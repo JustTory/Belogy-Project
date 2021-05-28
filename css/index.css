@@ -2,18 +2,43 @@ body {
     background: rgb(246, 246, 246);
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .navbar  {
     height: 65px;
 }
 
 .main-cont {
-    margin-top: 100px;
+    margin-top: 90px;
 }
+
 .avatar {
     width: 40px;
+    height: 40px;
 }
 
 .popover-body {
     text-align: center;
     padding: .5rem;
 }
+
+.post {
+    width: 100%;
+    max-height: 90vh;
+}
+
+.post-img {
+    width: 100%;
+    max-height: 50vh;
+    object-fit: contain;
+}
+
+/* .post-title {
+
+}
+
+.post-content {
+
+} */
