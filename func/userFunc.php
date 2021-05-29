@@ -50,7 +50,7 @@ function checkValidUsername($username)
 {
     if (mb_strlen($username, "utf-8") < 5 || mb_strlen($username, "utf-8") > 20) return false;
     else return true;
-}
+} 
 
 function checkExistData($conn, $data, $type)
 {

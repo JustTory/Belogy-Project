@@ -3,7 +3,7 @@
 }
 
 body {
-	background-image: url(../images/loginbg.jpg);
+	background-image: url(../images/default/loginbg.jpg);
 	background-repeat: no-repeat;
 	display: flex;
 	justify-content: center;

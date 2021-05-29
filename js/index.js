@@ -6,3 +6,7 @@ $(document).ready(function(){
     }, 3000);
 });
 
+$(".input-create").click(() => {
+    $(".form-create").submit();
+});
+

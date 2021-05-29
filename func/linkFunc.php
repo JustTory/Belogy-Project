@@ -1,5 +1,4 @@
 <?php 
-
   function PHPNameToPageName($PHPName) {
     switch ($PHPName) {
       case 'index':
@@ -10,6 +9,9 @@
         break;
       case 'signup':
         $PageName = ' | Sign Up';
+        break;
+      case 'createpost':
+        $PageName = ' | Create post';
         break;
     }
     return $PageName;
@@ -26,6 +28,9 @@
       case 'signup':
         $CSSName = 'signup.css';
         break;
+      case 'createpost':
+        $CSSName = 'createpost.css';
+        break;
     }
     return $CSSName;
   }
@@ -41,36 +46,10 @@
       case 'signup':
         $JSName = 'login.js';
         break;
+      case 'createpost':
+        $JSName = 'createpost.js';
+        break;
     }
     return $JSName;
   }
-
-//   function pageNameToPHPName($pageName) {
-//     switch ($pageName) {
-//       case 'Home':
-//         $PHPName = 'index';
-//         break;
-//       case 'About Me':
-//         $PHPName = 'aboutme';
-//         break;
-//       case 'My Gallery':
-//         $PHPName = 'mygallery';
-//         break;
-//     }
-//     return $PHPName;
-//   }
-
-
-
-//   function outputNavLinks($navLinks, $PHPName) {
-//     $output = "";
-//     foreach ($navLinks as $navLink) {
-//       $href = pageNameToPHPName($navLink);
-//       if($href == $PHPName) $active = "active";
-//       else $active = "";
-//       $output .= "<li><a href='{$href}.php' class='{$active}'>{$navLink}</a></li>";
-//     }
-//     echo $output;
-//   }
-
 ?>

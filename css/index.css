@@ -35,6 +35,19 @@ a {
     object-fit: contain;
 }
 
+#embedded-btn {
+    background: none;
+    border: none;
+}
+
+*:focus {
+    outline: 0 !important;
+}
+
+.post-info {
+    font-size: 0.75rem;
+}
+
 /* .post-title {
 
 }
