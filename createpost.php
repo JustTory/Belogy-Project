@@ -5,7 +5,6 @@
     checkSignedIn();
     $errorsPost = [];
     createPost($conn, $errorsPost);
-    var_dump($_SESSION);
 ?>
 
 <div class="container main-cont">

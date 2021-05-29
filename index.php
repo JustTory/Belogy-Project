@@ -3,7 +3,7 @@
     include "includes/nav.php";
     include "func/postFunc.php";
     directToCreatePost();
-    var_dump($_SESSION);
+    $postList = getPostList($conn, 5);
 ?>
 
 <div class="container main-cont">
@@ -37,116 +37,18 @@
   </div>
 
   <div class="posts">
-
-    <div class="row my-3">
-      <div class="col-md-8 offset-md-2">
-        <div class="card post">
-          <img class="card-img-top post-img" src="images/default/loginbg.jpg" alt="Card image cap">
-          <div class="card-body post-body pb-2">
-            <h5 class="card-title post-title">Card title</h5>
-            <p class="card-text post-content">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <div class="author-date d-flex">
-              <a class="text-dark font-weight-bold" href="#">
-                <img class="avatar mr-2" src="images\default\defaultUserAvatar.png" alt="">
-                <?php echo htmlspecialchars("Author") ?>
-              </a>
-              <p class="font-weight-light my-2 post-info ml-auto">14 hours ago</p>
-            </div>
-            <div class="no-like-cmt d-flex mt-2">
-              <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 25</p>
-              <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> 8</p>
-            </div>
-            <hr class="mb-2">
-            <div class="interaction">
-              <div class="row">
-                <a class="text-dark col-md-6 text-center" href="#">
-                  <i class="bi bi-hand-thumbs-up"></i>
-                  Like   
-                </a> 
-                <a class="text-dark col-md-6 text-center" href="#">
-                  <i class="bi bi-chat-left"></i>
-                  Comment     
-                </a> 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row my-3">
-      <div class="col-md-8 offset-md-2">
-        <div class="card post">
-          <img class="card-img-top post-img" src="images/default/loginbg.jpg" alt="Card image cap">
-          <div class="card-body post-body pb-2">
-            <h5 class="card-title post-title">Card title</h5>
-            <p class="card-text post-content">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <div class="author-date d-flex">
-              <a class="text-dark font-weight-bold" href="#">
-                <img class="avatar mr-2" src="images\default\defaultUserAvatar.png" alt="">
-                <?php echo htmlspecialchars("Author") ?>
-              </a>
-              <p class="font-weight-light my-2 post-info ml-auto">14 hours ago</p>
-            </div>
-            <div class="no-like-cmt d-flex mt-2">
-              <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 25</p>
-              <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> 8</p>
-            </div>
-            <hr class="mb-2">
-            <div class="interaction">
-              <div class="row">
-                <a class="text-dark col-md-6 text-center" href="#">
-                  <i class="bi bi-hand-thumbs-up"></i>
-                  Like   
-                </a> 
-                <a class="text-dark col-md-6 text-center" href="#">
-                  <i class="bi bi-chat-left"></i>
-                  Comment     
-                </a> 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row my-3">
-      <div class="col-md-8 offset-md-2">
-        <div class="card post">
-          <img class="card-img-top post-img" src="images/default/loginbg.jpg" alt="Card image cap">
-          <div class="card-body post-body pb-2">
-            <h5 class="card-title post-title">Card title</h5>
-            <p class="card-text post-content">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <div class="author-date d-flex">
-              <a class="text-dark font-weight-bold" href="#">
-                <img class="avatar mr-2" src="images\default\defaultUserAvatar.png" alt="">
-                <?php echo htmlspecialchars("Author") ?>
-              </a>
-              <p class="font-weight-light my-2 post-info ml-auto">14 hours ago</p>
-            </div>
-            <div class="no-like-cmt d-flex mt-2">
-              <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 25</p>
-              <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> 8</p>
-            </div>
-            <hr class="mb-2">
-            <div class="interaction">
-              <div class="row">
-                <a class="text-dark col-md-6 text-center" href="#">
-                  <i class="bi bi-hand-thumbs-up"></i>
-                  Like   
-                </a> 
-                <a class="text-dark col-md-6 text-center" href="#">
-                  <i class="bi bi-chat-left"></i>
-                  Comment     
-                </a> 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <?php
+      outputPostList($conn, $postList);
+    ?>
 
   </div>
+
+  <div class="row my-3 mt-5 loading">
+    <div class="col-md-8 offset-md-2 d-flex justify-content-center">
+      <img src="images/default/loading.gif" width="35px" alt="">
+    </div>
+  </div>
+
 </div>
 
 <?php

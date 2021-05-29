@@ -56,6 +56,110 @@
         }
     }
 
+    function getPostList($conn, $limit , $offset = 0) {
+        $sql = "SELECT p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ?,?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $offset, $limit);
+        $stmt->execute();
+        $results = $stmt->get_result();
+        return $results->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function outputPost($conn, $post) {
+        $output = '';
+        $output .= '
+            <div class="row my-3">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card post">';
+
+            if ($post['post_img_url'] != null) {
+                $output.= '
+                        <img class="card-img-top post-img" src="' . $post['post_img_url'] . '" alt="Post image">';
+            }
+            $output .= '
+                        <div class="card-body post-body pb-2">
+                            <h5 class="card-title post-title font-weight-normal">' . $post['post_title'] . '</h5>
+                            <p class="card-text post-content">' . $post['post_content'] . '</p>
+                            <div class="author-date d-flex mt-4">
+                                <a class="text-dark font-weight-bold" href="#">
+                                    <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
+                                    . $post['user_username'] . '
+                                </a>
+                                <p class="font-weight-light my-2 post-info ml-auto">' . outputPostDateTime($conn, $post['post_date_created']) . '</p>
+                            </div>
+                            <div class="no-like-cmt d-flex mt-2">
+                                <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 25</p>
+                                <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> 8</p>
+                            </div>
+                            <hr class="mb-2">
+                            <div class="interaction">
+                                <div class="row">
+                                    <a class="text-dark col-md-6 text-center" href="#">
+                                        <i class="bi bi-hand-thumbs-up"></i>
+                                        Like
+                                    </a>
+                                    <a class="text-dark col-md-6 text-center" href="#">
+                                        <i class="bi bi-chat-left"></i>
+                                        Comment
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+        echo $output;
+    }
+
+    function outputPostList($conn, $postList) {
+        $output = '';
+        foreach ($postList as $post) {
+            $output .= '
+            <div class="row my-3">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card post">';
+
+            if ($post['post_img_url'] != null) {
+                $output.= '<img class="card-img-top post-img" src="' . $post['post_img_url'] . '" alt="Post image">';
+            }
+            $output .= '
+                        <div class="card-body post-body pb-2">
+                            <h5 class="card-title post-title font-weight-normal">' . $post['post_title'] . '</h5>
+                            <p class="card-text post-content">' . $post['post_content'] . '</p>
+                            <div class="author-date d-flex mt-4">
+                                <a class="text-dark font-weight-bold" href="#">
+                                    <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
+                                    . $post['user_username'] . '
+                                </a>
+                                <p class="font-weight-light my-2 post-info ml-auto">' . outputPostDateTime($conn, $post['post_date_created']) . '</p>
+                            </div>
+                            <div class="no-like-cmt d-flex mt-2">
+                                <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 25</p>
+                                <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> 8</p>
+                            </div>
+                            <hr class="mb-2">
+                            <div class="interaction">
+                                <div class="row">
+                                    <a class="text-dark col-md-6 text-center" href="#">
+                                        <i class="bi bi-hand-thumbs-up"></i>
+                                        Like
+                                    </a>
+                                    <a class="text-dark col-md-6 text-center" href="#">
+                                        <i class="bi bi-chat-left"></i>
+                                        Comment
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ';
+        }
+        echo $output;
+    }
+
 
     //check signedin functions
     function directToCreatePost() {
@@ -141,7 +245,6 @@
           }  
           return $monthName;
     }
-
     function getYear($date) {
         $date = explode('-', $date);
         return $date[0];
@@ -168,8 +271,11 @@
     }
     function getTimeOnly($dateTime) {
         $dateTime = explode(' ', $dateTime);
-        return $dateTime[1];
+        $time = $dateTime[1];
+        $time = explode(':', $time);
+        return $time[0] . ':' . $time[1];
     }
+
     function getDetailDateTime($dateTime) {
         $date = getDateOnly($dateTime);
         $time = getTimeOnly($dateTime);
@@ -212,9 +318,6 @@
                 $res = getMonthName(getMonth(getDateOnly($postDateTime))) . " " . getDay(getDateOnly($postDateTime));
             }
         }
-
-
         return $res;
-       
     }
 ?>

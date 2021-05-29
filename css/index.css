@@ -48,6 +48,12 @@ a {
     font-size: 0.75rem;
 }
 
+.avatar-post {
+    width: 30px;
+    height: 30px;
+    font-size: 0.7rem;
+}
+
 /* .post-title {
 
 }
