@@ -3,6 +3,7 @@
     include "includes/nav.php";
     include "func/postFunc.php";
     directToCreatePost();
+    var_dump($_SESSION);
 ?>
 
 <div class="container main-cont">
@@ -13,7 +14,7 @@
           <div class="card-body">
             <div class="create-form d-flex">
               <div class="avatar-wrapper d-flex justify-content-center align-items-center">
-                <img class="avatar mr-3" src="images\defaultUserAvatar.png" alt="">
+                <img class="avatar mr-3" src="images\default\defaultUserAvatar.png" alt="">
               </div>
               <form class="w-100 form-create" method="post" action="index.php">
                 <div class="form-group m-0">
@@ -40,7 +41,7 @@
     <div class="row my-3">
       <div class="col-md-8 offset-md-2">
         <div class="card post">
-          <img class="card-img-top post-img" src="images/loginbg.jpg" alt="Card image cap">
+          <img class="card-img-top post-img" src="images/default/loginbg.jpg" alt="Card image cap">
           <div class="card-body post-body pb-2">
             <h5 class="card-title post-title">Card title</h5>
             <p class="card-text post-content">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -76,7 +77,7 @@
     <div class="row my-3">
       <div class="col-md-8 offset-md-2">
         <div class="card post">
-          <img class="card-img-top post-img" src="images/loginbg.jpg" alt="Card image cap">
+          <img class="card-img-top post-img" src="images/default/loginbg.jpg" alt="Card image cap">
           <div class="card-body post-body pb-2">
             <h5 class="card-title post-title">Card title</h5>
             <p class="card-text post-content">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -112,7 +113,7 @@
     <div class="row my-3">
       <div class="col-md-8 offset-md-2">
         <div class="card post">
-          <img class="card-img-top post-img" src="images/loginbg.jpg" alt="Card image cap">
+          <img class="card-img-top post-img" src="images/default/loginbg.jpg" alt="Card image cap">
           <div class="card-body post-body pb-2">
             <h5 class="card-title post-title">Card title</h5>
             <p class="card-text post-content">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -150,10 +151,7 @@
 
 <?php
     include "includes/footer.php";
-    unset($_SESSION['signUpSuccess']);
-    unset($_SESSION['signInSuccess']);
-    unset($_SESSION['signOutSuccess']);
-    unset($_SESSION['notSignedInOnCreatePost']);
+    unsetNotification();       
 ?>
       
 

@@ -1,3 +1,7 @@
+<?php
+  include "func/notification.php";
+?>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white      ">
   <a class="navbar-brand ml-3" href="index.php">Belogy</a>
 
@@ -31,16 +35,7 @@
         </li>
       <?php endif; ?>
 
-      <li class="nav-item ml-4 notification d-flex align-items-center" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="bottom" data-content="<?php
-          if(isset($_SESSION['signUpSuccess']))
-            echo htmlspecialchars($_SESSION['signUpSuccess']);
-          else if(isset($_SESSION['signInSuccess']))
-            echo htmlspecialchars($_SESSION['signInSuccess']);
-          else if(isset($_SESSION['signOutSuccess']))
-            echo htmlspecialchars($_SESSION['signOutSuccess']);
-          else if(($_SESSION['signedIn'] == false && isset($_POST['createpost'])) || isset($_SESSION['notSignedInOnCreatePost']))
-            echo htmlspecialchars("You must be signed in to create post");
-        ?>">
+      <li class="nav-item ml-4 notification d-flex align-items-center" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="bottom" data-content="<?php notify(); ?>">
         <i class="bi bi-bell fa-lg"></i>
       </li>
 

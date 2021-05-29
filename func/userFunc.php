@@ -10,11 +10,11 @@ function createUser($conn, &$errorsSignUp, &$username, &$email, &$password1, &$p
 
         if (!checkValidUsername($username))
             $errorsSignUp['username'] = 'Username must be between 5 and 20 characters';
-        if (!checkExistData($conn, $username, "username"))
+        if (!checkExistData($conn, $username, "user_username"))
             $errorsSignUp['username'] = 'Username is already taken';
         if (!checkValidEmail($email))
             $errorsSignUp['email'] = 'Invalid email';
-        if (!checkExistData($conn, $email, "email"))
+        if (!checkExistData($conn, $email, "user_email"))
             $errorsSignUp['email'] = 'Email is already taken';
         if (!checkPassword($password1))
             $errorsSignUp['password1'] = 'Password must be atleast 6 characters';
@@ -35,7 +35,7 @@ function logInUser($conn, &$errorsSignIn, &$email)
         $password = $_POST['password'];
         if (empty($email))
             $errorsSignIn['email'] = "Email can't be empty";
-        else if (checkExistData($conn, $email, "email"))
+        else if (checkExistData($conn, $email, "user_email"))
             $errorsSignIn['email'] = 'Email not found';
         else if (empty($password))
             $errorsSignIn['password'] = "Password can't be empty";
@@ -84,7 +84,7 @@ function checkMatchingPasswords($password1, $password2)
 function createUserInDB($conn, $username, $email, $password2)
 {
     $hashPW = password_hash($password2, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
+    $sql = "INSERT INTO users (user_username, user_email, user_password) VALUES (?,?,?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $username, $email, $hashPW);
     $stmt->execute();
@@ -101,19 +101,19 @@ function createUserInDB($conn, $username, $email, $password2)
 
 function checkLogIn($conn, $email, $password)
 {
-    $sql = "SELECT * FROM users WHERE email = ?";
+    $sql = "SELECT * FROM users WHERE user_email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
+        if (password_verify($password, $row['user_password'])) {
             $_SESSION['signedIn'] = true;
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['email'] = $row['email'];
-            $_SESSION['userID'] = $row['ID'];
-            $_SESSION['userRole'] = $row['role'];
+            $_SESSION['username'] = $row['user_username'];
+            $_SESSION['email'] = $row['user_email'];
+            $_SESSION['userID'] = $row['user_ID'];
+            $_SESSION['userRole'] = $row['user_role'];
             $_SESSION['signInSuccess'] = 'You have signed in successfully';
             header("Location: index.php");
         }

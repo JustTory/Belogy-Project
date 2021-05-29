@@ -13,6 +13,9 @@
       case 'createpost':
         $PageName = ' | Create post';
         break;
+      case 'post':
+        $PageName = ' | Post';
+        break;
     }
     return $PageName;
   }
@@ -31,6 +34,9 @@
       case 'createpost':
         $CSSName = 'createpost.css';
         break;
+      case 'post':
+        $CSSName = 'post.css';
+        break;
     }
     return $CSSName;
   }
@@ -48,6 +54,9 @@
         break;
       case 'createpost':
         $JSName = 'createpost.js';
+        break;
+      case 'post':
+        $JSName = 'post.js';
         break;
     }
     return $JSName;

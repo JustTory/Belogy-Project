@@ -3,10 +3,9 @@
     include "includes/nav.php";
     include "func/postFunc.php";
     checkSignedIn();
-
     $errorsPost = [];
     createPost($conn, $errorsPost);
-    var_dump($errorsPost);
+    var_dump($_SESSION);
 ?>
 
 <div class="container main-cont">
@@ -24,5 +23,6 @@
 </div>
 
 <?php
-include "includes/footer.php";
+    include "includes/footer.php";
+    unsetNotification();   
 ?>
