@@ -4,6 +4,7 @@
     include "func/postFunc.php";
     directToCreatePost();
     $postList = getPostList($conn, 5);
+    var_dump($_SESSION)
 ?>
 
 <div class="container main-cont">
@@ -20,9 +21,9 @@
                 <div class="form-group m-0">
                   <input type="text" type="submit" name="createpost" class="form-control input-create" placeholder="<?php
                     if($_SESSION['signedIn'] == true) {
-                      echo htmlspecialchars($_SESSION['username']) . ", t";
-                    } else echo "T";
-                  ?>ell us what are you up to?">
+                      echo htmlspecialchars($_SESSION['username']) . ", h";
+                    } else echo htmlspecialchars("H");
+                  ?>ow are you doing today?">
                 </div>
               </form>
               <form method="post" action="index.php" class="embedded d-flex justify-content-center align-items-center">

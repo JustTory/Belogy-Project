@@ -1,8 +1,9 @@
 <?php
-  include "func/notification.php";
+  include "func/notificationFunc.php";
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white      ">
+<!-- add fixed-top to nav's class -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white      "> 
   <a class="navbar-brand ml-3" href="index.php">Belogy</a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

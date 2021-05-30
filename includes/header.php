@@ -16,9 +16,9 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Belogy<?php echo $pageTitle; ?></title>
+    <title>Belogy<?php echo htmlspecialchars($pageTitle); ?></title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
 
     <!-- library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -30,7 +30,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap" rel="stylesheet">
 
     <!-- css must be below libary -->
-    <link rel="stylesheet" href="css/<?php echo $CSSName; ?>">
+    <link rel="stylesheet" href="css/<?php echo htmlspecialchars($CSSName); ?>">
     
   </head>
   <body>

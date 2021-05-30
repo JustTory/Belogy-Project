@@ -1,5 +1,6 @@
 <?php
     include "func/imgFunc.php";
+    include "func/timeFunc.php";
 
     //main functions
     function createPost($conn, &$errorsPost) {
@@ -44,20 +45,24 @@
 
     function getPost($conn) {
         $postID = $_GET['id'];
-        $sql = "SELECT p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_ID = ? AND p.post_author_ID = u.user_ID";
+        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_ID = ? AND p.post_author_ID = u.user_ID";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $postID);
         $stmt->execute();
         $result = $stmt->get_result();
         if($result->num_rows == 1) {
-            return $result->fetch_assoc();
+            $post = $result->fetch_assoc();
+            if($_SESSION['signedIn'] == true) {
+                $_SESSION['lastPostIDVisited'] = $post['post_ID'];
+            }
+            return $post;
         } else {
             return false;
         }
     }
 
     function getPostList($conn, $limit , $offset = 0) {
-        $sql = "SELECT p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ?,?";
+        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ?,?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $offset, $limit);
         $stmt->execute();
@@ -65,23 +70,24 @@
         return $results->fetch_all(MYSQLI_ASSOC);
     }
 
-    function outputPost($conn, $post) {
+    function outputPost($conn, $post, $type) {
         $output = '';
         $output .= '
-            <div class="row my-3">
-                <div class="col-md-8 offset-md-2">
+        <div class="row my-3">
+            <div class="col-md-8 offset-md-2">
+                <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
                     <div class="card post">';
-
-            if ($post['post_img_url'] != null) {
-                $output.= '
+                  
+        if ($post['post_img_url'] != null) {
+            $output.= '
                         <img class="card-img-top post-img" src="' . $post['post_img_url'] . '" alt="Post image">';
-            }
+        }
             $output .= '
                         <div class="card-body post-body pb-2">
                             <h5 class="card-title post-title font-weight-normal">' . $post['post_title'] . '</h5>
                             <p class="card-text post-content">' . $post['post_content'] . '</p>
                             <div class="author-date d-flex mt-4">
-                                <a class="text-dark font-weight-bold" href="#">
+                                <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
                                     <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
                                     . $post['user_username'] . '
                                 </a>
@@ -94,11 +100,11 @@
                             <hr class="mb-2">
                             <div class="interaction">
                                 <div class="row">
-                                    <a class="text-dark col-md-6 text-center" href="#">
+                                    <a class="text-dark col-md-6 text-center" href="like">
                                         <i class="bi bi-hand-thumbs-up"></i>
                                         Like
                                     </a>
-                                    <a class="text-dark col-md-6 text-center" href="#">
+                                    <a class="text-dark col-md-6 text-center" href="post.php?id=' . $post['post_ID'] . '">
                                         <i class="bi bi-chat-left"></i>
                                         Comment
                                     </a>
@@ -106,56 +112,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>    
             </div>
-            ';
-        echo $output;
+        </div>
+        ';
+        if($type == "echo") echo $output;
+        else if($type == "return") return $output;
     }
 
+    //$post['post_ID']
     function outputPostList($conn, $postList) {
         $output = '';
         foreach ($postList as $post) {
-            $output .= '
-            <div class="row my-3">
-                <div class="col-md-8 offset-md-2">
-                    <div class="card post">';
-
-            if ($post['post_img_url'] != null) {
-                $output.= '<img class="card-img-top post-img" src="' . $post['post_img_url'] . '" alt="Post image">';
-            }
-            $output .= '
-                        <div class="card-body post-body pb-2">
-                            <h5 class="card-title post-title font-weight-normal">' . $post['post_title'] . '</h5>
-                            <p class="card-text post-content">' . $post['post_content'] . '</p>
-                            <div class="author-date d-flex mt-4">
-                                <a class="text-dark font-weight-bold" href="#">
-                                    <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
-                                    . $post['user_username'] . '
-                                </a>
-                                <p class="font-weight-light my-2 post-info ml-auto">' . outputPostDateTime($conn, $post['post_date_created']) . '</p>
-                            </div>
-                            <div class="no-like-cmt d-flex mt-2">
-                                <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 25</p>
-                                <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> 8</p>
-                            </div>
-                            <hr class="mb-2">
-                            <div class="interaction">
-                                <div class="row">
-                                    <a class="text-dark col-md-6 text-center" href="#">
-                                        <i class="bi bi-hand-thumbs-up"></i>
-                                        Like
-                                    </a>
-                                    <a class="text-dark col-md-6 text-center" href="#">
-                                        <i class="bi bi-chat-left"></i>
-                                        Comment
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            ';
+            $output .= outputPost($conn, $post, "return");
         }
         echo $output;
     }
@@ -204,93 +173,7 @@
 
 
     //time functions
-    function getMonthName($monthNum) {
-        switch ($monthNum) {
-            case '1':
-                $monthName = 'January';
-                break;
-            case '2':
-                $monthName = 'February';
-                break;
-            case '3':
-                $monthName = 'March';
-                break;
-            case '4':
-                $monthName = 'April';
-                break;
-            case '5':
-                $monthName = 'May';
-                break;
-            case '6':
-                $monthName = 'June';
-                break;
-            case '7':
-                $monthName = 'July';
-                break;
-            case '8':
-                $monthName = 'August';
-                break;
-            case '9':
-                $monthName = 'September';
-                break;
-            case '10':
-                $monthName = 'October';
-                break;
-            case '11':
-                $monthName = 'November';
-                break;
-            case '12':
-                $monthName = 'December';
-                break;    
-          }  
-          return $monthName;
-    }
-    function getYear($date) {
-        $date = explode('-', $date);
-        return $date[0];
-    }
-    function getMonth($date) {
-        $date = explode('-', $date);
-        return $date[1];
-    }
-    function getDay($date) {
-        $date = explode('-', $date);
-        return $date[2];
-    }
-    function getHour($time) {
-        $time = explode(':', $time);
-        return $time[0];
-    }
-    function getMinute($time) {
-        $time = explode(':', $time);
-        return $time[1];
-    }
-    function getDateOnly($dateTime) {
-        $dateTime = explode(' ', $dateTime);
-        return $dateTime[0];
-    }
-    function getTimeOnly($dateTime) {
-        $dateTime = explode(' ', $dateTime);
-        $time = $dateTime[1];
-        $time = explode(':', $time);
-        return $time[0] . ':' . $time[1];
-    }
-
-    function getDetailDateTime($dateTime) {
-        $date = getDateOnly($dateTime);
-        $time = getTimeOnly($dateTime);
-        $detailDateTime['year'] = getYear($date);
-        $detailDateTime['day'] = getDay($date);
-        $detailDateTime['hour'] = getHour($time);
-        $detailDateTime['minute'] = getMinute($time);
-        return $detailDateTime;
-    }
-
-    function getCurDateTime($conn) {
-        $stmt = $conn->query("SELECT CURRENT_TIMESTAMP() as 'CurDateTime'");
-        $res = $stmt->fetch_assoc();
-        return $res['CurDateTime'];
-    }
+ 
 
     function outputPostDateTime($conn, $postDateTime) {
         $currDateTime = getCurDateTime($conn);

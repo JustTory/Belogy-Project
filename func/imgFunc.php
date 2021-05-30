@@ -1,8 +1,4 @@
 <?php
-    function uploadIMG() {
-        
-    }
-
     function allowedImgSize($imgSize) {
         if($imgSize > 2000000) return false;
         else return true;
