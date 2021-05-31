@@ -1,6 +1,6 @@
 <?php
     function getCommentList($conn, $postID, $limit, $offset = 0) {
-        $sql = "SELECT DISTINCT c.cmt_ID, c.cmt_content, c.cmt_author_ID, u.user_username, c.cmt_date_created, COUNT(DISTINCT c.cmt_ID) as 'number_of_cmt' FROM comments c, users u, posts p WHERE c.cmt_author_ID = u.user_ID and c.cmt_post_ID = ? ORDER BY c.cmt_ID DESC LIMIT ? OFFSET ?";
+        $sql = "SELECT DISTINCT c.cmt_ID, c.cmt_content, c.cmt_author_ID, u.user_username, c.cmt_date_created FROM comments c, users u, posts p WHERE c.cmt_author_ID = u.user_ID and c.cmt_post_ID = ? ORDER BY c.cmt_ID DESC LIMIT ? OFFSET ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iii", $postID, $limit, $offset);
         $stmt->execute();

@@ -23,8 +23,9 @@ function ajaxComment(commentContent) {
     xhr.onload = function() {
       if(this.status == 200) {
         let newComment = JSON.parse(this.responseText);
-        console.log(newComment);
+        //console.log(newComment);
         outputNewComment(newComment);
+        updateTotalPostComment(newComment['post_no_comments']);
       }
     }
     xhr.send("comment=" + commentContent);
@@ -50,4 +51,9 @@ function outputNewComment(newComment) {
 
   $(".comments").prepend(output);
   $(".empty-comment").remove();
+}
+
+function updateTotalPostComment(newTotalComment) {
+    let icon = `<i class="bi bi-chat-left-fill text-secondary"></i> `;
+    $("p.post-no-comments").html(icon + newTotalComment);
 }

@@ -4,19 +4,35 @@
     include 'func/timeFunc.php';
 
     if(isset($_POST['comment'])) {
-        $sql = "INSERT INTO comments (cmt_content, cmt_author_ID, cmt_post_ID) VALUE (?,?,?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sii", $_POST['comment'], $_SESSION['userID'], $_SESSION['lastPostIDVisited']);
-        $stmt->execute();
-        if($stmt->affected_rows == 1) {
-            $id = $stmt->insert_id;
-            $sql = "SELECT c.cmt_ID, c.cmt_content, u.user_ID, u.user_username, c.cmt_date_created FROM comments c JOIN users u ON u.user_ID = c.cmt_author_ID WHERE c.cmt_ID = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $newComment = $result->fetch_assoc();
+        //insert new comment into DB
+        $sqlInsert = "INSERT INTO comments (cmt_content, cmt_author_ID, cmt_post_ID) VALUE (?,?,?)";
+        $stmtInsert = $conn->prepare($sqlInsert);
+        $stmtInsert->bind_param("sii", $_POST['comment'], $_SESSION['userID'], $_SESSION['lastPostIDVisited']);
+        $stmtInsert->execute();
+        if($stmtInsert->affected_rows == 1) {
+            //get the new comment from DB and encode it into json to send back
+            $id = $stmtInsert->insert_id;
+            $sqlGetCmt = "SELECT c.cmt_ID, c.cmt_content, u.user_ID, u.user_username, c.cmt_date_created FROM comments c JOIN users u ON u.user_ID = c.cmt_author_ID WHERE c.cmt_ID = ?";
+            $stmtGetCmt = $conn->prepare($sqlGetCmt);
+            $stmtGetCmt->bind_param("i", $id);
+            $stmtGetCmt->execute();
+            $resNewComment = $stmtGetCmt->get_result();
+            $newComment = $resNewComment->fetch_assoc();
             $newComment['cmt_date_time'] = outputContentDateTime($conn, $newComment['cmt_date_created']);
+            
+            //update the number of comment of the post
+            $sqlUpdate = "UPDATE posts SET post_no_comments = post_no_comments + 1 WHERE post_ID = ?";
+            $stmtUpdate = $conn->prepare($sqlUpdate);
+            $stmtUpdate->bind_param("i", $_SESSION['lastPostIDVisited']);
+            $stmtUpdate->execute();
+
+            $sqlGetNumberOfComments = "SELECT post_no_comments FROM posts WHERE post_ID = ?";
+            $stmtGetNumberOfComments = $conn->prepare($sqlGetNumberOfComments);
+            $stmtGetNumberOfComments->bind_param("i", $_SESSION['lastPostIDVisited']);
+            $stmtGetNumberOfComments->execute();
+            $resNumberOfComments = $stmtGetNumberOfComments->get_result();
+            $numberOfComments = $resNumberOfComments->fetch_assoc();
+            $newComment['post_no_comments'] = $numberOfComments['post_no_comments'];
             echo json_encode($newComment);
         }
     }

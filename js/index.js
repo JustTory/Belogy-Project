@@ -59,8 +59,8 @@ function outputNewPosts(newPostList) {
                                         <p class="font-weight-light my-2 post-info ml-auto">${post['post_date_time']}</p>
                                     </div>
                                     <div class="no-like-cmt d-flex mt-2">
-                                        <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 25</p>
-                                        <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> 8</p>
+                                        <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${post['post_no_upvotes']}</p>
+                                        <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> ${post['post_no_comments']}</p>
                                     </div>
                                     <hr class="mb-2">
                                     <div class="interaction">
