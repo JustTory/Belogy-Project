@@ -41,25 +41,30 @@
     }
 
     function getPost($conn) {
-        $postID = $_GET['id'];
-        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_ID = ? AND p.post_author_ID = u.user_ID";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $postID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if($result->num_rows == 1) {
-            $post = $result->fetch_assoc();
-            if($_SESSION['signedIn'] == true) {
-                $_SESSION['lastPostIDVisited'] = $post['post_ID'];
+        if(isset($_GET['id'])) {
+            $postID = $_GET['id'];
+            $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_likes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_ID = ? AND p.post_author_ID = u.user_ID";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $postID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if($result->num_rows == 1) {
+                $post = $result->fetch_assoc();
+                if($_SESSION['signedIn'] == true) {
+                    $_SESSION['lastPostIDVisited'] = $post['post_ID'];
+                }
+                return $post;
+            } else {
+                return false;
             }
-            return $post;
         } else {
-            return false;
+            header("Location: index.php");
+            exit();
         }
     }
 
     function getPostList($conn, $limit , $offset = 0) {
-        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ? OFFSET ?";
+        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_likes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ? OFFSET ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
@@ -68,7 +73,16 @@
     }
 
     function outputPost($conn, $post, $type) {
+        $likePostList = likedPostList($conn);
         $output = '';
+        $isLikedClass = [];
+        if(in_array($post['post_ID'], $likePostList, true)) {
+            array_push($isLikedClass, "text-danger");
+            array_push($isLikedClass, "bi-heart-fill");
+        } else {
+            array_push($isLikedClass, "text-dark");
+            array_push($isLikedClass, "bi-heart");
+        }
         $output .= '
         <div class="row my-3">
             <div class="col-md-8 offset-md-2">
@@ -91,20 +105,24 @@
                                 <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $post['post_date_created']) . '</p>
                             </div>
                             <div class="no-like-cmt d-flex mt-2">
-                                <p class="post-info post-no-upvotes mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> ' . $post['post_no_upvotes'] . '</p>
+                                <p class="post-info post-no-likes mb-0 mr-3"><i class="bi bi-heart-fill text-danger"></i> ' . $post['post_no_likes'] . '</p>
                                 <p class="post-info post-no-comments mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> ' . $post['post_no_comments'] . '</p>
                             </div>
                             <hr class="mb-2">
                             <div class="interaction">
                                 <div class="row">
-                                    <a class="text-dark col-md-6 text-center" href="like">
-                                        <i class="bi bi-hand-thumbs-up"></i>
-                                        Like
-                                    </a>
-                                    <a class="text-dark col-md-6 text-center" href="post.php?id=' . $post['post_ID'] . '">
-                                        <i class="bi bi-chat-left"></i>
-                                        Comment
-                                    </a>
+                                    <form class="like-form col-md-6 d-flex justify-content-center" method="POST" action="createlike.php">
+                                        <button type="submit" name="like-submit" class="like-btn ' . $isLikedClass[0] . ' text-center">
+                                            <i class="like-logo bi '. $isLikedClass[1] . '"></i>
+                                            Like
+                                        </button>
+                                    </form> 
+                                    <div class="col-md-6 d-flex justify-content-center">
+                                        <a class="text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
+                                            <i class="bi bi-chat-left"></i>
+                                            Comment
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -150,6 +168,17 @@
         }
     }
 
+    //check whether the post is liked
+    function likedPostList($conn) {
+        $sql = "SELECT like_post_ID FROM likes WHERE like_author_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $_SESSION['userID']);
+        $stmt->execute();
+        $results = $stmt->get_result();
+        $rows = $results->fetch_all(MYSQLI_ASSOC);
+        $likedPostList = array_column($rows, 'like_post_ID');
+        return $likedPostList;
+    }
 
     //helper functions
     function checkTitle($title) {

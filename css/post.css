@@ -58,6 +58,11 @@ a, a:hover, a:focus, a:active {
     font-size: 0.7rem;
 }
 
+button.like-btn {
+    background: none;
+    border: none;
+}
+
 .comments {
     margin-bottom: 200px;
 }

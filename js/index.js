@@ -22,8 +22,8 @@ $(document).ready(function(){
             xhr.open("GET", request, true);
             xhr.onload = function() {
                 if(this.status == 200) {
-                    //console.log(this.responseText);
                     let newPostList = JSON.parse(this.responseText);
+                    console.log(newPostList);
                     outputNewPosts(newPostList);
                 }
             }
@@ -37,6 +37,15 @@ function outputNewPosts(newPostList) {
     if(newPostList != '') {
         let output = '';
         newPostList.forEach(post => {
+            let isLikedClass = [];
+            if(post['liked'] == true) { 
+                isLikedClass.push("text-danger");
+                isLikedClass.push("bi-heart-fill");
+            }
+            else {
+                isLikedClass.push("text-dark");
+                isLikedClass.push("bi-heart");
+            }
             output += `
                 <div class="row my-3">
                     <div class="col-md-8 offset-md-2">
@@ -59,14 +68,14 @@ function outputNewPosts(newPostList) {
                                         <p class="font-weight-light my-2 post-info ml-auto">${post['post_date_time']}</p>
                                     </div>
                                     <div class="no-like-cmt d-flex mt-2">
-                                        <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${post['post_no_upvotes']}</p>
+                                        <p class="post-info mb-0 mr-3"><i class="bi bi-heart-fill text-danger"></i> ${post['post_no_likes']}</p>
                                         <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> ${post['post_no_comments']}</p>
                                     </div>
                                     <hr class="mb-2">
                                     <div class="interaction">
                                         <div class="row">
-                                            <a class="text-dark col-md-6 text-center" href="#">
-                                                <i class="bi bi-hand-thumbs-up"></i>
+                                            <a class="${isLikedClass[0]} col-md-6 text-center" href="#">
+                                                <i class="bi ${isLikedClass[1]}"></i>
                                                 Like
                                             </a>
                                             <a class="text-dark col-md-6 text-center" href="post.php?id=${post['post_ID']}">

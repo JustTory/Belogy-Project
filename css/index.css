@@ -55,9 +55,10 @@ a, a:hover, a:focus, a:active {
     font-size: 0.7rem;
 }
 
-/* .post-title {
-
-} */
+button.like-btn {
+    background: none;
+    border: none;
+}
 
 .post-content {
     max-height: 20vh;

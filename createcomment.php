@@ -20,7 +20,7 @@
             $newComment = $resNewComment->fetch_assoc();
             $newComment['cmt_date_time'] = outputContentDateTime($conn, $newComment['cmt_date_created']);
             
-            //update the number of comment of the post
+            //update total comment of the post
             $sqlUpdate = "UPDATE posts SET post_no_comments = post_no_comments + 1 WHERE post_ID = ?";
             $stmtUpdate = $conn->prepare($sqlUpdate);
             $stmtUpdate->bind_param("i", $_SESSION['lastPostIDVisited']);

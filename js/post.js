@@ -1,3 +1,5 @@
+let isLiked;
+
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
     $('.notification').popover('show');
@@ -6,14 +8,22 @@ $(document).ready(function(){
     }, 3000);
 
     let commentForm = document.querySelector("form.comment-form");
+    let likeForm = document.querySelector("form.like-form");
+   
+    if($('.like-logo').hasClass("bi-heart-fill")) isLiked = true
+    else isLiked = false;
 
     commentForm.addEventListener("submit", (e) => {
         let commentContent = document.querySelector(".comment").value;
         e.preventDefault();
         ajaxComment(commentContent);
     });
-});
 
+    likeForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        ajaxLike();
+    });
+});
 
 function ajaxComment(commentContent) {
     let request = "createcomment.php";
@@ -56,4 +66,45 @@ function outputNewComment(newComment) {
 function updateTotalPostComment(newTotalComment) {
     let icon = `<i class="bi bi-chat-left-fill text-secondary"></i> `;
     $("p.post-no-comments").html(icon + newTotalComment);
+}
+
+function switchLikeIcon() {
+    if(isLiked == true) {
+        $('.like-btn').removeClass('text-dark').addClass('text-danger');
+        $('.like-logo').removeClass("bi-heart").addClass("bi-heart-fill");
+    }
+    else {
+        $('.like-logo').removeClass("bi-heart-fill").addClass("bi-heart");
+        $('.like-btn').removeClass('text-danger').addClass('text-dark');
+    }
+}
+
+function checkAddOrRemoveLike() {
+    let requestAdd = "likemanager.php?addlike=true";
+    let requestRemove = "likemanager.php?removelike=true";
+    let request = '';
+    if(isLiked == true) request = requestRemove;
+    else request = requestAdd;
+    return request;
+}
+
+function ajaxLike() {
+    let xhr = new XMLHttpRequest();
+    request = checkAddOrRemoveLike();
+    console.log(request);
+    xhr.open("GET", request, true);
+    xhr.onload = function() {
+        if(this.status == 200) {
+            let newTotalPostLike = JSON.parse(this.responseText)['post_no_likes'];
+            updateTotalLikePost(newTotalPostLike);
+            isLiked = !isLiked;
+            switchLikeIcon();
+        }
+    }
+    xhr.send();
+}
+
+function updateTotalLikePost(newTotalLike) {
+    let icon = `<i class="bi bi-heart-fill text-danger"></i>  `;
+    $("p.post-no-likes").html(icon + newTotalLike);
 }

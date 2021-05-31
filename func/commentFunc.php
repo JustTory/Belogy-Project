@@ -38,8 +38,4 @@
         }
         echo $output;
     }
-
-    function countComment($commentList) {
-
-    }
 ?>

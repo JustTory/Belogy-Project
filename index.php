@@ -3,6 +3,7 @@
     include "includes/nav.php";
     include "func/postFunc.php";
     include "func/timeFunc.php";
+    //include "func/likeFunc.php";
     directToCreatePost();
     $postList = getPostList($conn, 5);
 ?>

@@ -49,6 +49,6 @@
 </div>
 
 <?php
-include "includes/footer.php";
-unsetNotification();
+    include "includes/footer.php";
+    unsetNotification();
 ?>
