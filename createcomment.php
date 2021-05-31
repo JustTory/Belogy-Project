@@ -1,6 +1,7 @@
 <?php
     session_start();
     include 'includes/db.php';
+    include 'func/timeFunc.php';
 
     if(isset($_POST['comment'])) {
         $sql = "INSERT INTO comments (cmt_content, cmt_author_ID, cmt_post_ID) VALUE (?,?,?)";
@@ -14,7 +15,9 @@
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
-            echo json_encode($result->fetch_assoc());
+            $newComment = $result->fetch_assoc();
+            $newComment['cmt_date_time'] = outputContentDateTime($conn, $newComment['cmt_date_created']);
+            echo json_encode($newComment);
         }
     }
 ?>

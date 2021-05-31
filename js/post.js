@@ -19,20 +19,35 @@ function ajaxComment(commentContent) {
     let request = "createcomment.php";
     let xhr = new XMLHttpRequest();
     xhr.open("POST", request, true);
-    // to use the post method we must set the request headers
-    // depending on the form data being sent
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onload = function() {
       if(this.status == 200) {
-        let output = JSON.parse(this.responseText);
-        console.log(output);
-        outputNewComment(output);
+        let newComment = JSON.parse(this.responseText);
+        console.log(newComment);
+        outputNewComment(newComment);
       }
     }
     xhr.send("comment=" + commentContent);
 }
 
-function outputNewComment(output) {
+function outputNewComment(newComment) {
     
+  let output = `
+        <div class="row my-2">
+            <div class="col-md-8 offset-md-2">
+                <div class="comment card">
+                    <div class="user-cmt-info d-flex">
+                        <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=${newComment['user_ID']}">
+                            <img class="avatar-post mr-2" src="images/default/defaultUserAvatar.png" alt="">
+                            ${newComment['user_username']}
+                        </a>
+                        <p class="font-weight-light my-2 post-info ml-auto">${newComment['cmt_date_time']}</p>
+                    </div>
+                    <p class="comment-content mt-2">${newComment['cmt_content']}</p>
+                </div>
+            </div>
+        </div>`;
 
+  $(".comments").prepend(output);
+  $(".empty-comment").remove();
 }

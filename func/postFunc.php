@@ -1,7 +1,4 @@
 <?php
-    include "func/imgFunc.php";
-    include "func/timeFunc.php";
-
     //main functions
     function createPost($conn, &$errorsPost) {
         if(isset($_POST['submit'])) {
@@ -62,9 +59,9 @@
     }
 
     function getPostList($conn, $limit , $offset = 0) {
-        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ?,?";
+        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_upvotes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ? OFFSET ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ii", $offset, $limit);
+        $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
         $results = $stmt->get_result();
         return $results->fetch_all(MYSQLI_ASSOC);
@@ -91,7 +88,7 @@
                                     <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
                                     . $post['user_username'] . '
                                 </a>
-                                <p class="font-weight-light my-2 post-info ml-auto">' . outputPostDateTime($conn, $post['post_date_created']) . '</p>
+                                <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $post['post_date_created']) . '</p>
                             </div>
                             <div class="no-like-cmt d-flex mt-2">
                                 <p class="post-info mb-0 mr-3"><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 25</p>
@@ -120,7 +117,6 @@
         else if($type == "return") return $output;
     }
 
-    //$post['post_ID']
     function outputPostList($conn, $postList) {
         $output = '';
         foreach ($postList as $post) {
@@ -138,9 +134,17 @@
         }
     }
 
-    function checkSignedIn() {
+    function checkSignedInOnCreatePost() {
         if($_SESSION['signedIn'] == false) {
             $_SESSION['notSignedInOnCreatePost'] = true;
+            header("Location: index.php");
+            exit();
+        }
+    }
+
+    function checkSignedInOnPost() {
+        if($_SESSION['signedIn'] == false) {
+            $_SESSION['notSignedInOnPost'] = true;
             header("Location: index.php");
             exit();
         }
@@ -169,38 +173,5 @@
             header($location);
             exit();
         }
-    }
-
-
-    //time functions
- 
-
-    function outputPostDateTime($conn, $postDateTime) {
-        $currDateTime = getCurDateTime($conn);
-        $detailCurDateTime = getDetailDateTime($currDateTime);
-        $detailPostDateTime = getDetailDateTime($postDateTime);
-        if($detailCurDateTime['year'] == $detailPostDateTime['year']) {
-            if($detailCurDateTime['day'] == $detailPostDateTime['day']) {
-                if($detailCurDateTime['hour'] == $detailPostDateTime['hour']) {
-                    if($detailCurDateTime['minute'] - $detailPostDateTime['minute'] == 0) 
-                        $res = "Just now";
-                    else if($detailCurDateTime['minute'] - $detailPostDateTime['minute'] == 1) 
-                        $res = "1 minute ago";
-                    else $res = $detailCurDateTime['minute'] - $detailPostDateTime['minute'] . " minutes ago";
-                }
-                else {
-                    if($detailCurDateTime['hour'] - $detailPostDateTime['hour'] == 1) 
-                        $res = "1 hour ago";
-                    else $res = $detailCurDateTime['hour'] - $detailPostDateTime['hour'] . " hours ago";
-                }
-            }
-            else if($detailCurDateTime['day'] - $detailPostDateTime['day'] == 1) {
-                $res = "Yesterday at " . getTimeOnly($postDateTime);
-            }
-            else {
-                $res = getMonthName(getMonth(getDateOnly($postDateTime))) . " " . getDay(getDateOnly($postDateTime));
-            }
-        }
-        return $res;
     }
 ?>

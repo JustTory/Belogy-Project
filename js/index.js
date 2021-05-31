@@ -1,3 +1,4 @@
+let limit = 5;
 let offset = 0; // default offset;
 let reachedEnd = false;
 $(document).ready(function(){
@@ -15,9 +16,9 @@ $(document).ready(function(){
     $(window).scroll(function() {
         if((($(window).scrollTop() + $(window).height()) >= $(document).height()) && reachedEnd == false) {
             offset += 5;
-            console.log("loading new posts from record " + offset + " to " + (offset + 5));
+            console.log("loading new posts from record " + offset + " to " + (offset + 5) + " (limit = " + limit + ")");
             let xhr = new XMLHttpRequest();
-            let request = "getmoreposts.php?offset=" + offset;
+            let request = "getmoreposts.php?offset=" + offset + "&limit=" + limit;
             xhr.open("GET", request, true);
             xhr.onload = function() {
                 if(this.status == 200) {

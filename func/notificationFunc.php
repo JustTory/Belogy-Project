@@ -8,6 +8,8 @@
             echo htmlspecialchars($_SESSION['signOutSuccess']);
         else if(($_SESSION['signedIn'] == false && isset($_POST['createpost'])) || isset($_SESSION['notSignedInOnCreatePost']))
             echo htmlspecialchars("You must be signed in to create post");
+        else if($_SESSION['signedIn'] == false && isset($_SESSION['notSignedInOnPost']))
+            echo htmlspecialchars("You must be signed in to view posts");
         else if(isset($_SESSION['newPost']))
             echo htmlspecialchars($_SESSION['newPost']);
     }
@@ -17,6 +19,7 @@
         unset($_SESSION['signInSuccess']);
         unset($_SESSION['signOutSuccess']);
         unset($_SESSION['notSignedInOnCreatePost']);
+        unset($_SESSION['notSignedInOnPost']);
         unset($_SESSION['newPost']);
     }
 ?>

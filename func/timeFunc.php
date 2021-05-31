@@ -1,4 +1,36 @@
 <?php
+    //main functions
+    function outputContentDateTime($conn, $contentDateCreated) {
+        $currDateTime = getCurDateTime($conn);
+        $detailCurDateTime = getDetailDateTime($currDateTime);
+        $detailContentDateCreated = getDetailDateTime($contentDateCreated);
+        if($detailCurDateTime['year'] == $detailContentDateCreated['year']) {
+            if($detailCurDateTime['day'] == $detailContentDateCreated['day']) {
+                if($detailCurDateTime['hour'] == $detailContentDateCreated['hour']) {
+                    if($detailCurDateTime['minute'] - $detailContentDateCreated['minute'] == 0) 
+                        $res = "Just now";
+                    else if($detailCurDateTime['minute'] - $detailContentDateCreated['minute'] == 1) 
+                        $res = "1 minute ago";
+                    else $res = $detailCurDateTime['minute'] - $detailContentDateCreated['minute'] . " minutes ago";
+                }
+                else {
+                    if($detailCurDateTime['hour'] - $detailContentDateCreated['hour'] == 1) 
+                        $res = "1 hour ago";
+                    else $res = $detailCurDateTime['hour'] - $detailContentDateCreated['hour'] . " hours ago";
+                }
+            }
+            else if($detailCurDateTime['day'] - $detailContentDateCreated['day'] == 1) {
+                $res = "Yesterday at " . getTimeOnly($contentDateCreated);
+            }
+            else {
+                $res = getMonthName(getMonth(getDateOnly($contentDateCreated))) . " " . getDay(getDateOnly($contentDateCreated));
+            }
+        }
+        return $res;
+    }
+
+
+    //helper functions
     function getMonthName($monthNum) {
         switch ($monthNum) {
             case '1':
@@ -70,7 +102,6 @@
         $time = explode(':', $time);
         return $time[0] . ':' . $time[1];
     }
-
     function getDetailDateTime($dateTime) {
         $date = getDateOnly($dateTime);
         $time = getTimeOnly($dateTime);
@@ -80,7 +111,6 @@
         $detailDateTime['minute'] = getMinute($time);
         return $detailDateTime;
     }
-
     function getCurDateTime($conn) {
         $stmt = $conn->query("SELECT CURRENT_TIMESTAMP() as 'CurDateTime'");
         $res = $stmt->fetch_assoc();

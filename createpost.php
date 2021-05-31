@@ -2,10 +2,10 @@
     include "includes/header.php";
     include "includes/nav.php";
     include "func/postFunc.php";
-    checkSignedIn();
+    include "func/imgFunc.php";
+    checkSignedInOnCreatePost();
     $errorsPost = [];
     createPost($conn, $errorsPost);
-    var_dump($_SESSION);
 ?>
 
 <div class="container main-cont">

@@ -2,8 +2,11 @@
     include "includes/header.php";
     include "includes/nav.php";
     include "func/postFunc.php";
+    include "func/timeFunc.php";
+    include "func/commentFunc.php";
+    checkSignedInOnPost();
     $post = getPost($conn);
-    var_dump($_SESSION);
+    $commentList = getCommentList($conn, $_SESSION['lastPostIDVisited'], 10);
 ?>
 
 <div class="container main-cont">
@@ -30,66 +33,18 @@
     <hr>
 
     <div class="comments">
+        <?php
+            outputCommentList($conn, $commentList);
+        ?>
 
-        <div class="row my-2">
-            <div class="col-md-8 offset-md-2">
-                <div class="create-comment card">
-                    <div class="user-cmt-info d-flex">
-                        <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
-                            <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">User
-                        </a>
-                        <p class="font-weight-light my-2 post-info ml-auto">16 minutes ago</p>
-                    </div>
-                    <p class="mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit harum facilis aliquid minus fugit inventore ex eius, voluptatem dicta ut neque pariatur possimus quisquam quod amet laudantium laboriosam! Inventore, esse.</p>
-                </div>
+        <?php if (empty($commentList)): ?>
+            <div class="row my-3 mt-5 empty-comment">
+                <div class="col-md-8 offset-md-2 d-flex justify-content-center">
+                <p class="text-secondary font-italic">Be the first one to comment on this post</p>
             </div>
         </div>
-
-        <div class="row my-2">
-            <div class="col-md-8 offset-md-2">
-                <div class="create-comment card">
-                    <div class="user-cmt-info d-flex">
-                        <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
-                            <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">User
-                        </a>
-                        <p class="font-weight-light my-2 post-info ml-auto">16 minutes ago</p>
-                    </div>
-                    <p class="mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit harum facilis aliquid minus fugit inventore ex eius, voluptatem dicta ut neque pariatur possimus quisquam quod amet laudantium laboriosam! Inventore, esse.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row my-2">
-            <div class="col-md-8 offset-md-2">
-                <div class="create-comment card">
-                    <div class="user-cmt-info d-flex">
-                        <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
-                            <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">User
-                        </a>
-                        <p class="font-weight-light my-2 post-info ml-auto">16 minutes ago</p>
-                    </div>
-                    <p class="mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit harum facilis aliquid minus fugit inventore ex eius, voluptatem dicta ut neque pariatur possimus quisquam quod amet laudantium laboriosam! Inventore, esse.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row my-2">
-            <div class="col-md-8 offset-md-2">
-                <div class="create-comment card">
-                    <div class="user-cmt-info d-flex">
-                        <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
-                            <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">User
-                        </a>
-                        <p class="font-weight-light my-2 post-info ml-auto">16 minutes ago</p>
-                    </div>
-                    <p class="mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit harum facilis aliquid minus fugit inventore ex eius, voluptatem dicta ut neque pariatur possimus quisquam quod amet laudantium laboriosam! Inventore, esse.</p>
-                </div>
-            </div>
-        </div>
-
+        <?php endif; ?>
     </div>
-
-  
 
 </div>
 

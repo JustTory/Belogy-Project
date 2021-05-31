@@ -2,9 +2,9 @@
     include "includes/header.php";
     include "includes/nav.php";
     include "func/postFunc.php";
+    include "func/timeFunc.php";
     directToCreatePost();
     $postList = getPostList($conn, 5);
-    var_dump($_SESSION)
 ?>
 
 <div class="container main-cont">
