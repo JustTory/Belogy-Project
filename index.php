@@ -1,9 +1,21 @@
+<!-- TO DO LIST
+  - likable posts at index
+  - constraint comments (not empty...)
+  - delete posts (admin role)
+  - edit or delete own post (user role)
+  - fix createpost UI
+  - profile.php
+  - debugging and fixing
+
+  - index: new signed up users table on the right 
+  - notification when someone comments or likes your post 
+-->
+
 <?php
     include "includes/header.php";
     include "includes/nav.php";
     include "func/postFunc.php";
     include "func/timeFunc.php";
-    //include "func/likeFunc.php";
     directToCreatePost();
     $postList = getPostList($conn, 5);
 ?>
