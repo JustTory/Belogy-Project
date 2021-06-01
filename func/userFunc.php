@@ -95,7 +95,8 @@ function createUserInDB($conn, $username, $email, $password2)
         $_SESSION['userID'] = $stmt->insert_id;
         $_SESSION['userRole'] = 'user';
         $_SESSION['signUpSuccess'] = 'Your account has been created';
-        header("Location: index.php?signup=success");
+        header("Location: index.php");
+        exit();
     } else return false;
 }
 
@@ -116,6 +117,7 @@ function checkLogIn($conn, $email, $password)
             $_SESSION['userRole'] = $row['user_role'];
             $_SESSION['signInSuccess'] = 'You have signed in successfully';
             header("Location: index.php");
+            exit();
         }
     } else return false;
 }

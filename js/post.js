@@ -16,7 +16,9 @@ $(document).ready(function(){
     commentForm.addEventListener("submit", (e) => {
         let commentContent = document.querySelector(".comment").value;
         e.preventDefault();
-        ajaxComment(commentContent);
+        if(checkComment(commentContent)) {
+            ajaxComment(commentContent);
+        }
     });
 
     likeForm.addEventListener("submit", (e) => {
@@ -24,6 +26,21 @@ $(document).ready(function(){
         ajaxLike();
     });
 });
+
+function checkComment(comment) {
+    if(comment == '' ) {
+        $(".error-msg").removeClass('d-none');
+        return false;
+    } 
+    else {
+        $(".error-msg").addClass('d-none');
+        return true;
+    }
+}
+
+function removeInput() {
+    $(".comment").val("");
+}
 
 function ajaxComment(commentContent) {
     let request = "createcomment.php";
@@ -36,6 +53,7 @@ function ajaxComment(commentContent) {
         //console.log(newComment);
         outputNewComment(newComment);
         updateTotalPostComment(newComment['post_no_comments']);
+        removeInput();
       }
     }
     xhr.send("comment=" + commentContent);

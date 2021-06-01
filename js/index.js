@@ -34,9 +34,10 @@ $(document).ready(function(){
 });
 
 function outputNewPosts(newPostList) {
-    if(newPostList != '') {
+    let currentUserID = newPostList['currentUserID'];
+    if(newPostList['posts'] != '') {
         let output = '';
-        newPostList.forEach(post => {
+        newPostList['posts'].forEach(post => {
             let isLikedClass = [];
             if(post['liked'] == true) { 
                 isLikedClass.push("text-danger");
@@ -46,6 +47,10 @@ function outputNewPosts(newPostList) {
                 isLikedClass.push("text-dark");
                 isLikedClass.push("bi-heart");
             }
+
+            let ownedPostButton = ` <a class="ml-auto" href="editpost.php?id=${post['post_ID']}">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>`;
             output += `
                 <div class="row my-3">
                     <div class="col-md-8 offset-md-2">
@@ -58,7 +63,13 @@ function outputNewPosts(newPostList) {
                 }
                 output += `
                                 <div class="card-body post-body pb-2">
-                                    <h5 class="card-title post-title font-weight-normal">${post['post_title']}</h5>
+                                    <div class="title-edit d-flex">
+                                        <h5 class="card-title post-title font-weight-normal">${post['post_title']}</h5>`;
+                if(checkOwnedPost(post['post_author_ID'], currentUserID)){
+                    output += ownedPostButton;
+                }                    
+                    output +=`
+                                    </div>
                                     <p class="card-text post-content">${post['post_content']}</p>
                                     <div class="author-date d-flex mt-4">
                                         <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
@@ -74,14 +85,18 @@ function outputNewPosts(newPostList) {
                                     <hr class="mb-2">
                                     <div class="interaction">
                                         <div class="row">
-                                            <a class="${isLikedClass[0]} col-md-6 text-center" href="#">
-                                                <i class="bi ${isLikedClass[1]}"></i>
-                                                Like
-                                            </a>
-                                            <a class="text-dark col-md-6 text-center" href="post.php?id=${post['post_ID']}">
-                                                <i class="bi bi-chat-left"></i>
-                                                Comment
-                                            </a>
+                                            <form class="like-form col-md-6 d-flex justify-content-center" method="POST" action="createlike.php">
+                                                <button type="submit" name="like-submit" class="like-btn ${isLikedClass[0]} text-center">
+                                                    <i class="like-logo bi ${isLikedClass[1]}"></i>
+                                                    Like
+                                                </button>
+                                            </form> 
+                                            <div class="col-md-6 d-flex justify-content-center">
+                                                <a class="text-dark text-center" href="post.php?id=${post['post_ID']}">
+                                                    <i class="bi bi-chat-left"></i>
+                                                    Comment
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -105,5 +120,11 @@ function outputNewPosts(newPostList) {
         </div>`)
     }
 
+}
+
+function checkOwnedPost(postAuthorID, currentUserID) {
+    if(postAuthorID == currentUserID) 
+        return true;
+    else return false;
 }
 

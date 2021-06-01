@@ -64,7 +64,7 @@
     }
 
     function getPostList($conn, $limit , $offset = 0) {
-        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_likes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ? OFFSET ?";
+        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, p.post_author_ID, u.user_username, p.post_no_likes, p.post_no_comments, p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ? OFFSET ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
@@ -83,6 +83,9 @@
             array_push($isLikedClass, "text-dark");
             array_push($isLikedClass, "bi-heart");
         }
+        $ownedPostButton = '<a class="ml-auto" href="editpost.php?id=' . $post['post_ID'] . '">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>';
         $output .= '
         <div class="row my-3">
             <div class="col-md-8 offset-md-2">
@@ -95,10 +98,16 @@
         }
             $output .= '
                         <div class="card-body post-body pb-2">
-                            <h5 class="card-title post-title font-weight-normal">' . $post['post_title'] . '</h5>
+                            <div class="title-edit d-flex">
+                                <h5 class="card-title post-title font-weight-normal">' . $post['post_title'] . '</h5>';
+        if(checkOwnedPost($post['post_author_ID'])){
+            $output .= $ownedPostButton;
+        }                    
+            $output .='
+                            </div>
                             <p class="card-text post-content">' . $post['post_content'] . '</p>
                             <div class="author-date d-flex mt-4">
-                                <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
+                                <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
                                     <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
                                     . $post['user_username'] . '
                                 </a>
@@ -189,6 +198,12 @@
     function checkContent($content) {
         if($content == '') return false;
         else return true;
+    }
+
+    function checkOwnedPost($postAuthorID) {
+        if($postAuthorID == $_SESSION['userID']) 
+            return true;
+        else return false;
     }
 
     function writeToDB($conn, $title, $content, $authorID, $imgPath = null) {

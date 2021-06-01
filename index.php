@@ -1,9 +1,10 @@
 <!-- TO DO LIST
-  - likable posts at index
-  - constraint comments (not empty...)
   - delete posts (admin role)
   - edit or delete own post (user role)
+  - fix infinite scrolling in index (when ending div is on screen, triggers ajax)
+  - add infinite scrolling to comments / if cannot add load more comments button to trigger ajax
   - fix createpost UI
+  - likable posts at index
   - profile.php
   - debugging and fixing
 
