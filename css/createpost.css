@@ -8,6 +8,7 @@ a {
 
 .navbar  {
     height: 65px;
+    border: 1px solid rgba(0,0,0,.125);
 }
 
 .main-cont {
@@ -22,4 +23,8 @@ a {
 .popover-body {
     text-align: center;
     padding: .5rem;
+}
+
+label.custom-file-label {
+    overflow: hidden;
 }

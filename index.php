@@ -4,8 +4,9 @@
   - fix infinite scrolling in index (when ending div is on screen, triggers ajax)
   - add infinite scrolling to comments / if cannot add load more comments button to trigger ajax
   - fix createpost UI
-  - likable posts at index
   - profile.php
+  - likable posts at index //after like, need to find postID to ajax. We can count the order of post and query it in the DB
+  - prevent user from /images in url
   - debugging and fixing
 
   - index: new signed up users table on the right 

@@ -1,7 +1,7 @@
 let limit = 5;
 let offset = 0; // default offset;
 let reachedEnd = false;
-$(document).ready(function(){
+$(document).ready(function() {
     $('[data-toggle="popover"]').popover();
     $('.notification').popover('show');
     setTimeout(() => {
@@ -86,7 +86,7 @@ function outputNewPosts(newPostList) {
                                     <div class="interaction">
                                         <div class="row">
                                             <form class="like-form col-md-6 d-flex justify-content-center" method="POST" action="createlike.php">
-                                                <button type="submit" name="like-submit" class="like-btn ${isLikedClass[0]} text-center">
+                                                <button type="submit" data-post-id="${post['post_ID']}" name="like-submit" class="like-btn ${isLikedClass[0]} text-center">
                                                     <i class="like-logo bi ${isLikedClass[1]}"></i>
                                                     Like
                                                 </button>

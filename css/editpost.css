@@ -7,10 +7,6 @@ a, a:hover, a:focus, a:active {
     color: inherit !important;
 }
 
-.a-post {
-    pointer-events: none;
-}
-
 .navbar  {
     height: 65px;
     border: 1px solid rgba(0,0,0,.125);
@@ -29,6 +25,10 @@ a, a:hover, a:focus, a:active {
     text-align: center;
     padding: .5rem;
 }
+
+/* .a-post {
+    pointer-events: none;
+} */
 
 .post {
     width: 100%;
@@ -62,63 +62,43 @@ a, a:hover, a:focus, a:active {
 button.like-btn {
     background: none;
     border: none;
-    
 }
 
-i.like-logo {
-    display: inline-block;
-    
+.post-content-wrapper {
+    position: relative;
 }
 
-.heart-anim {
-    animation: heartbeat;
-    animation-duration: 0.4s;
+.options-img {
+    position: absolute;
+    z-index: 5;
+    top: -25px;
+    right: -25px;
 }
 
-.comments {
-    margin-bottom: 200px;
+.options-title {
+    position: absolute;
+    z-index: 5;
+    top: -15px;
+    right: -50px;
 }
 
-.create-comment {
-    padding: 0.7rem 1.25rem 0rem 0.7rem;
+.options-content {
+    position: absolute;
+    z-index: 5;
+    right: -50px;
 }
 
-.comment.card {
-    padding: 0.7rem 1.25rem;
+.option-btn {
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.125);
+    height: 50px;
+    width: 50px;
 }
 
-.error-msg {
-	color: red;
-	height: 25px;
-	font-size: 0.9rem;
-	align-self: start !important;
-	text-align: start;
+.low-opacity {
+    opacity: 60%;
 }
 
-@keyframes heartbeat
-{
-  0%
-  {
-    transform: scale(0.75);
-  }
-  20%
-  {
-    transform: scale(1);
-  }
-  40%
-  {
-    transform: scale(1.25);
-  }
-  60%
-  {
-    transform: scale(1.5);
-  }
-  80%
-  {
-    transform: scale(1.25);
-  }
-  100%
-  {
-    transform: scale(1);
-  }
+label.custom-file-label {
+    overflow: hidden;
 }

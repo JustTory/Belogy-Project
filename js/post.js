@@ -1,6 +1,6 @@
 let isLiked;
 
-$(document).ready(function(){
+$(document).ready(function() {
     $('[data-toggle="popover"]').popover();
     $('.notification').popover('show');
     setTimeout(() => {
@@ -15,9 +15,10 @@ $(document).ready(function(){
 
     commentForm.addEventListener("submit", (e) => {
         let commentContent = document.querySelector(".comment").value;
+        let postID = $('.like-btn').data('postid');
         e.preventDefault();
         if(checkComment(commentContent)) {
-            ajaxComment(commentContent);
+            ajaxComment(commentContent, postID);
         }
     });
 
@@ -42,7 +43,8 @@ function removeInput() {
     $(".comment").val("");
 }
 
-function ajaxComment(commentContent) {
+function ajaxComment(commentContent, postID) {
+    console.log(postID);
     let request = "createcomment.php";
     let xhr = new XMLHttpRequest();
     xhr.open("POST", request, true);
@@ -56,7 +58,7 @@ function ajaxComment(commentContent) {
         removeInput();
       }
     }
-    xhr.send("comment=" + commentContent);
+    xhr.send("comment=" + commentContent + "&id=" + postID);
 }
 
 function outputNewComment(newComment) {
@@ -72,7 +74,7 @@ function outputNewComment(newComment) {
                         </a>
                         <p class="font-weight-light my-2 post-info ml-auto">${newComment['cmt_date_time']}</p>
                     </div>
-                    <p class="comment-content mt-2">${newComment['cmt_content']}</p>
+                    <p class="comment-content mt-2 mb-2">${newComment['cmt_content']}</p>
                 </div>
             </div>
         </div>`;
@@ -86,13 +88,15 @@ function updateTotalPostComment(newTotalComment) {
     $("p.post-no-comments").html(icon + newTotalComment);
 }
 
-function switchLikeIcon() {
+function switchLikeIconAnimation() {
     if(isLiked == true) {
-        $('.like-btn').removeClass('text-dark').addClass('text-danger');
         $('.like-logo').removeClass("bi-heart").addClass("bi-heart-fill");
+        $('.like-logo').toggleClass("heart-anim");
+        $('.like-btn').removeClass('text-dark').addClass('text-danger');
     }
     else {
         $('.like-logo').removeClass("bi-heart-fill").addClass("bi-heart");
+        $('.like-logo').toggleClass("heart-anim");
         $('.like-btn').removeClass('text-danger').addClass('text-dark');
     }
 }
@@ -116,7 +120,7 @@ function ajaxLike() {
             let newTotalPostLike = JSON.parse(this.responseText)['post_no_likes'];
             updateTotalLikePost(newTotalPostLike);
             isLiked = !isLiked;
-            switchLikeIcon();
+            switchLikeIconAnimation();
         }
     }
     xhr.send();

@@ -12,6 +12,8 @@
             echo htmlspecialchars("You must be signed in to view posts");
         else if(isset($_SESSION['newPost']))
             echo htmlspecialchars($_SESSION['newPost']);
+        else if(isset($_SESSION['editedPost']))
+            echo htmlspecialchars($_SESSION['editedPost']);
     }
 
     function unsetNotification() {
@@ -21,5 +23,6 @@
         unset($_SESSION['notSignedInOnCreatePost']);
         unset($_SESSION['notSignedInOnPost']);
         unset($_SESSION['newPost']);
+        unset($_SESSION['editedPost']);
     }
 ?>

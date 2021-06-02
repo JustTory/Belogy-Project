@@ -3,11 +3,11 @@
     include 'includes/db.php';
     include 'func/timeFunc.php';
 
-    if(isset($_POST['comment'])) {
+    if(isset($_POST['comment']) && isset($_POST['id'])) {
         //insert new comment into DB
         $sqlInsert = "INSERT INTO comments (cmt_content, cmt_author_ID, cmt_post_ID) VALUE (?,?,?)";
         $stmtInsert = $conn->prepare($sqlInsert);
-        $stmtInsert->bind_param("sii", $_POST['comment'], $_SESSION['userID'], $_SESSION['lastPostIDVisited']);
+        $stmtInsert->bind_param("sii", $_POST['comment'], $_SESSION['userID'], $_POST['id']);
         $stmtInsert->execute();
         if($stmtInsert->affected_rows == 1) {
             //get the new comment from DB and encode it into json to send back
@@ -23,12 +23,12 @@
             //update total comment of the post
             $sqlUpdate = "UPDATE posts SET post_no_comments = post_no_comments + 1 WHERE post_ID = ?";
             $stmtUpdate = $conn->prepare($sqlUpdate);
-            $stmtUpdate->bind_param("i", $_SESSION['lastPostIDVisited']);
+            $stmtUpdate->bind_param("i", $_POST['id']);
             $stmtUpdate->execute();
 
             $sqlGetNumberOfComments = "SELECT post_no_comments FROM posts WHERE post_ID = ?";
             $stmtGetNumberOfComments = $conn->prepare($sqlGetNumberOfComments);
-            $stmtGetNumberOfComments->bind_param("i", $_SESSION['lastPostIDVisited']);
+            $stmtGetNumberOfComments->bind_param("i", $_POST['id']);
             $stmtGetNumberOfComments->execute();
             $resNumberOfComments = $stmtGetNumberOfComments->get_result();
             $numberOfComments = $resNumberOfComments->fetch_assoc();

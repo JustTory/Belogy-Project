@@ -26,8 +26,8 @@
                     $errorsPost['imgExt'] = "Only png, jpeg, jpg, gif images are allowed";
 
                 if(empty($errorsPost)) {
-                    $newImgName = uniqid('', false) . "." . $imgExt;
-                    $finalPath = "images/useruploads/" . $newImgName;
+                    $hashedImgName = uniqid('', false) . "." . $imgExt;
+                    $finalPath = "images/useruploads/" . $hashedImgName;
                     if(move_uploaded_file($imgTmpName, $finalPath)) 
                         writeToDB($conn, $title, $content, $_SESSION['userID'], $finalPath);
                     else $errorsPost['imgUpload'] = "There was an error uploading the image";
@@ -40,10 +40,56 @@
         }
     }
 
+    function editPost($conn, &$errorsNewImg) {
+
+        if(isset($_POST['submit-edit-img'])) { 
+            $newImage = $_FILES['new-image'];
+            $newImgError = $newImage['error'];
+            if($newImgError == 0) { // if an image was uploaded
+                $newImgName = $newImage['name'];
+                $newImgType = explode("/", $newImage['type']);
+                $newImgExt = end($newImgType);
+                $newImgTmpName = $newImage['tmp_name'];
+                $newImgSize = $newImage['size'];
+                if(!allowedImgSize($newImgSize))
+                    $errorsNewImg['imgSize'] = "Image size must be less than 2mb";
+                if(!allowedImgExt($newImgExt))
+                    $errorsNewImg['imgExt'] = "Only png, jpeg, jpg, gif images are allowed";
+
+                if(empty($errorsNewImg)) {
+                    $hashedImgName = uniqid('', false) . "." . $newImgExt;
+                    $finalPath = "images/useruploads/" . $hashedImgName;
+
+
+                    //delete old image from folder
+
+
+                    if(move_uploaded_file($newImgTmpName, $finalPath)) 
+                        updateToDB($conn, "post_img_url", $finalPath);
+                    else $errorsNewImg['imgUpload'] = "There was an error uploading the image";
+                }
+            }
+        }
+
+        if(isset($_POST['submit-delete-img'])) { 
+            
+        }
+
+        if(isset($_POST['submit-edit-title'])) { 
+            
+        }
+
+        if(isset($_POST['submit-edit-content'])) { 
+            
+        }
+    
+    }
+
+
     function getPost($conn) {
         if(isset($_GET['id'])) {
             $postID = $_GET['id'];
-            $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, u.user_username, p.post_no_likes, p.post_no_comments,	p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_ID = ? AND p.post_author_ID = u.user_ID";
+            $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, p.post_author_ID, u.user_username, p.post_no_likes, p.post_no_comments, p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_ID = ? AND p.post_author_ID = u.user_ID";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $postID);
             $stmt->execute();
@@ -121,7 +167,7 @@
                             <div class="interaction">
                                 <div class="row">
                                     <form class="like-form col-md-6 d-flex justify-content-center" method="POST" action="createlike.php">
-                                        <button type="submit" name="like-submit" class="like-btn ' . $isLikedClass[0] . ' text-center">
+                                        <button type="submit" data-postid="'. $post['post_ID'] .'" name="like-submit" class="like-btn ' . $isLikedClass[0] . ' text-center">
                                             <i class="like-logo bi '. $isLikedClass[1] . '"></i>
                                             Like
                                         </button>
@@ -142,6 +188,96 @@
         ';
         if($type == "echo") echo $output;
         else if($type == "return") return $output;
+    }
+
+    function outputPostEdit($conn, $post) {
+        $likePostList = likedPostList($conn);
+        $output = '';
+        $isLikedClass = [];
+        if(in_array($post['post_ID'], $likePostList, true)) {
+            array_push($isLikedClass, "text-danger");
+            array_push($isLikedClass, "bi-heart-fill");
+        } else {
+            array_push($isLikedClass, "text-dark");
+            array_push($isLikedClass, "bi-heart");
+        }
+        $output .= '
+        <div class="row my-3">
+            <div class="col-md-8 offset-md-2">
+                <div class="card post">';
+                  
+        if ($post['post_img_url'] != null) {
+            $output.= ' 
+                    <div class="post-content-wrapper">
+                        <div class="options-img">
+                            <button type="button" name="edit-img" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-img">
+                                <i class="bi bi-pencil-square text-primary"></i>
+                            </button>
+                            <button type="button" name="delete-img" class="btn btn-outline-secondary bg-white d-flex justify-content-center mt-2 option-btn" data-toggle="modal" data-target="#delete-img">
+                                <i class="bi bi-trash text-danger"></i>
+                            </button>
+                        </div>
+                        <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
+                            <img class="card-img-top post-img low-opacity" src="' . $post['post_img_url'] . '" alt="Post image">
+                        </a>
+                    </div>';
+        }
+            $output .= '
+                    <div class="card-body post-body pb-2">
+                        <div class="post-content-wrapper">
+                            <div class="options-title">
+                                <button type="button" name="edit-title" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-title">
+                                    <i class="bi bi-pencil-square text-primary"></i>
+                                </button>
+                            </div>
+                            <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
+                                <h5 class="card-title post-title font-weight-normal low-opacity">' . $post['post_title'] . '</h5>
+                            </a>
+                        </div>
+                        <div class="post-content-wrapper">
+                            <div class="options-content">
+                                <button type="button" name="edit-content" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-content">
+                                    <i class="bi bi-pencil-square text-primary"></i>
+                                </button>
+                            </div>
+                            <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
+                                <p class="card-text post-content low-opacity">' . $post['post_content'] . '</p>
+                            </a>
+                        </div>
+                        <div class="author-date d-flex mt-4">
+                            <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
+                                <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
+                                    . $post['user_username'] . '
+                            </a>
+                            <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $post['post_date_created']) . '</p>
+                        </div>
+                        <div class="no-like-cmt d-flex mt-2">
+                            <p class="post-info post-no-likes mb-0 mr-3"><i class="bi bi-heart-fill text-danger"></i> ' . $post['post_no_likes'] . '</p>
+                            <p class="post-info post-no-comments mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> ' . $post['post_no_comments'] . '</p>
+                        </div>
+                        <hr class="mb-2">
+                        <div class="interaction">
+                            <div class="row">
+                                <form class="like-form col-md-6 d-flex justify-content-center" method="POST" action="createlike.php">
+                                    <button type="submit" name="like-submit" class="like-btn ' . $isLikedClass[0] . ' text-center">
+                                        <i class="like-logo bi '. $isLikedClass[1] . '"></i>
+                                            Like
+                                    </button>
+                                </form> 
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <a class="text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
+                                        <i class="bi bi-chat-left"></i>
+                                        Comment
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+        ';
+        echo $output;
     }
 
     function outputPostList($conn, $postList) {
@@ -214,6 +350,19 @@
         if($stmt->affected_rows == 1) {
             $_SESSION['newPost'] = "You have created a new post";
             $location = "Location: post.php?id=" . $stmt->insert_id;
+            header($location);
+            exit();
+        }
+    }
+
+    function updateToDB($conn, $columnName, $newColumnValue) {
+        $sql = "UPDATE posts SET $columnName = ? WHERE post_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $newColumnValue, $_GET['id']);
+        $stmt->execute();
+        if($stmt->affected_rows == 1) {
+            $_SESSION['editedPost'] = "Your post has been edited";
+            $location = "Location: editpost.php?id=" . $_GET['id'];
             header($location);
             exit();
         }
