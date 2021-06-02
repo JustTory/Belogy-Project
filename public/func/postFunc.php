@@ -133,7 +133,7 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>';
         $output .= '
-        <div class="row my-3">
+        <div class="row my-5">
             <div class="col-md-8 offset-md-2">
                 <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
                     <div class="card post">';
@@ -166,12 +166,12 @@
                             <hr class="mb-2">
                             <div class="interaction">
                                 <div class="row">
-                                    <form class="like-form col-md-6 d-flex justify-content-center" method="POST" action="createlike.php">
-                                        <button type="submit" data-postid="'. $post['post_ID'] .'" name="like-submit" class="like-btn ' . $isLikedClass[0] . ' text-center">
+                                    <div class="col-md-6 d-flex justify-content-center">
+                                        <button type="button" data-postid="'. $post['post_ID'] .'" name="like-btn" class="like-btn ' . $isLikedClass[0] . ' text-center">
                                             <i class="like-logo bi '. $isLikedClass[1] . '"></i>
                                             Like
                                         </button>
-                                    </form> 
+                                    </div> 
                                     <div class="col-md-6 d-flex justify-content-center">
                                         <a class="text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
                                             <i class="bi bi-chat-left"></i>
@@ -202,7 +202,7 @@
             array_push($isLikedClass, "bi-heart");
         }
         $output .= '
-        <div class="row my-3">
+        <div class="row my-5">
             <div class="col-md-8 offset-md-2">
                 <div class="card post">';
                   
@@ -348,7 +348,7 @@
         $stmt->bind_param("sssi", $title, $content, $imgPath, $authorID);
         $stmt->execute();
         if($stmt->affected_rows == 1) {
-            $_SESSION['newPost'] = "You have created a new post";
+            $_SESSION['notification'] = "You have created a new post";
             $location = "Location: post.php?id=" . $stmt->insert_id;
             header($location);
             exit();
@@ -361,7 +361,7 @@
         $stmt->bind_param("si", $newColumnValue, $_GET['id']);
         $stmt->execute();
         if($stmt->affected_rows == 1) {
-            $_SESSION['editedPost'] = "Your post has been edited";
+            $_SESSION['notification'] = "Your post has been edited";
             $location = "Location: editpost.php?id=" . $_GET['id'];
             header($location);
             exit();

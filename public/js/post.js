@@ -8,23 +8,22 @@ $(document).ready(function() {
     }, 3000);
 
     let commentForm = document.querySelector("form.comment-form");
-    let likeForm = document.querySelector("form.like-form");
-   
+    let likeBtn = document.querySelector(".like-btn");
+    let postID = $('.like-btn').data('postid');
+
     if($('.like-logo').hasClass("bi-heart-fill")) isLiked = true
     else isLiked = false;
 
     commentForm.addEventListener("submit", (e) => {
         let commentContent = document.querySelector(".comment").value;
-        let postID = $('.like-btn').data('postid');
         e.preventDefault();
         if(checkComment(commentContent)) {
             ajaxComment(commentContent, postID);
         }
     });
 
-    likeForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        ajaxLike();
+    likeBtn.addEventListener("click", () => {
+        ajaxLike(postID);
     });
 });
 
@@ -44,7 +43,6 @@ function removeInput() {
 }
 
 function ajaxComment(commentContent, postID) {
-    console.log(postID);
     let request = "createcomment.php";
     let xhr = new XMLHttpRequest();
     xhr.open("POST", request, true);
@@ -89,41 +87,50 @@ function updateTotalPostComment(newTotalComment) {
 }
 
 function switchLikeIconAnimation() {
+    $('.like-logo').addClass("heart-anim");
+    setTimeout(() => {
+        $('.like-logo').removeClass("heart-anim");
+    }, 400);
+    
     if(isLiked == true) {
         $('.like-logo').removeClass("bi-heart").addClass("bi-heart-fill");
-        $('.like-logo').toggleClass("heart-anim");
         $('.like-btn').removeClass('text-dark').addClass('text-danger');
     }
     else {
         $('.like-logo').removeClass("bi-heart-fill").addClass("bi-heart");
-        $('.like-logo').toggleClass("heart-anim");
         $('.like-btn').removeClass('text-danger').addClass('text-dark');
     }
 }
 
-function checkAddOrRemoveLike() {
-    let requestAdd = "likemanager.php?addlike=true";
-    let requestRemove = "likemanager.php?removelike=true";
-    let request = '';
-    if(isLiked == true) request = requestRemove;
-    else request = requestAdd;
-    return request;
+function checkAddOrRemoveLike(postID) {
+    let addLike =  "&addlike=true";
+    let removeLike = "&removelike=true";
+    let dataSend = "id=" + postID;
+    if(isLiked == true) dataSend += removeLike;
+    else dataSend += addLike;
+    return dataSend;
 }
 
-function ajaxLike() {
+function ajaxLike(postID) {
     let xhr = new XMLHttpRequest();
-    request = checkAddOrRemoveLike();
-    console.log(request);
-    xhr.open("GET", request, true);
+    dataSend = checkAddOrRemoveLike(postID);
+    let request = "likemanager.php";
+    xhr.open("POST", request, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onload = function() {
         if(this.status == 200) {
             let newTotalPostLike = JSON.parse(this.responseText)['post_no_likes'];
-            updateTotalLikePost(newTotalPostLike);
-            isLiked = !isLiked;
-            switchLikeIconAnimation();
+            if(newTotalPostLike != "error") {
+                updateTotalLikePost(newTotalPostLike);
+                isLiked = !isLiked;
+                switchLikeIconAnimation();
+            } else {
+                location.reload();
+                $(window).scrollTop(0);
+            } 
         }
     }
-    xhr.send();
+    xhr.send(dataSend);
 }
 
 function updateTotalLikePost(newTotalLike) {

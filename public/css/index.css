@@ -67,3 +67,40 @@ button.like-btn {
     text-overflow: ellipsis;
     text-decoration: none;
 }
+
+i.like-logo {
+    display: inline-block;
+}
+
+.heart-anim {
+    animation: heartbeat;
+    animation-duration: 0.4s;
+}
+
+@keyframes heartbeat
+{
+  0%
+  {
+    transform: scale(0.75);
+  }
+  20%
+  {
+    transform: scale(1);
+  }
+  40%
+  {
+    transform: scale(1.25);
+  }
+  60%
+  {
+    transform: scale(1.5);
+  }
+  80%
+  {
+    transform: scale(1.25);
+  }
+  100%
+  {
+    transform: scale(1);
+  }
+}

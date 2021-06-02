@@ -3,9 +3,19 @@
     include "includes/db.php";
     include "func/postFunc.php";
 
-    checkSignedInOnPost();
+    if(isset($_GET['defaultAvatar'])) {
+        outputIMG("../images/default/defaultUserAvatar.png");
+    }
 
-    if(isset($_GET['postID'])) {
+    else if(isset($_GET['loadinggif'])) {
+        outputIMG("../images/default/loading.gif");
+    }
+
+    else if(isset($_GET['loginbg'])) {
+        outputIMG("../images/default/loginbg.jpg");
+    }
+
+    else if(isset($_GET['postID'])) {
         $postID = $_GET['postID'];
         $sql = "SELECT post_img_url FROM posts WHERE post_ID = ?";
         $stmt = $conn->prepare($sql);
@@ -45,18 +55,6 @@
             $imgURL = $row['user_cover_bg'];
             outputIMG($imgURL);
         }
-    }
-
-    else if(isset($_GET['defaultAvatar'])) {
-        outputIMG("../images/default/defaultUserAvatar.png");
-    }
-
-    else if(isset($_GET['loadinggif'])) {
-        outputIMG("../images/default/loading.gif");
-    }
-
-    else if(isset($_GET['loginbg'])) {
-        outputIMG("../images/default/loginbg.jpg");
     }
 
     function outputIMG($imgURL) {

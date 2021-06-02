@@ -13,6 +13,15 @@ $(document).ready(function() {
         $(".form-create").submit();
     });
 
+    $('.posts').on('click', '.like-btn', function() { // add dynamically event handler to all ".like-btn"
+        let likeBtn = $(this).get(0);
+        let postID = $(this).data('postid'); 
+        let isLiked = checkIsLiked(likeBtn);
+        let likeIcon = likeBtn.childNodes[1];
+        let totalLikePost = likeBtn.parentNode.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild;
+        ajaxLike(postID, isLiked, likeIcon, totalLikePost);
+    });
+
     $(window).scroll(function() {
         if((($(window).scrollTop() + $(window).height()) >= $(document).height()) && reachedEnd == false) {
             offset += 5;
@@ -25,6 +34,9 @@ $(document).ready(function() {
                     let newPostList = JSON.parse(this.responseText);
                     console.log(newPostList);
                     outputNewPosts(newPostList);
+
+                    //add new likebtns listener
+
                 }
             }
             xhr.send();
@@ -52,14 +64,14 @@ function outputNewPosts(newPostList) {
                                         <i class="bi bi-pencil-square"></i>
                                     </a>`;
             output += `
-                <div class="row my-3">
+                <div class="row my-5">
                     <div class="col-md-8 offset-md-2">
                         <a class="a-post" href="post.php?id=${post['post_ID']}">
                             <div class="card post">`;
 
                 if (post['post_img_url'] != null) {
                     output += `
-                                <img class="card-img-top post-img" src="${post['post_img_url']}" alt="Post image">`;
+                                <img class="card-img-top post-img" src="image.php?postID=${post['post_ID']}" alt="Post image">`;
                 }
                 output += `
                                 <div class="card-body post-body pb-2">
@@ -85,12 +97,12 @@ function outputNewPosts(newPostList) {
                                     <hr class="mb-2">
                                     <div class="interaction">
                                         <div class="row">
-                                            <form class="like-form col-md-6 d-flex justify-content-center" method="POST" action="createlike.php">
-                                                <button type="submit" data-post-id="${post['post_ID']}" name="like-submit" class="like-btn ${isLikedClass[0]} text-center">
+                                            <div class="col-md-6 d-flex justify-content-center">
+                                                <button type="button" data-postid="${post['post_ID']}" name="like-submit" class="like-btn ${isLikedClass[0]} text-center">
                                                     <i class="like-logo bi ${isLikedClass[1]}"></i>
                                                     Like
                                                 </button>
-                                            </form> 
+                                            </div> 
                                             <div class="col-md-6 d-flex justify-content-center">
                                                 <a class="text-dark text-center" href="post.php?id=${post['post_ID']}">
                                                     <i class="bi bi-chat-left"></i>
@@ -126,5 +138,66 @@ function checkOwnedPost(postAuthorID, currentUserID) {
     if(postAuthorID == currentUserID) 
         return true;
     else return false;
+}
+
+function checkIsLiked(likeBtn) {
+    if(likeBtn.classList.contains("text-danger")) {
+        return true;
+    } else return false;
+}
+
+function switchLikeIconAnimation(isLiked, likeIcon) {
+    likeIcon.classList.add("heart-anim");
+    setTimeout(() => {
+        likeIcon.classList.remove("heart-anim");
+    }, 400);
+    if(isLiked == true) {
+        likeIcon.classList.remove("bi-heart");
+        likeIcon.classList.add("bi-heart-fill");
+        likeIcon.parentNode.classList.remove('text-dark')
+        likeIcon.parentNode.classList.add('text-danger');
+    }
+    else {
+        likeIcon.classList.remove("bi-heart-fill")
+        likeIcon.classList.add("bi-heart");
+        likeIcon.parentNode.classList.remove('text-danger')
+        likeIcon.parentNode.classList.add('text-dark');
+    }
+}
+
+function checkAddOrRemoveLike(postID, isLiked) {
+    let addLike =  "&addlike=true";
+    let removeLike = "&removelike=true";
+    let dataSend = "id=" + postID;
+    if(isLiked == true) dataSend += removeLike;
+    else dataSend += addLike;
+    return dataSend;
+}
+
+function ajaxLike(postID, isLiked, likeIcon, totalLikePost) {
+    let xhr = new XMLHttpRequest();
+    dataSend = checkAddOrRemoveLike(postID, isLiked);
+    let request = "likemanager.php";
+    xhr.open("POST", request, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onload = function() {
+        if(this.status == 200) {
+            let newTotalPostLike = JSON.parse(this.responseText)['post_no_likes'];
+            if(newTotalPostLike != "error") {
+                updateTotalLikePost(newTotalPostLike, totalLikePost);
+                isLiked = !isLiked;
+                switchLikeIconAnimation(isLiked, likeIcon);
+            } else {
+                location.reload();
+                $(window).scrollTop(0);
+            } 
+        }
+    }
+    xhr.send(dataSend);
+}
+
+function updateTotalLikePost(newTotalLike, totalLikePost) {
+    let icon = `<i class="bi bi-heart-fill text-danger"></i>  `;
+    totalLikePost.innerHTML = icon + newTotalLike;
 }
 

@@ -3,6 +3,7 @@
     $_SESSION = [];
     session_destroy();
     session_start();
-    $_SESSION['signOutSuccess'] = "You have signed out successfully";
+    $_SESSION['notification'] = "You have signed out successfully";
     header("Location: index.php");
+    exit();
 ?>

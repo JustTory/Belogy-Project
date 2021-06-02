@@ -5,12 +5,15 @@
   - add infinite scrolling to comments / if cannot add load more comments button to trigger ajax
   - fix createpost UI
   - profile.php
-  - likable posts at index //after like, need to find postID to ajax. We can count the order of post and query it in the DB
-  - prevent user from /images in url
   - debugging and fixing
 
   - index: new signed up users table on the right 
   - notification when someone comments or likes your post 
+
+
+  ============= DONE ==============
+  - likable posts at index //after like, need to find postID to ajax. We can count the order of post and query it in the DB
+  - prevent user from /images in url
 -->
 
 <?php
@@ -61,7 +64,7 @@
 
   <div class="row my-3 mt-5 loading">
     <div class="col-md-8 offset-md-2 d-flex justify-content-center">
-      <img src="images.php?loadinggif" width="35px" alt="">
+      <img src="image.php?loadinggif" width="35px" alt="">
     </div>
   </div>
 

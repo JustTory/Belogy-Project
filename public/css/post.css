@@ -62,12 +62,10 @@ a, a:hover, a:focus, a:active {
 button.like-btn {
     background: none;
     border: none;
-    
 }
 
 i.like-logo {
     display: inline-block;
-    
 }
 
 .heart-anim {
