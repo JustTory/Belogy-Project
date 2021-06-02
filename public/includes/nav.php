@@ -20,7 +20,7 @@
       <?php if ($_SESSION['signedIn'] == true): ?>
         <li class="nav-item dropdown">
           <a tabindex="0" class="nav-link p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="avatar mr-2" src="images\default\defaultUserAvatar.png" alt="">
+            <img class="avatar mr-2" src="image.php?defaultAvatar" alt="">
             <?php echo htmlspecialchars($_SESSION['username']); ?>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">

@@ -30,7 +30,7 @@
           <div class="card-body">
             <div class="create-form d-flex">
               <div class="avatar-wrapper d-flex justify-content-center align-items-center">
-                <img class="avatar mr-3" src="images\default\defaultUserAvatar.png" alt="">
+                <img class="avatar mr-3" src="image.php?defaultAvatar" alt="">
               </div>
               <form class="w-100 form-create" method="post" action="index.php">
                 <div class="form-group m-0">
@@ -61,7 +61,7 @@
 
   <div class="row my-3 mt-5 loading">
     <div class="col-md-8 offset-md-2 d-flex justify-content-center">
-      <img src="images/default/loading.gif" width="35px" alt="">
+      <img src="images.php?loadinggif" width="35px" alt="">
     </div>
   </div>
 

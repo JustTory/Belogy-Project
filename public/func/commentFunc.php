@@ -16,7 +16,7 @@
                 <div class="comment card">
                     <div class="user-cmt-info d-flex">
                         <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=' . $comment['cmt_author_ID'] . '">
-                            <img class="avatar-post mr-2" src="images/default/defaultUserAvatar.png" alt="">
+                            <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">
                             ' . $comment['user_username'] . '
                         </a>
                         <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $comment['cmt_date_created']) . '</p>

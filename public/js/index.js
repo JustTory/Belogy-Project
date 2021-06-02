@@ -73,7 +73,7 @@ function outputNewPosts(newPostList) {
                                     <p class="card-text post-content">${post['post_content']}</p>
                                     <div class="author-date d-flex mt-4">
                                         <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
-                                            <img class="avatar-post mr-2" src="images/default/defaultUserAvatar.png" alt="">
+                                            <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">
                                             ${post['user_username']}
                                         </a>
                                         <p class="font-weight-light my-2 post-info ml-auto">${post['post_date_time']}</p>

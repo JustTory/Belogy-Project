@@ -69,7 +69,7 @@ function outputNewComment(newComment) {
                 <div class="comment card">
                     <div class="user-cmt-info d-flex">
                         <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=${newComment['user_ID']}">
-                            <img class="avatar-post mr-2" src="images/default/defaultUserAvatar.png" alt="">
+                            <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">
                             ${newComment['user_username']}
                         </a>
                         <p class="font-weight-light my-2 post-info ml-auto">${newComment['cmt_date_time']}</p>

@@ -27,7 +27,7 @@
 
                 if(empty($errorsPost)) {
                     $hashedImgName = uniqid('', false) . "." . $imgExt;
-                    $finalPath = "images/useruploads/" . $hashedImgName;
+                    $finalPath = "../images/useruploads/" . $hashedImgName;
                     if(move_uploaded_file($imgTmpName, $finalPath)) 
                         writeToDB($conn, $title, $content, $_SESSION['userID'], $finalPath);
                     else $errorsPost['imgUpload'] = "There was an error uploading the image";
@@ -58,7 +58,7 @@
 
                 if(empty($errorsNewImg)) {
                     $hashedImgName = uniqid('', false) . "." . $newImgExt;
-                    $finalPath = "images/useruploads/" . $hashedImgName;
+                    $finalPath = "../images/useruploads/" . $hashedImgName;
 
 
                     //delete old image from folder
@@ -140,7 +140,7 @@
                   
         if ($post['post_img_url'] != null) {
             $output.= '
-                        <img class="card-img-top post-img" src="' . $post['post_img_url'] . '" alt="Post image">';
+                        <img class="card-img-top post-img" src="image.php?postID=' . $post['post_ID'] . '" alt="Post image">';
         }
             $output .= '
                         <div class="card-body post-body pb-2">
@@ -154,7 +154,7 @@
                             <p class="card-text post-content">' . $post['post_content'] . '</p>
                             <div class="author-date d-flex mt-4">
                                 <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
-                                    <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
+                                    <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">'
                                     . $post['user_username'] . '
                                 </a>
                                 <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $post['post_date_created']) . '</p>
@@ -218,7 +218,7 @@
                             </button>
                         </div>
                         <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
-                            <img class="card-img-top post-img low-opacity" src="' . $post['post_img_url'] . '" alt="Post image">
+                            <img class="card-img-top post-img low-opacity" src="image.php?postID=' . $post['post_ID'] . '" alt="Post image">
                         </a>
                     </div>';
         }
@@ -246,7 +246,7 @@
                         </div>
                         <div class="author-date d-flex mt-4">
                             <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
-                                <img class="avatar-post mr-2" src="images\default\defaultUserAvatar.png" alt="">'
+                                <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">'
                                     . $post['user_username'] . '
                             </a>
                             <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $post['post_date_created']) . '</p>
