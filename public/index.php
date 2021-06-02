@@ -1,9 +1,9 @@
 <!-- TO DO LIST
+  - fix createpost UI to appear errors
   - delete posts (admin role)
   - edit or delete own post (user role)
   - fix infinite scrolling in index (when ending div is on screen, triggers ajax)
   - add infinite scrolling to comments / if cannot add load more comments button to trigger ajax
-  - fix createpost UI
   - profile.php
   - debugging and fixing
 

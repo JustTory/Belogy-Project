@@ -12,7 +12,10 @@
                 $errorsPost['title'] = "Title can't be empty";
             if(!checkContent($content)) 
                 $errorsPost['content'] = "Content can't be empty";
-            
+            if($imgError == 1) { //default php.ini max file size is also 2mb
+                $errorsPost['imgSize'] = "Image size must be less than 2mb";
+            }
+
             if($imgError == 0) { // if an image was uploaded
                 $imgName = $image['name'];
                 $imgType = explode("/", $image['type']);
@@ -20,9 +23,11 @@
                 $imgTmpName = $image['tmp_name'];
                 $imgSize = $image['size'];
 
-                if(!allowedImgSize($imgSize))
+                if(!allowedImgSize($imgSize)) {
                     $errorsPost['imgSize'] = "Image size must be less than 2mb";
-                if(!allowedImgExt($imgExt))
+                }
+                    
+                if(!allowedImgExt($imgType))
                     $errorsPost['imgExt'] = "Only png, jpeg, jpg, gif images are allowed";
 
                 if(empty($errorsPost)) {

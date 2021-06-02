@@ -6,6 +6,7 @@
     checkSignedInOnCreatePost();
     $errorsPost = [];
     createPost($conn, $errorsPost);
+    var_dump($errorsPost);
 ?>
 
 <div class="container main-cont">
