@@ -69,8 +69,9 @@
                         unlink(getOldImgURL($conn));
                     }
 
-                    if(move_uploaded_file($newImgTmpName, $finalPath)) 
+                    if(move_uploaded_file($newImgTmpName, $finalPath)) {
                         updateToDB($conn, "post_img_url", $finalPath);
+                    }
                     else $errorsEdit['img'] = "There was an error uploading the new image";
                 }
             } 
@@ -83,6 +84,7 @@
         }
 
         else if(isset($_POST['submit-delete-img'])) { 
+            unlink(getOldImgURL($conn));
             updateToDB($conn, "post_img_url", NULL);
         }
 
@@ -287,7 +289,7 @@
                             </a>
                         </div>
                         <div class="author-date d-flex mt-4">
-                            <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
+                            <a class="' .outputUserRoleColor($post['user_role']) . ' font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
                                 <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">'
                                     . $post['user_username'] . '
                             </a>
@@ -301,13 +303,13 @@
                         <div class="interaction">
                             <div class="row">
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <button type="button" name="like-submit" class="like-btn low-opacity ' . $isLikedClass[0] . ' text-center">
+                                    <a class="like-btn ' . $isLikedClass[0] . ' text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
                                         <i class="like-logo bi '. $isLikedClass[1] . '"></i>
-                                            Like
-                                    </button>
+                                        Like
+                                    </a>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="text-dark text-center low-opacity" href="post.php?id=' . $post['post_ID'] . '">
+                                    <a class="text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
                                         <i class="bi bi-chat-left"></i>
                                         Comment
                                     </a>
@@ -383,6 +385,7 @@
         else if(isset($errorsEdit['content'])) 
             $_SESSION['errorEditContent'] = $errorsEdit['content'];
     }
+
     function checkTitle($title) {
         if($title == '') return false;
         else return true;

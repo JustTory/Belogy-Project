@@ -9,6 +9,7 @@
     $post = getPost($conn);
     editPost($conn, $errorsEdit);
     mapErrorsToSession($errorsEdit);
+    var_dump($_POST);
 ?>
 
 <div class="container main-cont">
@@ -33,7 +34,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
+                <form action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
                             <input type="file" name="new-image" class="custom-file-input" id="inputFile">
@@ -58,7 +59,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
+                <form action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
                             <input type="file" name="new-image" class="custom-file-input" id="inputFile">
@@ -83,7 +84,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
+                <form action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <h6 class="my-3">Are you sure you want to delete this post image?</h6>
                     </div>
@@ -105,7 +106,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
+                <form action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <input type="text" name="new-title" class="form-control my-3" placeholder="New title" value="">
                     </div>
@@ -127,7 +128,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
+                <form action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <textarea name="new-content" class="form-control my-3" placeholder="New content" rows="8" cols="80"></textarea>
                     </div>
