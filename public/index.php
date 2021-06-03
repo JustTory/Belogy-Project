@@ -1,7 +1,10 @@
 <!-- TO DO LIST
   - delete posts (admin role)
+  - fix super long title breaks post UI at index
+  - add read more for long post content at index
   - add infinite scrolling to comments / if cannot add load more comments button to trigger ajax
   - profile.php
+  - have list of user who likes your post
   - debugging and fixing
   - fix infinite scrolling in index (when ending div is on screen, triggers ajax)
   - search posts

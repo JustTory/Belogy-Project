@@ -9,7 +9,6 @@
     $post = getPost($conn);
     editPost($conn, $errorsEdit);
     mapErrorsToSession($errorsEdit);
-    var_dump($_POST);
 ?>
 
 <div class="container main-cont">
