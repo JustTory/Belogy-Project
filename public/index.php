@@ -12,8 +12,8 @@
   - retain file field if other fields is incorrect
 
 
-  - index: new signed up users table on the right 
-  - notification when someone comments or likes your post 
+  - index: new signed up users table on the right
+  - notification when someone comments or likes your post
 
 
   ============= DONE ==============
@@ -77,8 +77,8 @@
 
 <?php
     include "includes/footer.php";
-    unsetNotification();       
+    unsetNotification();
 ?>
-      
+
 
 

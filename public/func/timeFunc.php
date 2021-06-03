@@ -7,14 +7,14 @@
         if($detailCurDateTime['year'] == $detailContentDateCreated['year']) {
             if($detailCurDateTime['day'] == $detailContentDateCreated['day']) {
                 if($detailCurDateTime['hour'] == $detailContentDateCreated['hour']) {
-                    if($detailCurDateTime['minute'] - $detailContentDateCreated['minute'] == 0) 
+                    if($detailCurDateTime['minute'] - $detailContentDateCreated['minute'] == 0)
                         $res = "Just now";
-                    else if($detailCurDateTime['minute'] - $detailContentDateCreated['minute'] == 1) 
+                    else if($detailCurDateTime['minute'] - $detailContentDateCreated['minute'] == 1)
                         $res = "1 minute ago";
                     else $res = $detailCurDateTime['minute'] - $detailContentDateCreated['minute'] . " minutes ago";
                 }
                 else {
-                    if($detailCurDateTime['hour'] - $detailContentDateCreated['hour'] == 1) 
+                    if($detailCurDateTime['hour'] - $detailContentDateCreated['hour'] == 1)
                         $res = "1 hour ago";
                     else $res = $detailCurDateTime['hour'] - $detailContentDateCreated['hour'] . " hours ago";
                 }
@@ -68,8 +68,8 @@
                 break;
             case '12':
                 $monthName = 'December';
-                break;    
-          }  
+                break;
+          }
           return $monthName;
     }
     function getYear($date) {

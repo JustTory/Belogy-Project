@@ -6,7 +6,7 @@
 
     include "includes/db.php";
     include "func/linkFunc.php";
-    
+
     $PHPName = basename($_SERVER['SCRIPT_NAME'], ".php");
     $pageTitle = PHPNameToPageName($PHPName);
     $CSSName = PHPNameToCSSName($PHPName);
@@ -34,6 +34,6 @@
 
     <!-- web icon -->
     <link rel="icon" href="../image.php?webicon">
-    
+
   </head>
   <body>

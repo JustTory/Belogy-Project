@@ -1,4 +1,4 @@
-<?php 
+<?php
   function PHPNameToPageName($PHPName) {
     switch ($PHPName) {
       case 'index':

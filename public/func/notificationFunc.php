@@ -6,7 +6,7 @@
             echo htmlspecialchars("You must be signed in to create post");
         else if($_SESSION['signedIn'] == false && isset($_SESSION['notSignedInOnPost']))
             echo htmlspecialchars("You must be signed in to view posts");
-        
+
     }
 
     function notifyErrorEditImg() {

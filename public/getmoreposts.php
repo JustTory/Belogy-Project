@@ -14,7 +14,7 @@
             } else $newPost['liked'] = false;
         }
         $newPostList['currentUserID'] = $_SESSION['userID'];
-        
+
         echo json_encode($newPostList);
     }
 ?>

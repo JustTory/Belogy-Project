@@ -3,7 +3,7 @@
 ?>
 
 <!-- add fixed-top to nav's class -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white      "> 
+<nav class="navbar navbar-expand-lg navbar-light bg-white      ">
   <a class="navbar-brand ml-3" href="index.php">
     <img class="web-logo" src="image.php?weblogo" alt="">
   </a>
@@ -18,7 +18,7 @@
         <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
       </form>
     <ul class="navbar-nav ml-auto mr-5">
-    
+
       <?php if ($_SESSION['signedIn'] == true): ?>
         <li class="nav-item dropdown">
           <a tabindex="0" class="nav-link p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,7 +34,7 @@
         </li>
       <?php else: ?>
         <li class="nav-item">
-          <a class="nav-link" href="signin.php">Login <i class="bi bi-box-arrow-in-right fa-lg"></i></a> 
+          <a class="nav-link" href="signin.php">Login <i class="bi bi-box-arrow-in-right fa-lg"></i></a>
         </li>
       <?php endif; ?>
 

@@ -14,9 +14,9 @@
             <h5>Create a post</h5>
             <form class="mt-4" action="createpost.php" method="post" enctype="multipart/form-data">
 
-                <input type="text" name="title" id="inputTitle" class="form-control <?php 
+                <input type="text" name="title" id="inputTitle" class="form-control <?php
                     if(isset($errorsPost['title'])) echo htmlspecialchars("border-error");
-                ?>" placeholder="Title" value="<?php 
+                ?>" placeholder="Title" value="<?php
                     if (isset($title)) echo htmlspecialchars($title);
                 ?>">
                 <p class="m-0 error-msg" id="errorTitle"><?php
@@ -24,9 +24,9 @@
                     ?>
                 </p>
 
-                <textarea name="content" id="inputContent" class="form-control mt-2 <?php 
+                <textarea name="content" id="inputContent" class="form-control mt-2 <?php
                     if(isset($errorsPost['content'])) echo htmlspecialchars("border-error");
-                ?>" placeholder="Content" rows="8" cols="80"><?php 
+                ?>" placeholder="Content" rows="8" cols="80"><?php
                     if (isset($content)) echo htmlspecialchars($content);
                 ?></textarea>
                 <p class="m-0 error-msg" id="errorContent"><?php
@@ -51,5 +51,5 @@
 
 <?php
     include "includes/footer.php";
-    unsetNotification();   
+    unsetNotification();
 ?>

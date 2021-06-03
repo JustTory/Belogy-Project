@@ -8,9 +8,9 @@
             $image = $_FILES['image'];
             $imgError = $image['error'];
 
-            if(!checkTitle($title)) 
+            if(!checkTitle($title))
                 $errorsPost['title'] = "Title can't be empty";
-            if(!checkContent($content)) 
+            if(!checkContent($content))
                 $errorsPost['content'] = "Content can't be empty";
             if($imgError == 1) { //default php.ini max file size is also 2mb
                 $errorsPost['file'] = "Image size must be less than 2mb";
@@ -26,14 +26,14 @@
                 if(!allowedImgSize($imgSize)) {
                     $errorsPost['file'] = "Image size must be less than 2mb";
                 }
-                    
+
                 if(!allowedImgExt($imgType))
                     $errorsPost['file'] = "Only png, jpeg, jpg, gif images are allowed";
 
                 if(empty($errorsPost)) {
                     $hashedImgName = uniqid('', false) . "." . $imgExt;
                     $finalPath = "../images/useruploads/" . $hashedImgName;
-                    if(move_uploaded_file($imgTmpName, $finalPath)) 
+                    if(move_uploaded_file($imgTmpName, $finalPath))
                         writeToDB($conn, $title, $content, $_SESSION['userID'], $finalPath);
                     else $errorsPost['file'] = "There was an error uploading the image";
                 }
@@ -46,7 +46,7 @@
     }
 
     function editPost($conn, &$errorsEdit) {
-        if(isset($_POST['submit-new-img'])) { 
+        if(isset($_POST['submit-new-img'])) {
             $newImage = $_FILES['new-image'];
             $newImgError = $newImage['error'];
             if($newImgError == 0) { // if an image was uploaded
@@ -74,7 +74,7 @@
                     }
                     else $errorsEdit['img'] = "There was an error uploading the new image";
                 }
-            } 
+            }
             else if($newImgError == 4) {
                 $errorsEdit['img'] = "No new image was selected";
             }
@@ -83,15 +83,15 @@
             }
         }
 
-        else if(isset($_POST['submit-delete-img'])) { 
+        else if(isset($_POST['submit-delete-img'])) {
             unlink(getOldImgURL($conn));
             updateToDB($conn, "post_img_url", NULL);
         }
 
-        else if(isset($_POST['submit-edit-title'])) { 
+        else if(isset($_POST['submit-edit-title'])) {
             $newTitle = $_POST['new-title'];
 
-            if(!checkTitle($newTitle)) 
+            if(!checkTitle($newTitle))
                 $errorsEdit['title'] = "New title can't be empty";
 
             if(empty($errorsEdit)) {
@@ -99,17 +99,17 @@
             }
         }
 
-        else if(isset($_POST['submit-edit-content'])) { 
+        else if(isset($_POST['submit-edit-content'])) {
             $newContent = $_POST['new-content'];
 
-            if(!checkContent($newContent)) 
+            if(!checkContent($newContent))
                 $errorsEdit['content'] = "New content can't be empty";
 
             if(empty($errorsEdit)) {
                 updateToDB($conn, "post_content", $newContent);
             }
         }
-    
+
     }
 
     function getPost($conn) {
@@ -163,7 +163,7 @@
             <div class="col-md-8 offset-md-2">
                 <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
                     <div class="card post">';
-                  
+
         if ($post['post_img_url'] != null) {
             $output.= '
                         <img class="card-img-top post-img" src="image.php?postID=' . $post['post_ID'] . '" alt="Post image">';
@@ -174,7 +174,7 @@
                                 <h5 class="card-title post-title font-weight-normal">' . $post['post_title'] . '</h5>';
         if(checkOwnedPost($post['post_author_ID'])){
             $output .= $ownedPostButton;
-        }                    
+        }
             $output .='
                             </div>
                             <p class="card-text post-content">' . $post['post_content'] . '</p>
@@ -197,7 +197,7 @@
                                             <i class="like-logo bi '. $isLikedClass[1] . '"></i>
                                             Like
                                         </button>
-                                    </div> 
+                                    </div>
                                     <div class="col-md-6 d-flex justify-content-center">
                                         <a class="text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
                                             <i class="bi bi-chat-left"></i>
@@ -208,7 +208,7 @@
                             </div>
                         </div>
                     </div>
-                </a>    
+                </a>
             </div>
         </div>
         ';
@@ -233,9 +233,9 @@
                 <div class="card post">
                     <div class="post-content-wrapper">
                         <div class="options-img">';
-                  
+
         if ($post['post_img_url'] != null) {
-            $output.= ' 
+            $output.= '
                             <button type="button" name="edit-img" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-img">
                                 <span class= "notification" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="right" data-content="'. notifyErrorEditImg() .'">
                                     <i class="bi bi-pencil-square text-primary"></i>
@@ -250,7 +250,7 @@
                         </a>
                     </div>';
         } else {
-            $output.= ' 
+            $output.= '
                             <button type="button" name="add-img" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#add-img">
                                 <span class= "notification" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="right" data-content="'. notifyErrorEditImg() .'">
                                     <i class="bi bi-plus-lg text-secondary"></i>
@@ -317,7 +317,7 @@
                             </div>
                         </div>
                     </div>
-                </div>   
+                </div>
             </div>
         </div>
         ';
@@ -378,11 +378,11 @@
     }
 
     function mapErrorsToSession($errorsEdit) {
-        if(isset($errorsEdit['img'])) 
+        if(isset($errorsEdit['img']))
             $_SESSION['errorEditImg'] = $errorsEdit['img'];
-        else if(isset($errorsEdit['title'])) 
+        else if(isset($errorsEdit['title']))
             $_SESSION['errorEditTitle'] = $errorsEdit['title'];
-        else if(isset($errorsEdit['content'])) 
+        else if(isset($errorsEdit['content']))
             $_SESSION['errorEditContent'] = $errorsEdit['content'];
     }
 
@@ -397,7 +397,7 @@
     }
 
     function checkOwnedPost($postAuthorID) {
-        if($postAuthorID == $_SESSION['userID']) 
+        if($postAuthorID == $_SESSION['userID'])
             return true;
         else return false;
     }

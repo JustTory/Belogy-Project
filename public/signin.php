@@ -2,7 +2,7 @@
 	include "includes/header.php";
 	include "func/userFunc.php";
 	$errorsSignIn = [];
-	logInUser($conn, $errorsSignIn, $email); 
+	logInUser($conn, $errorsSignIn, $email);
 ?>
 
 <div class="container" id="container">
@@ -36,10 +36,10 @@
 			</div>
 			<span>or use your Belogy account</span>
 
-			<input type="email" class="mb-0 <?php 
+			<input type="email" class="mb-0 <?php
                     if(isset($errorsSignIn['email'])) echo htmlspecialchars("border-error");
-                ?>" 
-            name="email" id="inputEmail" placeholder="Email" value="<?php 
+                ?>"
+            name="email" id="inputEmail" placeholder="Email" value="<?php
                     if (isset($email)) echo htmlspecialchars($email);
                 ?>">
             <p class="m-0 error-msg" id="errorEmail"><?php
@@ -47,9 +47,9 @@
                 ?>
             </p>
 
-			<input type="password" class="mb-0 <?php 
+			<input type="password" class="mb-0 <?php
                     if(isset($errorsSignIn['password'])) echo htmlspecialchars("border-error");
-                ?>" 
+                ?>"
 			name="password" id="inputPassword" placeholder="Password">
 			<p class="m-0 error-msg" id="errorPassword"><?php
                     if(isset($errorsSignIn['password'])) echo htmlspecialchars($errorsSignIn['password']);
