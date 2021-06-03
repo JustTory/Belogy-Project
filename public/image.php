@@ -15,6 +15,18 @@
         outputIMG("../images/default/loginbg.jpg");
     }
 
+    else if(isset($_GET['weblogo'])) {
+        outputIMG("../images/default/web-logo.png");
+    }
+
+    else if(isset($_GET['webicon'])) {
+        outputIMG("../images/default/web-icon.png");
+    }
+
+    else if(isset($_GET['emptyimg'])) {
+        outputIMG("../images/default/emptyimg.png");
+    }
+
     else if(isset($_GET['postID'])) {
         $postID = $_GET['postID'];
         $sql = "SELECT post_img_url FROM posts WHERE post_ID = ?";

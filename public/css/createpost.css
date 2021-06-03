@@ -6,6 +6,10 @@ a {
     text-decoration: none !important;
 }
 
+img.web-logo {
+    width: 175px;
+}
+
 .navbar  {
     height: 65px;
     border: 1px solid rgba(0,0,0,.125);
@@ -27,4 +31,16 @@ a {
 
 label.custom-file-label {
     overflow: hidden;
+}
+
+.border-error {
+	border: 1px solid red !important;
+}
+
+.error-msg {
+	color: red;
+	height: 25px;
+	font-size: 0.8rem;
+	align-self: start !important;
+	text-align: start;
 }

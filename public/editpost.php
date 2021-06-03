@@ -3,10 +3,12 @@
     include "includes/nav.php";
     include "func/postFunc.php";
     include "func/timeFunc.php";
+    include "func/imgFunc.php";
     checkSignedInOnPost();
+    $errorsEdit = [];
     $post = getPost($conn);
-    $errorsNewImg = [];
-    editPost($conn, $errorsNewImg);
+    editPost($conn, $errorsEdit);
+    mapErrorsToSession($errorsEdit);
 ?>
 
 <div class="container main-cont">
@@ -22,7 +24,32 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="edit-img" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade show" id="add-img" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Post Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="custom-file my-3">
+                            <input type="file" name="new-image" class="custom-file-input" id="inputFile">
+                            <label class="custom-file-label" for="customFile">Choose image</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-new-img" value="add-img" class="btn btn-primary">Add image</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade show" id="edit-img" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -31,16 +58,16 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php" method="post" enctype="multipart/form-data">
+                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
-                            <input type="file" name="new-image" class="custom-file-input" id="customFile">
+                            <input type="file" name="new-image" class="custom-file-input" id="inputFile">
                             <label class="custom-file-label" for="customFile">Choose new image</label>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-edit-img" class="btn btn-primary">Save changes</button>
+                        <button type="submit" name="submit-new-img" value="edit-img" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -56,7 +83,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php" method="post" enctype="multipart/form-data">
+                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <h6 class="my-3">Are you sure you want to delete this post image?</h6>
                     </div>
@@ -78,7 +105,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php" method="post" enctype="multipart/form-data">
+                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <input type="text" name="new-title" class="form-control my-3" placeholder="New title" value="">
                     </div>
@@ -100,7 +127,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="" action="editpost.php" method="post" enctype="multipart/form-data">
+                <form class="" action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <textarea name="new-content" class="form-control my-3" placeholder="New content" rows="8" cols="80"></textarea>
                     </div>

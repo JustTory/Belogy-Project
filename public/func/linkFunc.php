@@ -2,22 +2,22 @@
   function PHPNameToPageName($PHPName) {
     switch ($PHPName) {
       case 'index':
-        $PageName = '';
+        $PageName = 'Belogy';
         break;
       case 'signin':
-        $PageName = ' | Sign In';
+        $PageName = 'Sign In';
         break;
       case 'signup':
-        $PageName = ' | Sign Up';
+        $PageName = 'Sign Up';
         break;
       case 'createpost':
-        $PageName = ' | Create post';
+        $PageName = 'Create Post';
         break;
       case 'post':
-        $PageName = ' | Post';
+        $PageName = 'Post';
         break;
       case 'editpost':
-        $PageName = ' | Edit post';
+        $PageName = 'Edit Post';
         break;
     }
     return $PageName;

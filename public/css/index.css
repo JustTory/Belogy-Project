@@ -7,6 +7,10 @@ a, a:hover, a:focus, a:active {
     color: inherit !important;
 }
 
+img.web-logo {
+    width: 175px;
+}
+
 .navbar  {
     height: 65px;
     border: 1px solid rgba(0,0,0,.125);

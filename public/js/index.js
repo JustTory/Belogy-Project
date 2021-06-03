@@ -32,11 +32,8 @@ $(document).ready(function() {
             xhr.onload = function() {
                 if(this.status == 200) {
                     let newPostList = JSON.parse(this.responseText);
-                    console.log(newPostList);
+                    //console.log(newPostList);
                     outputNewPosts(newPostList);
-
-                    //add new likebtns listener
-
                 }
             }
             xhr.send();
@@ -84,7 +81,7 @@ function outputNewPosts(newPostList) {
                                     </div>
                                     <p class="card-text post-content">${post['post_content']}</p>
                                     <div class="author-date d-flex mt-4">
-                                        <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=">
+                                        <a class="${outputUserRoleColor(post['user_role'])} font-weight-bold d-flex align-items-center" href="profile.php?id=">
                                             <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">
                                             ${post['user_username']}
                                         </a>
@@ -132,6 +129,13 @@ function outputNewPosts(newPostList) {
         </div>`)
     }
 
+}
+
+function outputUserRoleColor(userRole) {
+    if(userRole == 'admin') {
+        return "text-danger";
+    }
+    else return "text-dark";
 }
 
 function checkOwnedPost(postAuthorID, currentUserID) {

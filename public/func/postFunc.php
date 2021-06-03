@@ -1,6 +1,6 @@
 <?php
     //main functions
-    function createPost($conn, &$errorsPost) {
+    function createPost($conn, &$errorsPost, &$title, &$content) {
         if(isset($_POST['submit'])) {
             $title = $_POST['title'];
             $content = $_POST['content'];
@@ -13,7 +13,7 @@
             if(!checkContent($content)) 
                 $errorsPost['content'] = "Content can't be empty";
             if($imgError == 1) { //default php.ini max file size is also 2mb
-                $errorsPost['imgSize'] = "Image size must be less than 2mb";
+                $errorsPost['file'] = "Image size must be less than 2mb";
             }
 
             if($imgError == 0) { // if an image was uploaded
@@ -24,18 +24,18 @@
                 $imgSize = $image['size'];
 
                 if(!allowedImgSize($imgSize)) {
-                    $errorsPost['imgSize'] = "Image size must be less than 2mb";
+                    $errorsPost['file'] = "Image size must be less than 2mb";
                 }
                     
                 if(!allowedImgExt($imgType))
-                    $errorsPost['imgExt'] = "Only png, jpeg, jpg, gif images are allowed";
+                    $errorsPost['file'] = "Only png, jpeg, jpg, gif images are allowed";
 
                 if(empty($errorsPost)) {
                     $hashedImgName = uniqid('', false) . "." . $imgExt;
                     $finalPath = "../images/useruploads/" . $hashedImgName;
                     if(move_uploaded_file($imgTmpName, $finalPath)) 
                         writeToDB($conn, $title, $content, $_SESSION['userID'], $finalPath);
-                    else $errorsPost['imgUpload'] = "There was an error uploading the image";
+                    else $errorsPost['file'] = "There was an error uploading the image";
                 }
             }
 
@@ -45,9 +45,8 @@
         }
     }
 
-    function editPost($conn, &$errorsNewImg) {
-
-        if(isset($_POST['submit-edit-img'])) { 
+    function editPost($conn, &$errorsEdit) {
+        if(isset($_POST['submit-new-img'])) { 
             $newImage = $_FILES['new-image'];
             $newImgError = $newImage['error'];
             if($newImgError == 0) { // if an image was uploaded
@@ -57,44 +56,64 @@
                 $newImgTmpName = $newImage['tmp_name'];
                 $newImgSize = $newImage['size'];
                 if(!allowedImgSize($newImgSize))
-                    $errorsNewImg['imgSize'] = "Image size must be less than 2mb";
-                if(!allowedImgExt($newImgExt))
-                    $errorsNewImg['imgExt'] = "Only png, jpeg, jpg, gif images are allowed";
+                    $errorsEdit['img'] = "New image size must be less than 2mb";
+                if(!allowedImgExt($newImgType))
+                    $errorsEdit['img'] = "Only png, jpeg, jpg, gif new images are allowed";
 
-                if(empty($errorsNewImg)) {
+                if(empty($errorsEdit)) {
                     $hashedImgName = uniqid('', false) . "." . $newImgExt;
                     $finalPath = "../images/useruploads/" . $hashedImgName;
 
-
-                    //delete old image from folder
-
+                    //delete old image from folder if the user edit the img (replace the img)
+                    if($_POST['submit-new-img'] == 'edit-img') {
+                        unlink(getOldImgURL($conn));
+                    }
 
                     if(move_uploaded_file($newImgTmpName, $finalPath)) 
                         updateToDB($conn, "post_img_url", $finalPath);
-                    else $errorsNewImg['imgUpload'] = "There was an error uploading the image";
+                    else $errorsEdit['img'] = "There was an error uploading the new image";
                 }
+            } 
+            else if($newImgError == 4) {
+                $errorsEdit['img'] = "No new image was selected";
+            }
+            else if($newImgError == 1) { //default php.ini max file size is also 2mb
+                $errorsEdit['img'] = "New image size must be less than 2mb";
             }
         }
 
-        if(isset($_POST['submit-delete-img'])) { 
-            
+        else if(isset($_POST['submit-delete-img'])) { 
+            updateToDB($conn, "post_img_url", NULL);
         }
 
-        if(isset($_POST['submit-edit-title'])) { 
-            
+        else if(isset($_POST['submit-edit-title'])) { 
+            $newTitle = $_POST['new-title'];
+
+            if(!checkTitle($newTitle)) 
+                $errorsEdit['title'] = "New title can't be empty";
+
+            if(empty($errorsEdit)) {
+                updateToDB($conn, "post_title", $newTitle);
+            }
         }
 
-        if(isset($_POST['submit-edit-content'])) { 
-            
+        else if(isset($_POST['submit-edit-content'])) { 
+            $newContent = $_POST['new-content'];
+
+            if(!checkContent($newContent)) 
+                $errorsEdit['content'] = "New content can't be empty";
+
+            if(empty($errorsEdit)) {
+                updateToDB($conn, "post_content", $newContent);
+            }
         }
     
     }
 
-
     function getPost($conn) {
         if(isset($_GET['id'])) {
             $postID = $_GET['id'];
-            $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, p.post_author_ID, u.user_username, p.post_no_likes, p.post_no_comments, p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_ID = ? AND p.post_author_ID = u.user_ID";
+            $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, p.post_author_ID, u.user_username, u.user_role, p.post_no_likes, p.post_no_comments, p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_ID = ? AND p.post_author_ID = u.user_ID";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $postID);
             $stmt->execute();
@@ -115,7 +134,7 @@
     }
 
     function getPostList($conn, $limit , $offset = 0) {
-        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, p.post_author_ID, u.user_username, p.post_no_likes, p.post_no_comments, p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ? OFFSET ?";
+        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, p.post_author_ID, u.user_username, u.user_role, p.post_no_likes, p.post_no_comments, p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID ORDER BY post_ID DESC LIMIT ? OFFSET ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $limit, $offset);
         $stmt->execute();
@@ -158,7 +177,7 @@
                             </div>
                             <p class="card-text post-content">' . $post['post_content'] . '</p>
                             <div class="author-date d-flex mt-4">
-                                <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
+                                <a class="' .outputUserRoleColor($post['user_role']) . ' font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
                                     <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">'
                                     . $post['user_username'] . '
                                 </a>
@@ -209,14 +228,16 @@
         $output .= '
         <div class="row my-5">
             <div class="col-md-8 offset-md-2">
-                <div class="card post">';
+                <div class="card post">
+                    <div class="post-content-wrapper">
+                        <div class="options-img">';
                   
         if ($post['post_img_url'] != null) {
             $output.= ' 
-                    <div class="post-content-wrapper">
-                        <div class="options-img">
                             <button type="button" name="edit-img" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-img">
-                                <i class="bi bi-pencil-square text-primary"></i>
+                                <span class= "notification" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="right" data-content="'. notifyErrorEditImg() .'">
+                                    <i class="bi bi-pencil-square text-primary"></i>
+                                </span>
                             </button>
                             <button type="button" name="delete-img" class="btn btn-outline-secondary bg-white d-flex justify-content-center mt-2 option-btn" data-toggle="modal" data-target="#delete-img">
                                 <i class="bi bi-trash text-danger"></i>
@@ -226,13 +247,27 @@
                             <img class="card-img-top post-img low-opacity" src="image.php?postID=' . $post['post_ID'] . '" alt="Post image">
                         </a>
                     </div>';
+        } else {
+            $output.= ' 
+                            <button type="button" name="add-img" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#add-img">
+                                <span class= "notification" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="right" data-content="'. notifyErrorEditImg() .'">
+                                    <i class="bi bi-plus-lg text-secondary"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
+                            <img class="card-img-top post-img low-opacity" src="image.php?emptyimg" alt="Post image">
+                        </a>
+                    </div>';
         }
             $output .= '
                     <div class="card-body post-body pb-2">
                         <div class="post-content-wrapper">
                             <div class="options-title">
                                 <button type="button" name="edit-title" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-title">
-                                    <i class="bi bi-pencil-square text-primary"></i>
+                                    <span class= "notification" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="right" data-content="'. notifyErrorEditTitle() .'">
+                                        <i class="bi bi-pencil-square text-primary"></i>
+                                    </span>
                                 </button>
                             </div>
                             <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
@@ -242,7 +277,9 @@
                         <div class="post-content-wrapper">
                             <div class="options-content">
                                 <button type="button" name="edit-content" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-content">
-                                    <i class="bi bi-pencil-square text-primary"></i>
+                                    <span class= "notification" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="right" data-content="'. notifyErrorEditContent() .'">
+                                        <i class="bi bi-pencil-square text-primary"></i>
+                                    </span>
                                 </button>
                             </div>
                             <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
@@ -263,14 +300,14 @@
                         <hr class="mb-2">
                         <div class="interaction">
                             <div class="row">
-                                <form class="like-form col-md-6 d-flex justify-content-center" method="POST" action="createlike.php">
-                                    <button type="submit" name="like-submit" class="like-btn ' . $isLikedClass[0] . ' text-center">
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <button type="button" name="like-submit" class="like-btn low-opacity ' . $isLikedClass[0] . ' text-center">
                                         <i class="like-logo bi '. $isLikedClass[1] . '"></i>
                                             Like
                                     </button>
-                                </form> 
+                                </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
+                                    <a class="text-dark text-center low-opacity" href="post.php?id=' . $post['post_ID'] . '">
                                         <i class="bi bi-chat-left"></i>
                                         Comment
                                     </a>
@@ -331,6 +368,21 @@
     }
 
     //helper functions
+    function outputUserRoleColor($userRole) {
+        if($userRole == 'admin') {
+            return "text-danger";
+        }
+        else return "text-dark";
+    }
+
+    function mapErrorsToSession($errorsEdit) {
+        if(isset($errorsEdit['img'])) 
+            $_SESSION['errorEditImg'] = $errorsEdit['img'];
+        else if(isset($errorsEdit['title'])) 
+            $_SESSION['errorEditTitle'] = $errorsEdit['title'];
+        else if(isset($errorsEdit['content'])) 
+            $_SESSION['errorEditContent'] = $errorsEdit['content'];
+    }
     function checkTitle($title) {
         if($title == '') return false;
         else return true;
@@ -371,5 +423,16 @@
             header($location);
             exit();
         }
+    }
+
+
+    function getOldImgURL($conn) {
+        $sql = "SELECT post_img_url FROM posts WHERE post_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $_GET['id']);
+        $stmt->execute();
+        $row = $stmt->get_result();
+        $result = $row->fetch_assoc();
+        return $result['post_img_url'];
     }
 ?>

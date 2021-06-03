@@ -16,7 +16,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Belogy<?php echo htmlspecialchars($pageTitle); ?></title>
+    <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
 
@@ -31,6 +31,9 @@
 
     <!-- css must be below libary -->
     <link rel="stylesheet" href="css/<?php echo htmlspecialchars($CSSName); ?>">
+
+    <!-- web icon -->
+    <link rel="icon" href="../image.php?webicon">
     
   </head>
   <body>

@@ -1,11 +1,13 @@
 <!-- TO DO LIST
-  - fix createpost UI to appear errors
   - delete posts (admin role)
-  - edit or delete own post (user role)
-  - fix infinite scrolling in index (when ending div is on screen, triggers ajax)
   - add infinite scrolling to comments / if cannot add load more comments button to trigger ajax
   - profile.php
   - debugging and fixing
+  - fix infinite scrolling in index (when ending div is on screen, triggers ajax)
+  - search posts
+  - show password button on sign up sign in
+  - retain file field if other fields is incorrect
+
 
   - index: new signed up users table on the right 
   - notification when someone comments or likes your post 
