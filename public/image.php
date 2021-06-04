@@ -6,27 +6,24 @@
     if(isset($_GET['defaultAvatar'])) {
         outputIMG("../images/default/defaultUserAvatar.png");
     }
-
     else if(isset($_GET['loadinggif'])) {
         outputIMG("../images/default/loading.gif");
     }
-
+    else if(isset($_GET['loadinglogo'])) {
+        outputIMG("../images/default/loading-logo.gif");
+    }
     else if(isset($_GET['loginbg'])) {
         outputIMG("../images/default/loginbg.jpg");
     }
-
     else if(isset($_GET['weblogo'])) {
         outputIMG("../images/default/web-logo.png");
     }
-
     else if(isset($_GET['webicon'])) {
         outputIMG("../images/default/web-icon.png");
     }
-
     else if(isset($_GET['emptyimg'])) {
         outputIMG("../images/default/emptyimg.png");
     }
-
     else if(isset($_GET['postID'])) {
         $postID = $_GET['postID'];
         $sql = "SELECT post_img_url FROM posts WHERE post_ID = ?";

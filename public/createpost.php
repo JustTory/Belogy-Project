@@ -8,6 +8,10 @@
     createPost($conn, $errorsPost, $title, $content);
 ?>
 
+<div class="loading-logo d-none">
+    <img src="image.php?loadinglogo" alt="">
+</div>
+
 <div class="container main-cont">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -43,7 +47,7 @@
                     ?>
                 </p>
 
-                <button type="submit" name="submit" class="btn btn-outline-dark btn-block mt-5"><i class="bi bi-pencil-square"></i> Post</button>
+                <button type="submit" name="submit" class="btn btn-outline-dark btn-block mt-5 submit-btn"><i class="bi bi-pencil-square"></i> Post</button>
             </form>
         </div>
     </div>

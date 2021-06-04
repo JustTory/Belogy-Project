@@ -2,6 +2,10 @@ body {
     background: rgb(246, 246, 246);
 }
 
+.inside-body {
+    position: relative;
+}
+
 a {
     text-decoration: none !important;
 }
@@ -17,6 +21,19 @@ img.web-logo {
 
 .main-cont {
     margin-top: 90px;
+}
+
+.loading-logo img {
+    width: 120px;
+}
+.loading-logo {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -50px;
+    margin-top: -120px;
+    z-index: 5;
+    opacity: 100% !important;
 }
 
 .avatar {
@@ -45,3 +62,4 @@ label.custom-file-label {
 	align-self: start !important;
 	text-align: start;
 }
+

@@ -30,6 +30,10 @@
     $postList = getPostList($conn, 5);
 ?>
 
+<div class="loading-logo d-none">
+    <img src="image.php?loadinglogo" alt="">
+</div>
+
 <div class="container main-cont">
   <div class="create-post">
     <div class="row my-3">

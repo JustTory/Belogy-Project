@@ -7,7 +7,21 @@ $(document).ready(function() {
     removeErrorOnFocus("#inputTitle", "#errorTitle");
 	removeErrorOnFocus("#inputContent", "#errorContent");
 	removeErrorOnFocus("#inputFile", "#errorFile");
+
+	$('.submit-btn').click(() => {
+		addLoading();
+	});
+
+	$(".input-create").click(() => {
+        addLoading();
+    });
 });
+
+function addLoading() {
+	$('.navbar').css("opacity", "40%");
+	$('.main-cont').css("opacity", "40%");
+	$('.loading-logo').removeClass('d-none');
+}
 
 function removeErrorOnFocus(IDInputError, IDMsgError) {
 	$(IDInputError).focus(function () {

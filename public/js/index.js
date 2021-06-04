@@ -8,9 +8,21 @@ $(document).ready(function() {
         $('.notification').popover('hide');
     }, 3000);
 
+    $('.posts').on('click', '.cmt-btn', function() { // add dynamically event handler to all ".cmt-btn"
+        addLoading();
+    });
+
+    $('.posts').on('click', '.edit-btn', function() { // add dynamically event handler to all ".edit-btn"
+        addLoading();
+    });
+
+    $('.posts').on('click', '.a-post', function() { // add dynamically event handler to all ".a-post"
+        addLoading();
+    });
 
     $(".input-create").click(() => {
         $(".form-create").submit();
+        addLoading();
     });
 
     $('.posts').on('click', '.like-btn', function() { // add dynamically event handler to all ".like-btn"
@@ -57,7 +69,7 @@ function outputNewPosts(newPostList) {
                 isLikedClass.push("bi-heart");
             }
 
-            let ownedPostButton = ` <a class="ml-auto" href="editpost.php?id=${post['post_ID']}">
+            let ownedPostButton = ` <a class="ml-auto edit-btn" href="editpost.php?id=${post['post_ID']}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>`;
             output += `
@@ -101,7 +113,7 @@ function outputNewPosts(newPostList) {
                                                 </button>
                                             </div>
                                             <div class="col-md-6 d-flex justify-content-center">
-                                                <a class="text-dark text-center" href="post.php?id=${post['post_ID']}">
+                                                <a class="text-dark text-center cmt-btn" href="post.php?id=${post['post_ID']}">
                                                     <i class="bi bi-chat-left"></i>
                                                     Comment
                                                 </a>
@@ -136,6 +148,12 @@ function outputUserRoleColor(userRole) {
         return "text-danger";
     }
     else return "text-dark";
+}
+
+function addLoading() {
+	$('.navbar').css("opacity", "40%");
+	$('.main-cont').css("opacity", "40%");
+	$('.loading-logo').removeClass('d-none');
 }
 
 function checkOwnedPostOrAdmin(postAuthorID, currentUserID, userRole) {

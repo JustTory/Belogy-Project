@@ -12,6 +12,28 @@ $(document).ready(function() {
             $('.custom-file-label').html(fileName);
         });
     });
-    
+
+    let submitBtnList = document.querySelectorAll('.submit-btn');
+    submitBtnList.forEach(submitBtn => {
+        submitBtn.addEventListener('click', () => {
+            addLoading();
+        });
+    });
+
+    $(".input-create").click(() => {
+        addLoading();
+    });
+
+    $(".input-create").click(() => {
+        addLoading();
+    });
+
+
 });
+
+function addLoading() {
+	$('.navbar').css("opacity", "40%");
+	$('.main-cont').css("opacity", "40%");
+	$('.loading-logo').removeClass('d-none');
+}
 

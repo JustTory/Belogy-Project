@@ -7,6 +7,10 @@ $(document).ready(function() {
         $('.notification').popover('hide');
     }, 3000);
 
+    $(".input-create").click(() => {
+        addLoading();
+    });
+
     let commentForm = document.querySelector("form.comment-form");
     let likeBtn = document.querySelector(".like-btn");
     let postID = $('.like-btn').data('postid');
@@ -27,11 +31,17 @@ $(document).ready(function() {
     });
 });
 
+function addLoading() {
+	$('.navbar').css("opacity", "40%");
+	$('.main-cont').css("opacity", "40%");
+	$('.loading-logo').removeClass('d-none');
+}
+
 function checkComment(comment) {
     if(comment == '' ) {
         $(".error-msg").removeClass('d-none');
         return false;
-    } 
+    }
     else {
         $(".error-msg").addClass('d-none');
         return true;
@@ -60,7 +70,7 @@ function ajaxComment(commentContent, postID) {
 }
 
 function outputNewComment(newComment) {
-    
+
   let output = `
         <div class="row my-2">
             <div class="col-md-8 offset-md-2">
@@ -91,7 +101,7 @@ function switchLikeIconAnimation() {
     setTimeout(() => {
         $('.like-logo').removeClass("heart-anim");
     }, 400);
-    
+
     if(isLiked == true) {
         $('.like-logo').removeClass("bi-heart").addClass("bi-heart-fill");
         $('.like-btn').removeClass('text-dark').addClass('text-danger');
@@ -127,7 +137,7 @@ function ajaxLike(postID) {
             } else {
                 location.reload();
                 $(window).scrollTop(0);
-            } 
+            }
         }
     }
     xhr.send(dataSend);

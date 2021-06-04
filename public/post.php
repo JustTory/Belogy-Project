@@ -9,6 +9,10 @@
     $commentList = getCommentList($conn, $_SESSION['lastPostIDVisited'], 10);
 ?>
 
+<div class="loading-logo d-none">
+    <img src="image.php?loadinglogo" alt="">
+</div>
+
 <div class="container main-cont">
     <?php
         outputPost($conn, $post, "echo");

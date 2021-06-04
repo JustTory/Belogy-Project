@@ -37,3 +37,4 @@
 
   </head>
   <body>
+  <div class="inside-body">

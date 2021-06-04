@@ -11,6 +11,10 @@
     mapErrorsToSession($errorsEdit);
 ?>
 
+<div class="loading-logo d-none">
+    <img src="image.php?loadinglogo" alt="">
+</div>
+
 <div class="container main-cont">
     <?php
         outputPostEdit($conn, $post);
@@ -42,7 +46,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-new-img" value="add-img" class="btn btn-primary">Add image</button>
+                        <button type="submit" name="submit-new-img" value="add-img" class="submit-btn btn btn-primary">Add image</button>
                     </div>
                 </form>
             </div>
@@ -67,7 +71,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-new-img" value="edit-img" class="btn btn-primary">Save changes</button>
+                        <button type="submit" name="submit-new-img" value="edit-img" class="submit-btn btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -89,7 +93,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-delete-img" class="btn btn-danger">Confirm</button>
+                        <button type="submit" name="submit-delete-img" class="submit-btn btn btn-danger">Confirm</button>
                     </div>
                 </form>
             </div>
@@ -111,7 +115,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-edit-title" class="btn btn-primary">Save changes</button>
+                        <button type="submit" name="submit-edit-title" class="submit-btn btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -133,7 +137,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-edit-content" class="btn btn-primary">Save changes</button>
+                        <button type="submit" name="submit-edit-content" class="submit-btn btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -155,7 +159,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-delete-post" class="btn btn-danger">Confirm</button>
+                        <button type="submit" name="submit-delete-post" class="submit-btn btn btn-danger">Confirm</button>
                     </div>
                 </form>
             </div>

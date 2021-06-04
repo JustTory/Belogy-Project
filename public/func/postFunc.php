@@ -161,7 +161,7 @@
             array_push($isLikedClass, "text-dark");
             array_push($isLikedClass, "bi-heart");
         }
-        $ownedPostButton = '<a class="ml-auto" href="editpost.php?id=' . $post['post_ID'] . '">
+        $ownedPostButton = '<a class="ml-auto edit-btn" href="editpost.php?id=' . $post['post_ID'] . '">
                                 <i class="bi bi-pencil-square"></i>
                             </a>';
         $output .= '
@@ -206,7 +206,7 @@
                                         </button>
                                     </div>
                                     <div class="col-md-6 d-flex justify-content-center">
-                                        <a class="text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
+                                        <a class="text-dark text-center cmt-btn" href="post.php?id=' . $post['post_ID'] . '">
                                             <i class="bi bi-chat-left"></i>
                                             Comment
                                         </a>
@@ -316,7 +316,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
+                                    <a class="text-dark text-center cmt-btn" href="post.php?id=' . $post['post_ID'] . '">
                                         <i class="bi bi-chat-left"></i>
                                         Comment
                                     </a>
