@@ -9,7 +9,7 @@
     <img src="image.php?loadinglogo" alt="">
 </div>
 
-<div class="container" id="container">
+<div class="container main-cont" id="container">
 	<div class="form-container sign-up-container">
 		<form action="signup.php" method="post">
 			<h1>Create Account</h1>

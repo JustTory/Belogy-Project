@@ -30,7 +30,6 @@ function removeErrorOnFocus(IDInputError, IDMsgError) {
 }
 
 function addLoading() {
-	$('.navbar').css("opacity", "40%");
 	$('.main-cont').css("opacity", "40%");
 	$('.loading-logo').removeClass('d-none');
 }

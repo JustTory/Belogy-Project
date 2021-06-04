@@ -24,10 +24,10 @@
     include "includes/header.php";
     include "func/postFunc.php";
     directToCreatePost();
-
     include "includes/nav.php";
     include "func/timeFunc.php";
     $postList = getPostList($conn, 5);
+
 ?>
 
 <div class="loading-logo d-none">

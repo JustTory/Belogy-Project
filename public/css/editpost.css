@@ -16,7 +16,6 @@ body {
     margin-left: -50px;
     margin-top: -120px;
     z-index: 5;
-    opacity: 100% !important;
 }
 
 a, a:hover, a:focus, a:active {
