@@ -1,8 +1,4 @@
 <!-- TO DO LIST
-  - delete own posts (user role)
-  - delete posts (admin role)
-  - fix super long title breaks post UI at index
-  - add read more for long post content at index
   - add loading gif when users perform any actions
   - fix infinite scrolling, the host takes many time to load if the user keep scrolling up and down will ajax multiple times
     add a variable to set if it's already ajax-ing or use the .then() method
@@ -10,7 +6,6 @@
   - profile.php
   - have list of user who likes your post
   - debugging and fixing
-  - add fixed-top to navbar on all pages that have navbar
   - search posts
   - show password button on sign up sign in
   - retain file field if other fields is incorrect
@@ -29,7 +24,7 @@
     include "includes/header.php";
     include "func/postFunc.php";
     directToCreatePost();
-    
+
     include "includes/nav.php";
     include "func/timeFunc.php";
     $postList = getPostList($conn, 5);

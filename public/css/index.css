@@ -66,13 +66,6 @@ button.like-btn {
     border: none;
 }
 
-.post-content {
-    /* max-height: 20vh;
-    /* overflow: hidden;
-    text-overflow: ellipsis; */ 
-    text-decoration: none;
-}
-
 i.like-logo {
     display: inline-block;
 }

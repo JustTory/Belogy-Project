@@ -17,7 +17,7 @@
     ?>
     <div class="row my-3 mt-5 delete-post">
         <div class="col-md-8 offset-md-2 d-flex justify-content-center">
-            <button type="button" class="btn btn-danger">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-post">
             <i class="bi bi-trash"></i>
             Delete post</button>
         </div>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" name="submit-new-img" value="add-img" class="btn btn-primary">Add image</button>
                     </div>
                 </form>
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" name="submit-new-img" value="edit-img" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
@@ -88,8 +88,8 @@
                         <h6 class="my-3">Are you sure you want to delete this post image?</h6>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-delete-img" class="btn btn-primary">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-delete-img" class="btn btn-danger">Confirm</button>
                     </div>
                 </form>
             </div>
@@ -110,7 +110,7 @@
                         <input type="text" name="new-title" class="form-control my-3" placeholder="New title" value="">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" name="submit-edit-title" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
@@ -132,8 +132,30 @@
                         <textarea name="new-content" class="form-control my-3" placeholder="New content" rows="8" cols="80"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" name="submit-edit-content" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete-post" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <h6 class="my-3">Are you sure you want to delete this post?</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-delete-post" class="btn btn-danger">Confirm</button>
                     </div>
                 </form>
             </div>

@@ -2,8 +2,7 @@
   include "func/notificationFunc.php";
 ?>
 
-<!-- add fixed-top to nav's class -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white      ">
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
   <a class="navbar-brand ml-3" href="index.php">
     <img class="web-logo" src="image.php?weblogo" alt="">
   </a>

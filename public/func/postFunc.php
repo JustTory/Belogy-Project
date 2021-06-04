@@ -110,6 +110,12 @@
             }
         }
 
+        else if(isset($_POST['submit-delete-post'])) {
+            if(getOldImgURL($conn) != NULL)
+                unlink(getOldImgURL($conn));
+            deleteFromDB($conn);
+        }
+
     }
 
     function getPost($conn) {
@@ -172,7 +178,7 @@
                         <div class="card-body post-body pb-2">
                             <div class="title-edit d-flex">
                                 <h5 class="card-title post-title font-weight-normal">' . $post['post_title'] . '</h5>';
-        if(checkOwnedPost($post['post_author_ID'])){
+        if(checkOwnedPostOrAdmin($post['post_author_ID'])){
             $output .= $ownedPostButton;
         }
             $output .='
@@ -304,7 +310,7 @@
                         <div class="interaction">
                             <div class="row">
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="like-btn ' . $isLikedClass[0] . ' text-dark text-center" href="post.php?id=' . $post['post_ID'] . '">
+                                    <a class="like-btn ' . $isLikedClass[0] . ' text-center" href="post.php?id=' . $post['post_ID'] . '">
                                         <i class="like-logo bi '. $isLikedClass[1] . '"></i>
                                         Like
                                     </a>
@@ -418,8 +424,8 @@
         else return true;
     }
 
-    function checkOwnedPost($postAuthorID) {
-        if($postAuthorID == $_SESSION['userID'])
+    function checkOwnedPostOrAdmin($postAuthorID) {
+        if($postAuthorID == $_SESSION['userID'] || (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 'admin'))
             return true;
         else return false;
     }
@@ -450,6 +456,18 @@
         }
     }
 
+    function deleteFromDB($conn) {
+        $sql = "DELETE FROM posts WHERE post_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $_GET['id']);
+        $stmt->execute();
+        if($stmt->affected_rows == 1) {
+            $_SESSION['notification'] = "Your post has been deleted";
+            $location = "Location: index.php";
+            header($location);
+            exit();
+        }
+    }
 
     function getOldImgURL($conn) {
         $sql = "SELECT post_img_url FROM posts WHERE post_ID = ?";

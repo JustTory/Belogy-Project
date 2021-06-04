@@ -74,7 +74,7 @@ function outputNewPosts(newPostList) {
                                 <div class="card-body post-body pb-2">
                                     <div class="title-edit d-flex">
                                         <h5 class="card-title post-title font-weight-normal">${post['post_title']}</h5>`;
-                if(checkOwnedPost(post['post_author_ID'], currentUserID)){
+                if(checkOwnedPostOrAdmin(post['post_author_ID'], currentUserID, newPostList['userRole'])){
                     output += ownedPostButton;
                 }
                     output +=`
@@ -138,8 +138,8 @@ function outputUserRoleColor(userRole) {
     else return "text-dark";
 }
 
-function checkOwnedPost(postAuthorID, currentUserID) {
-    if(postAuthorID == currentUserID)
+function checkOwnedPostOrAdmin(postAuthorID, currentUserID, userRole) {
+    if(postAuthorID == currentUserID || userRole == 'admin')
         return true;
     else return false;
 }

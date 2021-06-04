@@ -14,6 +14,8 @@
             } else $newPost['liked'] = false;
         }
         $newPostList['currentUserID'] = $_SESSION['userID'];
+        if(isset($_SESSION['userRole']))
+            $newPostList['userRole'] = $_SESSION['userRole'];
 
         echo json_encode($newPostList);
     }
