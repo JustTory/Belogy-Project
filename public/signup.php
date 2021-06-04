@@ -5,6 +5,10 @@
 	createUser($conn, $errorsSignUp, $username, $email, $password1, $password2);
 ?>
 
+<div class="loading-logo d-none">
+    <img src="image.php?loadinglogo" alt="">
+</div>
+
 <div class="container right-panel-active" id="container">
 	<div class="form-container sign-up-container">
 		<form action="signup.php" method="post" id="signup">
@@ -60,7 +64,7 @@
                 ?>
             </p>
 
-			<button type="submit" class="mt-1" name="signup">Sign up</button>
+			<button type="submit" class="mt-1 async-task" name="signup">Sign up</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
@@ -78,7 +82,7 @@
             <p class="m-0 error-msg"></p>
 
 			<a href="#">Forgot your password?</a>
-			<button type="submit" name="signin">Sign in</button>
+			<button type="submit" class="async-task" name="signin">Sign in</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -98,5 +102,5 @@
 </div>
 
 <?php
-include "includes/footer.php";
+	include "includes/footer.php";
 ?>

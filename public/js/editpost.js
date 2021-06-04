@@ -20,15 +20,9 @@ $(document).ready(function() {
         });
     });
 
-    $(".input-create").click(() => {
+    $(".async-task").click(() => {
         addLoading();
     });
-
-    $(".input-create").click(() => {
-        addLoading();
-    });
-
-
 });
 
 function addLoading() {

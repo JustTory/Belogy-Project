@@ -8,13 +8,9 @@ $(document).ready(function() {
 	removeErrorOnFocus("#inputContent", "#errorContent");
 	removeErrorOnFocus("#inputFile", "#errorFile");
 
-	$('.submit-btn').click(() => {
+	$('.async-task').click(() => {
 		addLoading();
 	});
-
-	$(".input-create").click(() => {
-        addLoading();
-    });
 });
 
 function addLoading() {

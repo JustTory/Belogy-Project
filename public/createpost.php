@@ -47,7 +47,7 @@
                     ?>
                 </p>
 
-                <button type="submit" name="submit" class="btn btn-outline-dark btn-block mt-5 submit-btn"><i class="bi bi-pencil-square"></i> Post</button>
+                <button type="submit" name="submit" class="btn btn-outline-dark btn-block mt-5 async-task"><i class="bi bi-pencil-square"></i> Post</button>
             </form>
         </div>
     </div>

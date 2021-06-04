@@ -11,6 +11,10 @@ $(document).ready(function() {
 		container.classList.remove("right-panel-active");
 	});
 
+	$('.async-task').click(() => {
+		addLoading();
+	});
+
 	removeErrorOnFocus("#inputEmail", "#errorEmail");
 	removeErrorOnFocus("#inputPassword", "#errorPassword");
 	removeErrorOnFocus("#inputUsername", "#errorUsername");
@@ -23,6 +27,12 @@ function removeErrorOnFocus(IDInputError, IDMsgError) {
 		$(IDInputError).removeClass("border-error");
 		$(IDMsgError).empty();
 	});
+}
+
+function addLoading() {
+	$('.navbar').css("opacity", "40%");
+	$('.main-cont').css("opacity", "40%");
+	$('.loading-logo').removeClass('d-none');
 }
 
 // function showPassword() {

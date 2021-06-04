@@ -8,17 +8,13 @@ $(document).ready(function() {
         $('.notification').popover('hide');
     }, 3000);
 
-    $('.posts').on('click', '.cmt-btn', function() { // add dynamically event handler to all ".cmt-btn"
+    $('.posts').on('click', '.async-task', function() { // add dynamically event handler to all ".cmt-btn"
         addLoading();
     });
 
-    $('.posts').on('click', '.edit-btn', function() { // add dynamically event handler to all ".edit-btn"
-        addLoading();
-    });
-
-    $('.posts').on('click', '.a-post', function() { // add dynamically event handler to all ".a-post"
-        addLoading();
-    });
+    $('.async-task').click(() => {
+		addLoading();
+	});
 
     $(".input-create").click(() => {
         $(".form-create").submit();
@@ -69,13 +65,13 @@ function outputNewPosts(newPostList) {
                 isLikedClass.push("bi-heart");
             }
 
-            let ownedPostButton = ` <a class="ml-auto edit-btn" href="editpost.php?id=${post['post_ID']}">
+            let ownedPostButton = ` <a class="ml-auto edit-btn async-task" href="editpost.php?id=${post['post_ID']}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>`;
             output += `
                 <div class="row my-5">
                     <div class="col-md-8 offset-md-2">
-                        <a class="a-post" href="post.php?id=${post['post_ID']}">
+                        <a class="a-post async-task" href="post.php?id=${post['post_ID']}">
                             <div class="card post">`;
 
                 if (post['post_img_url'] != null) {
@@ -113,7 +109,7 @@ function outputNewPosts(newPostList) {
                                                 </button>
                                             </div>
                                             <div class="col-md-6 d-flex justify-content-center">
-                                                <a class="text-dark text-center cmt-btn" href="post.php?id=${post['post_ID']}">
+                                                <a class="text-dark text-center cmt-btn async-task" href="post.php?id=${post['post_ID']}">
                                                     <i class="bi bi-chat-left"></i>
                                                     Comment
                                                 </a>
@@ -171,7 +167,7 @@ function readMoreAtIndex(postContent, postID) {
             finalPostContent = postContentCut.substr(0, lastSpacePost);
         else finalPostContent = postContentCut;
 
-        finalPostContent  += `... <a class="text-secondary" href="post.php?id=${postID}">Read more</a>`;
+        finalPostContent  += `... <a class="text-secondary async-task" href="post.php?id=${postID}">Read more</a>`;
         return finalPostContent;
     }
     else return postContent;

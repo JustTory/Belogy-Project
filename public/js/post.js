@@ -7,9 +7,9 @@ $(document).ready(function() {
         $('.notification').popover('hide');
     }, 3000);
 
-    $(".input-create").click(() => {
-        addLoading();
-    });
+    $('.async-task').click(() => {
+		addLoading();
+	});
 
     let commentForm = document.querySelector("form.comment-form");
     let likeBtn = document.querySelector(".like-btn");

@@ -161,13 +161,13 @@
             array_push($isLikedClass, "text-dark");
             array_push($isLikedClass, "bi-heart");
         }
-        $ownedPostButton = '<a class="ml-auto edit-btn" href="editpost.php?id=' . $post['post_ID'] . '">
+        $ownedPostButton = '<a class="ml-auto edit-btn async-task" href="editpost.php?id=' . $post['post_ID'] . '">
                                 <i class="bi bi-pencil-square"></i>
                             </a>';
         $output .= '
         <div class="row my-5">
             <div class="col-md-8 offset-md-2">
-                <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
+                <a class="a-post async-task" href="post.php?id=' . $post['post_ID'] . '">
                     <div class="card post">';
 
         if ($post['post_img_url'] != null) {
@@ -206,7 +206,7 @@
                                         </button>
                                     </div>
                                     <div class="col-md-6 d-flex justify-content-center">
-                                        <a class="text-dark text-center cmt-btn" href="post.php?id=' . $post['post_ID'] . '">
+                                        <a class="text-dark text-center cmt-btn async-task" href="post.php?id=' . $post['post_ID'] . '">
                                             <i class="bi bi-chat-left"></i>
                                             Comment
                                         </a>
@@ -252,7 +252,7 @@
                                 <i class="bi bi-trash text-danger"></i>
                             </button>
                         </div>
-                        <a class="a-post" href="post.php?id=' . $post['post_ID'] . '">
+                        <a class="a-post async-task" href="post.php?id=' . $post['post_ID'] . '">
                             <img class="card-img-top post-img low-opacity" src="image.php?postID=' . $post['post_ID'] . '" alt="Post image">
                         </a>
                     </div>';
@@ -316,7 +316,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="text-dark text-center cmt-btn" href="post.php?id=' . $post['post_ID'] . '">
+                                    <a class="text-dark text-center cmt-btn async-task" href="post.php?id=' . $post['post_ID'] . '">
                                         <i class="bi bi-chat-left"></i>
                                         Comment
                                     </a>
@@ -388,7 +388,7 @@
                     $finalPostContent = mb_substr($postContentCut, 0, $lastSpacePost, "utf-8");
                 else $finalPostContent = $postContentCut;
 
-                $finalPostContent  .= '... <a class="text-secondary" href="post.php?id=' . $postID . '">Read more</a>';
+                $finalPostContent  .= '... <a class="text-secondary async-task" href="post.php?id=' . $postID . '">Read more</a>';
                 return $finalPostContent;
             }
             else return $postContent;

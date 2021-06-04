@@ -3,7 +3,7 @@
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-  <a class="navbar-brand ml-3" href="index.php">
+  <a class="navbar-brand async-task ml-3" href="index.php">
     <img class="web-logo" src="image.php?weblogo" alt="">
   </a>
 
@@ -25,15 +25,15 @@
             <?php echo htmlspecialchars($_SESSION['username']); ?>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="profile.php"><i class="bi bi-person mr-2"></i>Profile</a>
-            <a class="dropdown-item input-create" href="createpost.php"><i class="bi bi-pencil-square mr-2"></i>Create post</a>
+            <a class="dropdown-item async-task" href="index.php"><i class="bi bi-person mr-2"></i>Profile</a>
+            <a class="dropdown-item async-task" href="createpost.php"><i class="bi bi-pencil-square mr-2"></i>Create post</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-danger" href="signout.php"><i class="bi bi-box-arrow-right mr-2"></i>Sign out</a>
+            <a class="dropdown-item text-danger async-task" href="signout.php"><i class="bi bi-box-arrow-right mr-2"></i>Sign out</a>
           </div>
         </li>
       <?php else: ?>
         <li class="nav-item">
-          <a class="nav-link" href="signin.php">Login <i class="bi bi-box-arrow-in-right fa-lg"></i></a>
+          <a class="nav-link async-task" href="signin.php">Login <i class="bi bi-box-arrow-in-right fa-lg"></i></a>
         </li>
       <?php endif; ?>
 

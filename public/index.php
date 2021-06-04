@@ -46,7 +46,7 @@
               </div>
               <form class="w-100 form-create" method="post" action="index.php">
                 <div class="form-group m-0">
-                  <input type="text" type="submit" name="createpost" class="form-control input-create" placeholder="<?php
+                  <input type="text" name="createpost" class="form-control input-create async-task" placeholder="<?php
                     if($_SESSION['signedIn'] == true) {
                       echo htmlspecialchars($_SESSION['username']) . ", h";
                     } else echo htmlspecialchars("H");
@@ -54,8 +54,8 @@
                 </div>
               </form>
               <form method="post" action="index.php" class="embedded d-flex justify-content-center align-items-center">
-                <button type="submit" name="createpost" id="embedded-btn" class="text-dark input-create p-0"><i class="bi bi-image fa-lg mx-2"></i></button>
-                <button type="submit" name="createpost" id="embedded-btn" class="text-dark input-create p-0"><i class="bi bi-link-45deg fa-lg"></i></button>
+                <button type="submit" name="createpost" id="embedded-btn" class="text-dark input-create async-task p-0"><i class="bi bi-image fa-lg mx-2"></i></button>
+                <button type="submit" name="createpost" id="embedded-btn" class="text-dark input-create async-task p-0"><i class="bi bi-link-45deg fa-lg"></i></button>
               </form>
             </div>
           </div>
