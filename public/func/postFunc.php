@@ -9,9 +9,9 @@
             $imgError = $image['error'];
 
             if(!checkTitle($title))
-                $errorsPost['title'] = "Title can't be empty";
+                $errorsPost['title'] = "Title can't be empty and must be less than 100 characters";
             if(!checkContent($content))
-                $errorsPost['content'] = "Content can't be empty";
+                $errorsPost['content'] = "Content can't be empty and must be less than 2000 characters";
             if($imgError == 1) { //default php.ini max file size is also 2mb
                 $errorsPost['file'] = "Image size must be less than 2mb";
             }
@@ -92,7 +92,7 @@
             $newTitle = $_POST['new-title'];
 
             if(!checkTitle($newTitle))
-                $errorsEdit['title'] = "New title can't be empty";
+                $errorsEdit['title'] = "New title can't be empty and must be less than 100 characters";
 
             if(empty($errorsEdit)) {
                 updateToDB($conn, "post_title", $newTitle);
@@ -103,7 +103,7 @@
             $newContent = $_POST['new-content'];
 
             if(!checkContent($newContent))
-                $errorsEdit['content'] = "New content can't be empty";
+                $errorsEdit['content'] = "New content can't be empty and must be less than 2000 characters";
 
             if(empty($errorsEdit)) {
                 updateToDB($conn, "post_content", $newContent);
@@ -176,8 +176,9 @@
             $output .= $ownedPostButton;
         }
             $output .='
+
                             </div>
-                            <p class="card-text post-content">' . $post['post_content'] . '</p>
+                            <p class="card-text post-content">' . readMoreAtIndex($post['post_content'], $post['post_ID']) . '</p>
                             <div class="author-date d-flex mt-4">
                                 <a class="' .outputUserRoleColor($post['user_role']) . ' font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
                                     <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">'
@@ -370,6 +371,25 @@
     }
 
     //helper functions
+    function readMoreAtIndex($postContent, $postID) {
+        $PHPName = basename($_SERVER['SCRIPT_NAME'], ".php");
+        if($PHPName == 'index') {
+            if (mb_strlen($postContent, "utf-8") > 190) {
+                $postContentCut = mb_substr($postContent, 0, 190, "utf-8");
+                $lastSpacePost = mb_strrpos($postContentCut, ' ', "utf-8");
+
+                if($lastSpacePost != false)
+                    $finalPostContent = mb_substr($postContentCut, 0, $lastSpacePost, "utf-8");
+                else $finalPostContent = $postContentCut;
+
+                $finalPostContent  .= '... <a class="text-secondary" href="post.php?id=' . $postID . '">Read more</a>';
+                return $finalPostContent;
+            }
+            else return $postContent;
+        }
+        else return $postContent;
+    }
+
     function outputUserRoleColor($userRole) {
         if($userRole == 'admin') {
             return "text-danger";
@@ -387,12 +407,14 @@
     }
 
     function checkTitle($title) {
-        if($title == '') return false;
+        if(mb_strlen($title, "utf-8") > 100 || $title == '')
+            return false;
         else return true;
     }
 
     function checkContent($content) {
-        if($content == '') return false;
+        if(mb_strlen($content, "utf-8") > 2000 || $content == '')
+            return false;
         else return true;
     }
 

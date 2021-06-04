@@ -6,18 +6,16 @@
         $detailContentDateCreated = getDetailDateTime($contentDateCreated);
         if($detailCurDateTime['year'] == $detailContentDateCreated['year']) {
             if($detailCurDateTime['day'] == $detailContentDateCreated['day']) {
-                if($detailCurDateTime['hour'] == $detailContentDateCreated['hour']) {
-                    if($detailCurDateTime['minute'] - $detailContentDateCreated['minute'] == 0)
+                if(getMinuteDiff($conn, $contentDateCreated) < 60) {
+                    if(getMinuteDiff($conn, $contentDateCreated) == 0)
                         $res = "Just now";
-                    else if($detailCurDateTime['minute'] - $detailContentDateCreated['minute'] == 1)
+                    else if(getMinuteDiff($conn, $contentDateCreated) == 1)
                         $res = "1 minute ago";
-                    else $res = $detailCurDateTime['minute'] - $detailContentDateCreated['minute'] . " minutes ago";
+                    else $res = getMinuteDiff($conn, $contentDateCreated) . " minutes ago";
                 }
-                else {
-                    if($detailCurDateTime['hour'] - $detailContentDateCreated['hour'] == 1)
+                else if(getMinuteDiff($conn, $contentDateCreated) >= 60 && getMinuteDiff($conn, $contentDateCreated) < 120)
                         $res = "1 hour ago";
-                    else $res = $detailCurDateTime['hour'] - $detailContentDateCreated['hour'] . " hours ago";
-                }
+                else $res = $detailCurDateTime['hour'] - $detailContentDateCreated['hour'] . " hours ago";
             }
             else if($detailCurDateTime['day'] - $detailContentDateCreated['day'] == 1) {
                 $res = "Yesterday at " . getTimeOnly($contentDateCreated);
@@ -115,5 +113,14 @@
         $stmt = $conn->query("SELECT CURRENT_TIMESTAMP() as 'CurDateTime'");
         $res = $stmt->fetch_assoc();
         return $res['CurDateTime'];
+    }
+
+    function getMinuteDiff($conn, $contentDateCreated) {
+        $stmt = $conn->prepare("SELECT TIMESTAMPDIFF(minute, ?, CURRENT_TIMESTAMP()) as minuteDiff");
+        $stmt->bind_param("s", $contentDateCreated);
+        $stmt->execute();
+        $row = $stmt->get_result();
+        $res = $row->fetch_assoc();
+        return $res['minuteDiff'];
     }
 ?>

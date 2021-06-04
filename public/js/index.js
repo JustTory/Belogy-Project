@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     $('.posts').on('click', '.like-btn', function() { // add dynamically event handler to all ".like-btn"
         let likeBtn = $(this).get(0);
-        let postID = $(this).data('postid'); 
+        let postID = $(this).data('postid');
         let isLiked = checkIsLiked(likeBtn);
         let likeIcon = likeBtn.childNodes[1];
         let totalLikePost = likeBtn.parentNode.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild;
@@ -48,7 +48,7 @@ function outputNewPosts(newPostList) {
         let output = '';
         newPostList['posts'].forEach(post => {
             let isLikedClass = [];
-            if(post['liked'] == true) { 
+            if(post['liked'] == true) {
                 isLikedClass.push("text-danger");
                 isLikedClass.push("bi-heart-fill");
             }
@@ -76,10 +76,10 @@ function outputNewPosts(newPostList) {
                                         <h5 class="card-title post-title font-weight-normal">${post['post_title']}</h5>`;
                 if(checkOwnedPost(post['post_author_ID'], currentUserID)){
                     output += ownedPostButton;
-                }                    
+                }
                     output +=`
                                     </div>
-                                    <p class="card-text post-content">${post['post_content']}</p>
+                                    <p class="card-text post-content">${readMoreAtIndex(post['post_content'], post['post_ID'])}</p>
                                     <div class="author-date d-flex mt-4">
                                         <a class="${outputUserRoleColor(post['user_role'])} font-weight-bold d-flex align-items-center" href="profile.php?id=">
                                             <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">
@@ -99,7 +99,7 @@ function outputNewPosts(newPostList) {
                                                     <i class="like-logo bi ${isLikedClass[1]}"></i>
                                                     Like
                                                 </button>
-                                            </div> 
+                                            </div>
                                             <div class="col-md-6 d-flex justify-content-center">
                                                 <a class="text-dark text-center" href="post.php?id=${post['post_ID']}">
                                                     <i class="bi bi-chat-left"></i>
@@ -110,7 +110,7 @@ function outputNewPosts(newPostList) {
                                     </div>
                                 </div>
                             </div>
-                        </a>    
+                        </a>
                     </div>
                 </div>
                 `;
@@ -139,9 +139,24 @@ function outputUserRoleColor(userRole) {
 }
 
 function checkOwnedPost(postAuthorID, currentUserID) {
-    if(postAuthorID == currentUserID) 
+    if(postAuthorID == currentUserID)
         return true;
     else return false;
+}
+
+function readMoreAtIndex(postContent, postID) {
+    if (postContent.length > 190) {
+        let postContentCut = postContent.substr(0, 190);
+        let lastSpacePost = postContentCut.lastIndexOf(' ');
+
+        if(lastSpacePost != -1)
+            finalPostContent = postContentCut.substr(0, lastSpacePost);
+        else finalPostContent = postContentCut;
+
+        finalPostContent  += `... <a class="text-secondary" href="post.php?id=${postID}">Read more</a>`;
+        return finalPostContent;
+    }
+    else return postContent;
 }
 
 function checkIsLiked(likeBtn) {
@@ -194,7 +209,7 @@ function ajaxLike(postID, isLiked, likeIcon, totalLikePost) {
             } else {
                 location.reload();
                 $(window).scrollTop(0);
-            } 
+            }
         }
     }
     xhr.send(dataSend);
