@@ -68,10 +68,8 @@
 
     function outputIMG($imgURL) {
         $fp = fopen($imgURL, 'rb');
-        // send the right headers
         header("Content-Type: image/png");
         header("Content-Length: " . filesize($imgURL));
-        // dump the picture and stop the script
         fpassthru($fp);
         exit;
     }

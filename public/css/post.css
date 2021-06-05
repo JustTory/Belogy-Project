@@ -38,12 +38,15 @@ img.web-logo {
 }
 
 .main-cont {
-    margin-top: 90px;
+    margin-top: 120px;
 }
 
 .avatar {
     width: 40px;
     height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.125);
 }
 
 .popover-body {
@@ -76,9 +79,12 @@ img.web-logo {
 }
 
 .avatar-post {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     font-size: 0.7rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.125);
 }
 
 button.like-btn {

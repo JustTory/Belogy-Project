@@ -6,7 +6,7 @@
     include "func/commentFunc.php";
     checkSignedInOnPost();
     $post = getPost($conn);
-    $commentList = getCommentList($conn, $_SESSION['lastPostIDVisited'], 10);
+    $commentList = getCommentList($conn, $_SESSION['lastPostIDVisited']);
 ?>
 
 <div class="loading-logo d-none">
@@ -22,7 +22,7 @@
         <div class="col-md-8 offset-md-2">
             <div class="create-comment d-flex">
                 <div class="avatar-wrapper">
-                    <img class="avatar-post mr-3" src="image.php?defaultAvatar" alt="">
+                    <img class="avatar-post mr-3" src="image.php?userID= <?php echo $_SESSION['userID']; ?> &avatar" alt="">
                 </div>
                 <form class="comment-form w-100" method="POST" action="createcomment.php">
                     <textarea class="form-control comment" name="comment" id="exampleFormControlTextarea1" value="" placeholder="Write a comment..." rows="3"></textarea>

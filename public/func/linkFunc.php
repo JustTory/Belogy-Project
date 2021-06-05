@@ -19,6 +19,9 @@
       case 'editpost':
         $PageName = 'Edit Post';
         break;
+      case 'profile':
+        $PageName = 'Profile';
+        break;
     }
     return $PageName;
   }
@@ -43,6 +46,9 @@
       case 'editpost':
         $CSSName = 'editpost.css';
         break;
+      case 'profile':
+        $CSSName = 'profile.css';
+        break;
     }
     return $CSSName;
   }
@@ -66,6 +72,9 @@
         break;
       case 'editpost':
         $JSName = 'editpost.js';
+        break;
+      case 'profile':
+        $JSName = 'profile.js';
         break;
     }
     return $JSName;

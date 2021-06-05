@@ -21,11 +21,11 @@
       <?php if ($_SESSION['signedIn'] == true): ?>
         <li class="nav-item dropdown">
           <a tabindex="0" class="nav-link p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="avatar mr-2" src="image.php?defaultAvatar" alt="">
+            <img class="avatar mr-2" src="image.php?userID=<?php echo htmlspecialchars($_SESSION['userID']); ?>&avatar" alt="">
             <?php echo htmlspecialchars($_SESSION['username']); ?>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item async-task" href="index.php"><i class="bi bi-person mr-2"></i>Profile</a>
+            <a class="dropdown-item async-task" href="profile.php?id=<?php echo htmlspecialchars($_SESSION['userID']); ?>"><i class="bi bi-person mr-2"></i>Profile</a>
             <a class="dropdown-item async-task" href="createpost.php"><i class="bi bi-pencil-square mr-2"></i>Create post</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-danger async-task" href="signout.php"><i class="bi bi-box-arrow-right mr-2"></i>Sign out</a>

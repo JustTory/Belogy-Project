@@ -1,23 +1,16 @@
 <!-- TO DO LIST
-  - add loading gif when users perform any actions
   - fix infinite scrolling, the host takes many time to load if the user keep scrolling up and down will ajax multiple times
     add a variable to set if it's already ajax-ing or use the .then() method
-  - add infinite scrolling to comments / if cannot add load more comments button to trigger ajax
   - profile.php
+  - post not found, user not found (when user type in url)
+  - back to home btn on login
+  - live like counter (settimeout for ajax get total post likes and cmts)
   - have list of user who likes your post
   - debugging and fixing
-  - search posts
   - show password button on sign up sign in
-  - retain file field if other fields is incorrect
-
 
   - index: new signed up users table on the right
   - notification when someone comments or likes your post
-
-
-  ============= DONE ==============
-  - likable posts at index //after like, need to find postID to ajax. We can count the order of post and query it in the DB
-  - prevent user from /images in url
 -->
 
 <?php
@@ -42,7 +35,10 @@
           <div class="card-body">
             <div class="create-form d-flex">
               <div class="avatar-wrapper d-flex justify-content-center align-items-center">
-                <img class="avatar mr-3" src="image.php?defaultAvatar" alt="">
+                <img class="avatar mr-3" src="image.php?<?php
+                if($_SESSION['signedIn'] == true)
+                  echo htmlspecialchars("userID=") . htmlspecialchars($_SESSION['userID']);
+                else echo htmlspecialchars("defaultAvatar")?>&avatar" alt="">
               </div>
               <form class="w-100 form-create" method="post" action="index.php">
                 <div class="form-group m-0">
@@ -83,6 +79,3 @@
     include "includes/footer.php";
     unsetNotification();
 ?>
-
-
-

@@ -8,6 +8,14 @@ $(document).ready(function() {
         $('.notification').popover('hide');
     }, 3000);
 
+    let fileInputs = document.querySelectorAll('#inputFile');
+    fileInputs.forEach(fileInput => {
+        fileInput.addEventListener('change', (e) => {
+            let fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        });
+    });
+
     $('.posts').on('click', '.async-task', function() {
         addLoading();
     });
@@ -21,6 +29,10 @@ $(document).ready(function() {
         addLoading();
     });
 
+    $(".edit-profile-btn").click(() => {
+       outputEditBtns();
+    });
+
     $('.posts').on('click', '.like-btn', function() { // add dynamically event handler to all ".like-btn"
         let likeBtn = $(this).get(0);
         let postID = $(this).data('postid');
@@ -30,12 +42,14 @@ $(document).ready(function() {
         ajaxLike(postID, isLiked, likeIcon, totalLikePost);
     });
 
+    let userID = $('.user-profile').data('userid');
+
     $(window).scroll(function() {
         if((($(window).scrollTop() + $(window).height()) >= $(document).height()) && reachedEnd == false) {
             offset += 5;
             console.log("loading new posts from record " + offset + " to " + (offset + 5) + " (limit = " + limit + ")");
             let xhr = new XMLHttpRequest();
-            let request = "getmoreposts.php?offset=" + offset + "&limit=" + limit;
+            let request = "getmoreposts.php?offset=" + offset + "&limit=" + limit + "&userID=" + userID;
             xhr.open("GET", request, true);
             xhr.onload = function() {
                 if(this.status == 200) {
@@ -47,7 +61,6 @@ $(document).ready(function() {
             xhr.send();
         }
     });
-
 });
 
 function outputNewPosts(newPostList) {
@@ -234,3 +247,8 @@ function updateTotalLikePost(newTotalLike, totalLikePost) {
     totalLikePost.innerHTML = icon + newTotalLike;
 }
 
+function outputEditBtns() {
+    $('.option-btn-wrapper').toggleClass('d-none');
+    $('.coverbg').toggleClass('low-opacity');
+    $('.main-avatar').toggleClass('low-opacity');
+}

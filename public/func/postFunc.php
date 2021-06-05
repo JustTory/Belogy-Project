@@ -150,6 +150,15 @@
         return $results->fetch_all(MYSQLI_ASSOC);
     }
 
+    function getUserPostList($conn, $userID, $limit, $offset = 0) {
+        $sql = "SELECT p.post_ID, p.post_title, p.post_content, p.post_img_url, p.post_author_ID, u.user_username, u.user_role, p.post_no_likes, p.post_no_comments, p.post_date_created, p.post_last_modified FROM posts p, users u WHERE p.post_author_ID = u.user_ID AND p.post_author_ID = ? ORDER BY post_ID DESC LIMIT ? OFFSET ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iii", $userID, $limit, $offset);
+        $stmt->execute();
+        $results = $stmt->get_result();
+        return $results->fetch_all(MYSQLI_ASSOC);
+    }
+
     function outputPost($conn, $post, $type) {
         $likePostList = likedPostList($conn);
         $output = '';
@@ -187,7 +196,7 @@
                             <p class="card-text post-content">' . readMoreAtIndex($post['post_content'], $post['post_ID']) . '</p>
                             <div class="author-date d-flex mt-4">
                                 <a class="' .outputUserRoleColor($post['user_role']) . ' font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
-                                    <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">'
+                                    <img class="avatar-post mr-2" src="image.php?userID=' . $post['post_author_ID'] . '&avatar" alt="">'
                                     . $post['user_username'] . '
                                 </a>
                                 <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $post['post_date_created']) . '</p>
@@ -379,7 +388,7 @@
     //helper functions
     function readMoreAtIndex($postContent, $postID) {
         $PHPName = basename($_SERVER['SCRIPT_NAME'], ".php");
-        if($PHPName == 'index') {
+        if($PHPName == 'index' || $PHPName == 'profile') {
             if (mb_strlen($postContent, "utf-8") > 190) {
                 $postContentCut = mb_substr($postContent, 0, 190, "utf-8");
                 $lastSpacePost = mb_strrpos($postContentCut, ' ', "utf-8");

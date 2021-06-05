@@ -9,7 +9,6 @@ body {
 .loading-logo img {
     width: 120px;
 }
-
 .loading-logo {
     position: fixed;
     left: 50%;
@@ -34,7 +33,7 @@ img.web-logo {
 }
 
 .main-cont {
-    margin-top: 120px;
+    margin-top: 70px;
 }
 
 .avatar {
@@ -53,12 +52,13 @@ img.web-logo {
 
 .post {
     width: 100%;
+    max-height: 90vh;
 }
 
 .post-img {
     width: 100%;
     max-height: 50vh;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 #embedded-btn {
@@ -88,28 +88,77 @@ button.like-btn {
     border: none;
 }
 
-.post-content-wrapper {
+i.like-logo {
+    display: inline-block;
+}
+
+.heart-anim {
+    animation: heartbeat;
+    animation-duration: 0.4s;
+}
+
+@keyframes heartbeat
+{
+  0%
+  {
+    transform: scale(0.75);
+  }
+  20%
+  {
+    transform: scale(1);
+  }
+  40%
+  {
+    transform: scale(1.25);
+  }
+  60%
+  {
+    transform: scale(1.5);
+  }
+  80%
+  {
+    transform: scale(1.25);
+  }
+  100%
+  {
+    transform: scale(1);
+  }
+}
+
+.coverbg-wrapper {
+    width: 100%;
+    height: 45vh;
     position: relative;
 }
 
-.options-img {
-    position: absolute;
-    z-index: 5;
-    top: -25px;
-    right: -25px;
+.coverbg-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.options-title {
-    position: absolute;
-    z-index: 5;
-    top: -15px;
-    right: -50px;
+.main-avatar-wrapper {
+    width: 180px;
+    height: 180px;
+    position: relative;
 }
 
-.options-content {
-    position: absolute;
-    z-index: 5;
-    right: -50px;
+.main-avatar-wrapper img {
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.125);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.username {
+    font-weight:500;
+    font-size: 1.4rem;
+}
+
+.stat-title {
+    font-weight: lighter;
+    font-size: 1rem;
 }
 
 .option-btn {
@@ -119,10 +168,12 @@ button.like-btn {
     width: 50px;
 }
 
-.low-opacity {
-    opacity: 60%;
+.option-btn-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
-label.custom-file-label {
-    overflow: hidden;
+.low-opacity {
+    opacity: 60%;
 }
