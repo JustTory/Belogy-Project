@@ -251,4 +251,5 @@ function outputEditBtns() {
     $('.option-btn-wrapper').toggleClass('d-none');
     $('.coverbg').toggleClass('low-opacity');
     $('.main-avatar').toggleClass('low-opacity');
+    $('.bio').toggleClass('low-opacity');
 }

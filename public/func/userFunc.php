@@ -123,11 +123,10 @@
     }
 
     function outputProfile($conn) {
-
         if(isset($_GET['id'])) {
             $userID = $_GET['id'];
             if(checkOwnedProfileOrAdmin($userID)) {
-                $editBtn = '<button type="button" class="btn btn-light btn-sm bg-white edit-profile-btn"><i class="bi bi-pencil-square"></i> Edit profile</button>';
+                $editBtn = '<button type="button" class="btn btn-dark text-dark btn-sm bg-white edit-profile-btn"><i class="bi bi-pencil-square"></i></button>';
                 $editCoverBGBtn = ' <div class="option-btn-wrapper d-none">
                                         <button type="button" name="edit-coverbg" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-coverbg">
                                             <span class= "notification" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="right" data-content="'. notifyErrorEditImg() .'">
@@ -159,6 +158,18 @@
                                         </span>
                                         </button>
                                     </div>';
+
+                $editBioBtn = ' <div class="option-btn-wrapper d-none">
+                                        <button type="button" name="edit-bio" class="btn btn-outline-secondary bg-white d-flex justify-content-center option-btn" data-toggle="modal" data-target="#edit-bio">
+                                            <span class= "notification" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="right" data-content="'. notifyErrorEditImg() .'">
+                                                <i class="bi bi-pencil-square text-primary"></i>
+                                            </span>
+                                        </button>
+                                    </div>';
+                if(getBio($conn, $userID) != false) {
+                    $bio = getBio($conn, $userID);
+                }
+                else $bio = '" Write something about yourself "';
 
                 $createPost = ' <div class="create-post mt-5">
                                     <div class="row my-3">
@@ -193,32 +204,43 @@
                     $optionAvatarBtn =  $editAvatarBtn;
                 else $optionAvatarBtn = $addAvatarBtn;
 
-            } else {
+            }
+            else {
                 $editBtn = '';
                 $optionCoverBGBtn = '';
                 $optionAvatarBtn = '';
+                $editBioBtn = '';
                 $createPost = '';
+                $bio = getBio($conn, $userID);
             }
 
-            $output = ' <div class="user-profile" data-userid= "' . $_GET['id'] . '">
+            $output = ' <div class="user-profile bg-white rounded pb-3" data-userid= "' . $_GET['id'] . '">
                             <div class="coverbg-wrapper">
                                 <img class="rounded coverbg" src="image.php?userID=' . $userID . '&coverbg" alt="">';
             $output .= $optionCoverBGBtn;
             $output .=     '</div>
-                            <div class="row mt-2">
-                                <div class="col-md-4 d-flex justify-content-center">
+
+                            <div class="row mt-3 justify-content-center">
+                                <div class="col-md-3 d-flex justify-content-center">
                                     <div class="main-avatar-wrapper">
                                         <img class="main-avatar" src="image.php?userID=' . $userID . '&avatar" alt="">';
             $output .= $optionAvatarBtn;
             $output .=             '</div>
                                 </div>
 
-                                <div class="col-md-8 d-flex align-items-center justify-content-center">
+                                <div class="col-md-7 d-flex align-items-center justify-content-center">
                                     <div class="user-info">
                                         <div class="username-wrapper d-flex">
                                             <h5 class="username m-0 mr-3 align-middle ' . isAdmin($conn, $userID) . '">' . getUserName($conn, $userID) . '</h5>';
             $output .= $editBtn;
             $output .=                 '</div>
+
+                                        <div class="bio-wrapper my-4">
+                                            <p class="bio text-start m-0">' . $bio . '</p>';
+                    $output .= $editBioBtn;
+                    $output .=
+                                        '</div>
+
 
                                         <div class="statistics mt-3 d-flex">
 
@@ -251,6 +273,9 @@
 
                                 </div>
                             </div>
+
+
+
                         </div>';
 
             $output .= $createPost;
@@ -298,7 +323,7 @@
             }
         }
 
-        else if(isset($_POST['submit-delete-cover-bg'])) {
+        else if(isset($_POST['submit-delete-coverbg'])) {
             unlink(getOldProfileImgURL($conn, 'user_cover_bg'));
             updateProfileImgToDB($conn, 'user_cover_bg', '../images/default/empty-coverbg.jpg');
         }
@@ -345,6 +370,18 @@
             unlink(getOldProfileImgURL($conn, 'user_avatar'));
             updateProfileImgToDB($conn, 'user_avatar', '../images/default/defaultUserAvatar.png');
         }
+
+        else if(isset($_POST['submit-edit-bio'])) {
+            $bio = $_POST['bio'];
+
+            if(!checkBio($bio))
+                $errorsEdit['bio'] = "Bio must be less than 200 characters";
+
+            if(empty($errorsEdit)) {
+                updateBioToDB($conn, $bio);
+            }
+        }
+
     }
 
     function getOldProfileImgURL($conn, $columnName) {
@@ -361,6 +398,19 @@
         $sql = "UPDATE users SET $columnName = ? WHERE user_ID = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("si", $newColumnValue, $_GET['id']);
+        $stmt->execute();
+        if($stmt->affected_rows == 1) {
+            $_SESSION['notification'] = "Your profile has been edited";
+            $location = "Location: profile.php?id=" . $_GET['id'];
+            header($location);
+            exit();
+        }
+    }
+
+    function updateBioToDB($conn, $bio) {
+        $sql = "UPDATE users SET user_bio = ? WHERE user_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $bio, $_GET['id']);
         $stmt->execute();
         if($stmt->affected_rows == 1) {
             $_SESSION['notification'] = "Your profile has been edited";
@@ -392,6 +442,19 @@
         if ($row->num_rows == 1) {
             $result = $row->fetch_assoc();
             if($result['user_cover_bg'] == '../images/default/empty-coverbg.jpg') return false;
+            else return true;
+        }
+    }
+
+    function isSetBio($conn, $userID) {
+        $sql = "SELECT user_bio FROM users WHERE user_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $row = $stmt->get_result();
+        if ($row->num_rows == 1) {
+            $result = $row->fetch_assoc();
+            if($result['user_bio'] == NULL) return false;
             else return true;
         }
     }
@@ -461,5 +524,25 @@
             $result = $row->fetch_assoc();
             return $result['totalCmt'];
         }
+    }
+
+    function getBio($conn, $userID) {
+        $sql = "SELECT user_bio FROM users WHERE user_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $row = $stmt->get_result();
+        if ($row->num_rows == 1) {
+            $result = $row->fetch_assoc();
+            if($result['user_bio'] == NULL)
+                return false;
+            else return $result['user_bio'];
+        }
+    }
+
+    function checkBio($bio) {
+        if(mb_strlen($bio, "utf-8") > 200)
+            return false;
+        else return true;
     }
 ?>

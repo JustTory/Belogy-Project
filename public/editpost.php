@@ -40,13 +40,13 @@
                 <form action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
-                            <input type="file" name="new-image" class="custom-file-input" id="inputFile">
+                            <input type="file" accept="image/jpeg, image/png, image/gif, image/webp" name="new-image" class="custom-file-input" id="inputFile">
                             <label class="custom-file-label" for="customFile">Choose image</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-new-img" value="add-img" class="async-task btn btn-primary">Add image</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-new-img" value="add-img" class="async-task btn btn-primary btn-sm">Add image</button>
                     </div>
                 </form>
             </div>
@@ -65,13 +65,13 @@
                 <form action="editpost.php?id=<?php echo htmlspecialchars($post['post_ID']); ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
-                            <input type="file" name="new-image" class="custom-file-input" id="inputFile">
+                            <input type="file" accept="image/jpeg, image/png, image/gif, image/webp" name="new-image" class="custom-file-input" id="inputFile">
                             <label class="custom-file-label" for="customFile">Choose new image</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-new-img" value="edit-img" class="async-task btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-new-img" value="edit-img" class="async-task btn btn-primary btn-sm">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -92,8 +92,8 @@
                         <h6 class="my-3">Are you sure you want to delete this post image?</h6>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-delete-img" class="async-task btn btn-danger">Confirm</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-delete-img" class="async-task btn btn-danger btn-sm">Confirm</button>
                     </div>
                 </form>
             </div>
@@ -114,8 +114,8 @@
                         <input type="text" name="new-title" class="form-control my-3" placeholder="New title" value="">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-edit-title" class="async-task btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-edit-title" class="async-task btn btn-primary btn-sm">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -136,8 +136,8 @@
                         <textarea name="new-content" class="form-control my-3" placeholder="New content" rows="8" cols="80"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-edit-content" class="async-task btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-edit-content" class="async-task btn btn-primary btn-sm">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -158,8 +158,8 @@
                         <h6 class="my-3">Are you sure you want to delete this post?</h6>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-delete-post" class="async-task btn btn-danger">Confirm</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-delete-post" class="async-task btn btn-danger btn-sm">Confirm</button>
                     </div>
                 </form>
             </div>

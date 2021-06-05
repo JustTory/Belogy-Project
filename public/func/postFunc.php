@@ -419,6 +419,8 @@
             $_SESSION['errorEditTitle'] = $errorsEdit['title'];
         else if(isset($errorsEdit['content']))
             $_SESSION['errorEditContent'] = $errorsEdit['content'];
+        else if(isset($errorsEdit['bio']))
+            $_SESSION['errorEditBio'] = $errorsEdit['bio'];
     }
 
     function checkTitle($title) {

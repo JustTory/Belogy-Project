@@ -39,7 +39,7 @@
                 </p>
 
                 <div class="custom-file mt-2">
-                    <input type="file" name="image" id="inputFile" class="custom-file-input">
+                    <input type="file" accept="image/jpeg, image/png, image/gif, image/webp" name="image" id="inputFile" class="custom-file-input">
                     <label class="custom-file-label" for="customFile">Choose image</label>
                 </div>
                 <p class="m-0 error-msg" id="errorFile"><?php

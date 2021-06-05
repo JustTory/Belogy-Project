@@ -24,6 +24,11 @@
             return $_SESSION['errorEditContent'];
     }
 
+    function notifyErrorEditBio() {
+        if(isset($_SESSION['errorEditBio']))
+            return $_SESSION['errorEditBio'];
+    }
+
     function unsetNotification() {
         unset($_SESSION['notSignedInOnCreatePost']);
         unset($_SESSION['notSignedInOnPost']);

@@ -48,13 +48,13 @@
                 <form action="profile.php?id=<?php echo $_GET['id']; ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
-                            <input type="file" name="new-image" class="custom-file-input" id="inputFile">
+                            <input type="file" accept="image/jpeg, image/png, image/gif, image/webp" name="new-image" class="custom-file-input" id="inputFile">
                             <label class="custom-file-label" for="customFile">Choose background cover</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-new-coverbg" value="add-coverbg" class="async-task btn btn-primary">Add background</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-new-coverbg" value="add-coverbg" class="async-task btn btn-primary btn-sm">Add background</button>
                     </div>
                 </form>
             </div>
@@ -73,13 +73,36 @@
                 <form action="profile.php?id=<?php echo $_GET['id']; ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
-                            <input type="file" name="new-image" class="custom-file-input" id="inputFile">
+                            <input type="file" accept="image/jpeg, image/png, image/gif, image/webp" name="new-image" class="custom-file-input" id="inputFile">
                             <label class="custom-file-label" for="customFile">Choose new background cover</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-new-coverbg" value="edit-coverbg" class="async-task btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="button" name="submit-delete-post" class="btn btn-danger btn-sm" data-dismiss="modal" data-toggle="modal" data-target="#delete-coverbg">Delete</button>
+                        <button type="submit" name="submit-new-coverbg" value="edit-coverbg" class="async-task btn btn-primary btn-sm">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete-coverbg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete background cover</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="profile.php?id=<?php echo $_GET['id']; ?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <h6 class="my-3">Are you sure you want to delete this background cover?</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-delete-coverbg" class="async-task btn btn-danger btn-sm">Confirm</button>
                     </div>
                 </form>
             </div>
@@ -98,13 +121,13 @@
                 <form action="profile.php?id=<?php echo $_GET['id']; ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
-                            <input type="file" name="new-image" class="custom-file-input" id="inputFile">
+                            <input type="file" accept="image/jpeg, image/png, image/gif, image/webp" name="new-image" class="custom-file-input" id="inputFile">
                             <label class="custom-file-label" for="customFile">Choose avatar</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-new-avatar" value="add-avatar" class="async-task btn btn-primary">Add avatar</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-new-avatar" value="add-avatar" class="async-task btn btn-primary btn-sm">Add avatar</button>
                     </div>
                 </form>
             </div>
@@ -123,13 +146,58 @@
                 <form action="profile.php?id=<?php echo $_GET['id']; ?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file my-3">
-                            <input type="file" name="new-image" class="custom-file-input" id="inputFile">
+                            <input type="file" accept="image/jpeg, image/png, image/gif, image/webp" name="new-image" class="custom-file-input" id="inputFile">
                             <label class="custom-file-label" for="customFile">Choose new avatar</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit-new-avatar" value="edit-avatar" class="async-task btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="button" name="submit-delete-post" class="btn btn-danger btn-sm" data-dismiss="modal" data-toggle="modal" data-target="#delete-avatar">Delete</button>
+                        <button type="submit" name="submit-new-avatar" value="edit-avatar" class="async-task btn btn-primary btn-sm">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete-avatar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete avatar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="profile.php?id=<?php echo $_GET['id']; ?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <h6 class="my-3">Are you sure you want to delete this avatar?</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-delete-avatar" class="async-task btn btn-danger btn-sm">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit-bio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit bio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="profile.php?id=<?php echo $_GET['id']; ?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <textarea name="bio" class="form-control my-3" placeholder="New bio" rows="8" cols="80"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit-edit-bio" class="async-task btn btn-primary btn-sm">Edit bio</button>
                     </div>
                 </form>
             </div>
