@@ -124,3 +124,12 @@ i.like-logo {
     transform: scale(1);
   }
 }
+
+.nav-a {
+    position:relative;
+}
+.gradient-line {
+    position:absolute;
+    height: 2px;
+    background: linear-gradient(90deg,#003dff, #ff004d);
+}

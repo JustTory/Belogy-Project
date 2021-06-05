@@ -3,7 +3,7 @@
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-  <a class="navbar-brand async-task ml-3" href="index.php">
+  <a class="navbar-brand async-task ml-5" href="index.php">
     <img class="web-logo" src="image.php?weblogo" alt="">
   </a>
 
@@ -12,11 +12,32 @@
   </button>
 
   <div class="collapse navbar-collapse bg-white" id="navbarSupportedContent">
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search posts" aria-label="Search">
-        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    <ul class="navbar-nav ml-auto mr-5">
+
+    <ul class="navbar-nav ml-auto mr-auto">
+      <li class="nav-item mr-5">
+        <a class="async-task nav-a" href="index.php">
+          <i class="bi bi-house fa-lg"></i> Home
+          <?php if ($PHPName == 'index'): ?>
+            <div class="gradient-line w-100 mt-1"></div>
+          <?php endif; ?>
+        </a>
+
+      </li>
+
+      <li class="nav-item ml-5">
+        <a class="async-task nav-a" href="createpost.php">
+          <i class="bi bi-pencil-square fa-lg"></i> Create post
+          <?php if ($PHPName == 'createpost'): ?>
+            <div class="gradient-line w-100 mt-1"></div>
+          <?php endif; ?>
+        </a>
+
+      </li>
+    </ul>
+
+
+    <ul class="navbar-nav mr-5">
+
 
       <?php if ($_SESSION['signedIn'] == true): ?>
         <li class="nav-item dropdown">
