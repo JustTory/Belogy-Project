@@ -102,8 +102,8 @@ function outputNewPosts(newPostList) {
                                     </div>
                                     <p class="card-text post-content">${readMoreAtIndex(post['post_content'], post['post_ID'])}</p>
                                     <div class="author-date d-flex mt-4">
-                                        <a class="${outputUserRoleColor(post['user_role'])} font-weight-bold d-flex align-items-center" href="profile.php?id=">
-                                            <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">
+                                        <a class="${outputUserRoleColor(post['user_role'])} font-weight-bold d-flex align-items-center" href="profile.php?id=${post['post_author_ID']}">
+                                            <img class="avatar-post mr-2" src="image.php?userID=${post['post_author_ID']}&avatar" alt="">
                                             ${post['user_username']}
                                         </a>
                                         <p class="font-weight-light my-2 post-info ml-auto">${post['post_date_time']}</p>

@@ -1,6 +1,7 @@
 <!-- TO DO LIST
   - post not found, user not found (when user type in url)
   - back to home btn on login
+  - red admin name in comment
   - fix infinite scrolling, the host takes many time to load if the user keep scrolling up and down will ajax multiple times
     add a variable to set if it's already ajax-ing or use the .then() method
   - retain title and content value when click on edit post button
