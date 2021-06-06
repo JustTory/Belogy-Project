@@ -7,8 +7,11 @@
     include "func/userFunc.php";
     include "func/imgFunc.php";
     $errorsEdit = [];
-    if(isset($_GET['id']))
-        $postList = getUserPostList($conn, $_GET['id'], 8);
+    if(isset($_GET['id'])) {
+        if(checkValidUser($conn, $_GET['id'])) {
+            $postList = getUserPostList($conn, $_GET['id'], 8);
+        }
+    }
     editProfile($conn, $errorsEdit);
     mapErrorsToSession($errorsEdit);
 ?>
@@ -18,22 +21,24 @@
 </div>
 
 <div class="container main-cont">
-    <?php
-        outputProfile($conn);
-    ?>
-
-    <div class="posts">
+    <?php if (checkValidUser($conn, $_GET['id'])): ?>
         <?php
-            outputPostList($conn, $postList);
+            outputProfile($conn);
         ?>
-
-    </div>
-
-    <div class="row my-3 mt-5 loading">
+        <div class="posts">
+            <?php
+                outputPostList($conn, $postList);
+            ?>
+        </div>
+        <div class="row my-3 mt-5 loading">
         <div class="col-md-8 offset-md-2 d-flex justify-content-center">
             <img src="image.php?loadinggif" width="35px" alt="">
         </div>
     </div>
+
+    <?php else: ?>
+        <h1 class="text-center font-weight-light" style="margin-top: 120px;">User not found! (Error: 404)</h1>
+    <?php endif; ?>
 
     <!-- Modal -->
     <div class="modal fade show" id="add-coverbg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

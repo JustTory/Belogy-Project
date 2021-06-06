@@ -1,8 +1,5 @@
 <!-- TO DO LIST
-  - post not found, user not found (when user type in url)
-  - red admin name in comment
   - retain title and content value when click on edit post button
-  - have list of user who likes your post
   - debugging and fixing
 -->
 

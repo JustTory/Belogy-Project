@@ -23,10 +23,15 @@ $(document).ready(function() {
 
     $('.posts').on('click', '.like-btn', function() { // add dynamically event handler to all ".like-btn"
         let likeBtn = $(this).get(0);
+        console.log(likeBtn);
         let postID = $(this).data('postid');
+        console.log("postID: " + likeBtn);
         let isLiked = checkIsLiked(likeBtn);
+        console.log("isLiked: " + isLiked);
         let likeIcon = likeBtn.childNodes[1];
-        let totalLikePost = likeBtn.parentNode.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild;
+        console.log(likeIcon);
+        let totalLikePost = likeBtn.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild;
+        console.log("totalLikePost: " + totalLikePost);
         ajaxLike(postID, isLiked, likeIcon, totalLikePost);
     });
 

@@ -122,6 +122,17 @@
         } else return false;
     }
 
+    function checkValidUser($conn, $userID){
+        $sql = "SELECT * FROM users WHERE user_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $row = $stmt->get_result();
+        if ($row->num_rows == 1) {
+            return true;
+        } else return false;
+    }
+
     function outputProfile($conn) {
         if(isset($_GET['id'])) {
             $userID = $_GET['id'];
@@ -281,6 +292,10 @@
             $output .= $createPost;
 
             echo $output;
+        }
+        else {
+            header("Location: index.php");
+            exit();
         }
     }
 
