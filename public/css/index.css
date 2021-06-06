@@ -9,6 +9,7 @@ body {
 .loading-logo img {
     width: 120px;
 }
+
 .loading-logo {
     position: fixed;
     left: 50%;
@@ -132,4 +133,44 @@ i.like-logo {
     position:absolute;
     height: 2px;
     background: linear-gradient(90deg,#003dff, #ff004d);
+}
+
+@media screen and (max-width: 991px) {
+    li.nav-item.ml-5 {
+        margin-left: 0 !important;
+    }
+
+    li.nav-item {
+        margin-bottom: 25px;
+    }
+
+    div#navbarSupportedContent {
+        padding: 20px;
+        border: 2px solid rgba(0,0,0,.125);
+    }
+
+    li.nav-item.ml-4.notification.d-flex.align-items-center {
+        margin-left: 0 !important;
+    }
+
+    .navbar-brand {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .post-img {
+        max-height: 30vh;
+    }
+
+    .post-title {
+        font-size: 1.1rem;
+    }
+
+    .post-content {
+        font-size: 0.8rem;
+    }
+
+    .post-author {
+        font-size: 0.85rem;
+    }
 }

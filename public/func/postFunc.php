@@ -195,7 +195,7 @@
                             </div>
                             <p class="card-text post-content">' . readMoreAtIndex($post['post_content'], $post['post_ID']) . '</p>
                             <div class="author-date d-flex mt-4">
-                                <a class="' .outputUserRoleColor($post['user_role']) . ' font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
+                                <a class="' .outputUserRoleColor($post['user_role']) . ' font-weight-bold d-flex align-items-center post-author" href="profile.php?id=' . $post['post_author_ID'] . '">
                                     <img class="avatar-post mr-2" src="image.php?userID=' . $post['post_author_ID'] . '&avatar" alt="">'
                                     . $post['user_username'] . '
                                 </a>
@@ -206,20 +206,18 @@
                                 <p class="post-info post-no-comments mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> ' . $post['post_no_comments'] . '</p>
                             </div>
                             <hr class="mb-2">
-                            <div class="interaction">
-                                <div class="row">
-                                    <div class="col-md-6 d-flex justify-content-center">
-                                        <button type="button" data-postid="'. $post['post_ID'] .'" name="like-btn" class="like-btn ' . $isLikedClass[0] . ' text-center">
-                                            <i class="like-logo bi '. $isLikedClass[1] . '"></i>
-                                            Like
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6 d-flex justify-content-center">
-                                        <a class="text-dark text-center cmt-btn async-task" href="post.php?id=' . $post['post_ID'] . '">
-                                            <i class="bi bi-chat-left"></i>
-                                            Comment
-                                        </a>
-                                    </div>
+                            <div class="interaction d-flex justify-content-around">
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <button type="button" data-postid="'. $post['post_ID'] .'" name="like-btn" class="like-btn ' . $isLikedClass[0] . ' text-center">
+                                        <i class="like-logo bi '. $isLikedClass[1] . '"></i>
+                                        Like
+                                    </button>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <a class="text-dark text-center cmt-btn async-task" href="post.php?id=' . $post['post_ID'] . '">
+                                        <i class="bi bi-chat-left"></i>
+                                        Comment
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -305,8 +303,8 @@
                             </a>
                         </div>
                         <div class="author-date d-flex mt-4">
-                            <a class="' .outputUserRoleColor($post['user_role']) . ' font-weight-bold d-flex align-items-center" href="profile.php?id=' . $post['post_author_ID'] . '">
-                                <img class="avatar-post mr-2" src="image.php?defaultAvatar" alt="">'
+                            <a class="' .outputUserRoleColor($post['user_role']) . ' font-weight-bold d-flex align-items-center post-author" href="profile.php?id=' . $post['post_author_ID'] . '">
+                                <img class="avatar-post mr-2" src="image.php?userID=' . $post['post_author_ID'] . '&avatar" alt="">'
                                     . $post['user_username'] . '
                             </a>
                             <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $post['post_date_created']) . '</p>
@@ -316,20 +314,18 @@
                             <p class="post-info post-no-comments mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> ' . $post['post_no_comments'] . '</p>
                         </div>
                         <hr class="mb-2">
-                        <div class="interaction">
-                            <div class="row">
-                                <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="like-btn ' . $isLikedClass[0] . ' text-center" href="post.php?id=' . $post['post_ID'] . '">
-                                        <i class="like-logo bi '. $isLikedClass[1] . '"></i>
-                                        Like
-                                    </a>
-                                </div>
-                                <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="text-dark text-center cmt-btn async-task" href="post.php?id=' . $post['post_ID'] . '">
-                                        <i class="bi bi-chat-left"></i>
-                                        Comment
-                                    </a>
-                                </div>
+                        <div class="interaction d-flex justify-content-around">
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <a class="like-btn ' . $isLikedClass[0] . ' text-center" href="post.php?id=' . $post['post_ID'] . '">
+                                    <i class="like-logo bi '. $isLikedClass[1] . '"></i>
+                                    Like
+                                </a>
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <a class="text-dark text-center cmt-btn async-task" href="post.php?id=' . $post['post_ID'] . '">
+                                    <i class="bi bi-chat-left"></i>
+                                    Comment
+                                </a>
                             </div>
                         </div>
                     </div>

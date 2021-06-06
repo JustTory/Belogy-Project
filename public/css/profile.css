@@ -186,3 +186,66 @@ i.like-logo {
     border-radius: 50%;
     border: 1px solid rgba(0,0,0,.125);
 }
+
+@media screen and (max-width: 991px) {
+    li.nav-item.ml-5 {
+        margin-left: 0 !important;
+    }
+
+    li.nav-item {
+        margin-bottom: 25px;
+    }
+
+    div#navbarSupportedContent {
+        padding: 20px;
+        border: 2px solid rgba(0,0,0,.125);
+    }
+
+    li.nav-item.ml-4.notification.d-flex.align-items-center {
+        margin-left: 0 !important;
+    }
+
+    .navbar-brand {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .post-img {
+        max-height: 30vh;
+    }
+
+    .post-title {
+        font-size: 1.1rem;
+    }
+
+    .post-content {
+        font-size: 0.8rem;
+    }
+
+    .user-info {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+
+    .username-wrapper {
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .stat-title {
+        font-size: 0.8rem;
+    }
+
+    .stat-content {
+        font-size: 0.9rem;
+    }
+
+    .bio {
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .post-author {
+        font-size: 0.85rem;
+    }
+}

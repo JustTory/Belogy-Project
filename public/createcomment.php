@@ -12,7 +12,7 @@
         if($stmtInsert->affected_rows == 1) {
             //get the new comment from DB and encode it into json to send back
             $id = $stmtInsert->insert_id;
-            $sqlGetCmt = "SELECT c.cmt_ID, c.cmt_content, u.user_ID, u.user_username, c.cmt_date_created FROM comments c JOIN users u ON u.user_ID = c.cmt_author_ID WHERE c.cmt_ID = ?";
+            $sqlGetCmt = "SELECT c.cmt_ID, c.cmt_content, u.user_ID, u.user_username, u.user_role, c.cmt_date_created FROM comments c JOIN users u ON u.user_ID = c.cmt_author_ID WHERE c.cmt_ID = ?";
             $stmtGetCmt = $conn->prepare($sqlGetCmt);
             $stmtGetCmt->bind_param("i", $id);
             $stmtGetCmt->execute();

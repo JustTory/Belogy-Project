@@ -21,7 +21,7 @@
     ?>
     <div class="row my-3 mt-5 delete-post">
         <div class="col-md-8 offset-md-2 d-flex justify-content-center">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-post">
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-post">
             <i class="bi bi-trash"></i>
             Delete post</button>
         </div>

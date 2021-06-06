@@ -60,7 +60,7 @@ function ajaxComment(commentContent, postID) {
     xhr.onload = function() {
       if(this.status == 200) {
         let newComment = JSON.parse(this.responseText);
-        //console.log(newComment);
+        console.log(newComment);
         outputNewComment(newComment);
         updateTotalPostComment(newComment['post_no_comments']);
         removeInput();
@@ -70,13 +70,16 @@ function ajaxComment(commentContent, postID) {
 }
 
 function outputNewComment(newComment) {
+    let isAdmin= "text-dark";
+    if(newComment['user_role'] == 'admin')
+        isAdmin = "text-danger";
 
-  let output = `
+    let output = `
         <div class="row my-2">
             <div class="col-md-8 offset-md-2">
                 <div class="comment card">
                     <div class="user-cmt-info d-flex">
-                        <a class="text-dark font-weight-bold d-flex align-items-center" href="profile.php?id=${newComment['user_ID']}">
+                        <a class="${isAdmin} font-weight-bold d-flex align-items-center" href="profile.php?id=${newComment['user_ID']}">
                             <img class="avatar-post mr-2" src="image.php?userID=${newComment['user_ID']}&avatar" alt="">
                             ${newComment['user_username']}
                         </a>

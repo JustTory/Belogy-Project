@@ -20,6 +20,15 @@ $(document).ready(function() {
 	removeErrorOnFocus("#inputUsername", "#errorUsername");
 	removeErrorOnFocus("#inputPassword1", "#errorPassword1");
 	removeErrorOnFocus("#inputPassword2", "#errorPassword2");
+
+	let inputEmails = document.querySelectorAll("#inputEmail");
+	inputEmails.forEach(inputEmail => {
+		if (!inputEmail.checkValidity()) {
+			console.log("invalid");
+		}
+		//removeLoading();
+	});
+
 });
 
 function removeErrorOnFocus(IDInputError, IDMsgError) {
@@ -34,11 +43,7 @@ function addLoading() {
 	$('.loading-logo').removeClass('d-none');
 }
 
-// function showPassword() {
-// 	var x = document.getElementById("myInput");
-// 	if (x.type === "password") {
-// 	  x.type = "text";
-// 	} else {
-// 	  x.type = "password";
-// 	}
-// }
+function removeLoading() {
+	$('.main-cont').css("opacity", "100%");
+	$('.loading-logo').addClass('d-none');
+}

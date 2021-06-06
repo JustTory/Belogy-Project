@@ -8,7 +8,7 @@
     include "func/imgFunc.php";
     $errorsEdit = [];
     if(isset($_GET['id']))
-        $postList = getUserPostList($conn, $_GET['id'], 5);
+        $postList = getUserPostList($conn, $_GET['id'], 8);
     editProfile($conn, $errorsEdit);
     mapErrorsToSession($errorsEdit);
 ?>

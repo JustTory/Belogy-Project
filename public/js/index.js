@@ -1,4 +1,4 @@
-let limit = 5;
+let limit = 8;
 let offset = 0; // default offset;
 let reachedEnd = false;
 $(document).ready(function() {
@@ -32,8 +32,8 @@ $(document).ready(function() {
 
     $(window).scroll(function() {
         if((($(window).scrollTop() + $(window).height()) >= $(document).height()) && reachedEnd == false) {
-            offset += 5;
-            console.log("loading new posts from record " + offset + " to " + (offset + 5) + " (limit = " + limit + ")");
+            offset += 8;
+            console.log("loading new posts from record " + offset + " to " + (offset + 8) + " (limit = " + limit + ")");
             let xhr = new XMLHttpRequest();
             let request = "getmoreposts.php?offset=" + offset + "&limit=" + limit;
             xhr.open("GET", request, true);
@@ -89,7 +89,7 @@ function outputNewPosts(newPostList) {
                                     </div>
                                     <p class="card-text post-content">${readMoreAtIndex(post['post_content'], post['post_ID'])}</p>
                                     <div class="author-date d-flex mt-4">
-                                        <a class="${outputUserRoleColor(post['user_role'])} font-weight-bold d-flex align-items-center" href="profile.php?id=${post['post_author_ID']}">
+                                        <a class="${outputUserRoleColor(post['user_role'])} font-weight-bold d-flex align-items-center post-author" href="profile.php?id=${post['post_author_ID']}">
                                             <img class="avatar-post mr-2" src="image.php?userID=${post['post_author_ID']}&avatar" alt="">
                                             ${post['user_username']}
                                         </a>
@@ -100,20 +100,18 @@ function outputNewPosts(newPostList) {
                                         <p class="post-info mb-0"><i class="bi bi-chat-left-fill text-secondary"></i> ${post['post_no_comments']}</p>
                                     </div>
                                     <hr class="mb-2">
-                                    <div class="interaction">
-                                        <div class="row">
-                                            <div class="col-md-6 d-flex justify-content-center">
-                                                <button type="button" data-postid="${post['post_ID']}" name="like-submit" class="like-btn ${isLikedClass[0]} text-center">
-                                                    <i class="like-logo bi ${isLikedClass[1]}"></i>
-                                                    Like
-                                                </button>
-                                            </div>
-                                            <div class="col-md-6 d-flex justify-content-center">
-                                                <a class="text-dark text-center cmt-btn async-task" href="post.php?id=${post['post_ID']}">
-                                                    <i class="bi bi-chat-left"></i>
-                                                    Comment
-                                                </a>
-                                            </div>
+                                    <div class="interaction d-flex justify-content-around">
+                                        <div class="col-md-6 d-flex justify-content-center">
+                                            <button type="button" data-postid="${post['post_ID']}" name="like-submit" class="like-btn ${isLikedClass[0]} text-center">
+                                                <i class="like-logo bi ${isLikedClass[1]}"></i>
+                                                Like
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 d-flex justify-content-center">
+                                            <a class="text-dark text-center cmt-btn async-task" href="post.php?id=${post['post_ID']}">
+                                                <i class="bi bi-chat-left"></i>
+                                                Comment
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

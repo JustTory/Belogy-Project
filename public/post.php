@@ -28,7 +28,7 @@
                     <textarea class="form-control comment" name="comment" id="exampleFormControlTextarea1" value="" placeholder="Write a comment..." rows="3"></textarea>
                     <div class="btn-comment-wrapper d-flex">
                         <p class="m-0 error-msg d-none id="errorEmail">Comment can't be empty</p>
-                        <button class="btn btn-secondary mt-2 ml-auto" name="comment-submit" type="submit"><i class="bi bi-chat-left"></i> Comment</button>
+                        <button class="btn btn-secondary btn-sm mt-2 ml-auto" name="comment-submit" type="submit"><i class="bi bi-chat-left"></i> Comment</button>
                     </div>
                 </form>
             </div>
