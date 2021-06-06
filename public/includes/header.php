@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="css/<?php echo htmlspecialchars($CSSName); ?>">
 
     <!-- web icon -->
-    <link rel="icon" href="../image.php?webicon">
+    <link rel="icon" href="image.php?webicon">
 
   </head>
   <body>

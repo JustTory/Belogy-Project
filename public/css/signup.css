@@ -7,7 +7,7 @@
 }
 
 body {
-	background-image: url(/image.php?loginbg);
+	background-image: url(../image.php?loginbg);
 	background-repeat: no-repeat;
 	display: flex;
 	justify-content: center;

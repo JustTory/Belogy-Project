@@ -38,7 +38,7 @@ $(document).ready(function() {
         let postID = $(this).data('postid');
         let isLiked = checkIsLiked(likeBtn);
         let likeIcon = likeBtn.childNodes[1];
-        let totalLikePost = likeBtn.parentNode.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild;
+        let totalLikePost = likeBtn.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild;
         ajaxLike(postID, isLiked, likeIcon, totalLikePost);
     });
 
