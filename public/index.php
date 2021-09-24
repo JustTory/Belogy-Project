@@ -51,7 +51,7 @@
 
   <div class="posts">
     <?php
-      outputPostList($conn, $postList);
+      var_dump($postList);
     ?>
 
   </div>
