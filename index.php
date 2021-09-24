@@ -1,3 +1,3 @@
 <?php
-    echo "hello world heheboi";
+    header("Location: ./public");
 ?>
