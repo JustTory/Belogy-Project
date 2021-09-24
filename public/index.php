@@ -8,7 +8,7 @@
     include "func/postFunc.php";
     directToCreatePost();
     include "includes/nav.php";
-    //include "func/timeFunc.php";
+    include "func/timeFunc.php";
     $postList = getPostList($conn, 8);
 ?>
 
@@ -54,7 +54,8 @@
       //outputPostList($conn, $postList);
 
       foreach ($postList as $post) {
-        echo '<h1>' . $post['post_title'] . '</h1>';
+        echo '<h1>' . $post['post_title'] . '(' . outputContentDateTime($conn, $post['post_date_created']) . ')</h1>';
+        echo '<img class="card-img-top post-img" src="image.php?postID=' . $post['post_ID'] . '" alt="Post image">';
     }
     ?>
 
