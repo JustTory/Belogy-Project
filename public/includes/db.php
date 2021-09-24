@@ -8,12 +8,14 @@
 
     $conn = new mysqli($server, $username, $password, $db);
 
-    if ($conn -> connect_errno) {
+    if ($conn->connect_errno) {
         echo "Failed to connect to MySQL";
         exit();
     }
     else {
         echo "connect sucess";
+        $result = $conn->query("SELECT * FROM posts");
+        echo "Returned rows are: " . $result->num_rows;
         exit();
     }
 ?>
