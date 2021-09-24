@@ -53,7 +53,11 @@
   <div class="posts">
     <?php
       //outputPostList($conn, $postList);
-      echo "TESTTTT";
+
+      $sql = "SELECT post_title FROM heroku_ac967c3a31d7ed8.posts where post_ID = 64";
+      $conn->query($sql);
+      $result = $conn->fetch_all(MYSQLI_ASSOC);
+      echo $result;
     ?>
 
   </div>
