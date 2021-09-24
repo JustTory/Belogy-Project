@@ -51,7 +51,7 @@
 
   <div class="posts">
     <?php
-      outputPostList($conn, $postList);
+      //outputPostList($conn, $postList);
 
       foreach ($postList as $post) {
         echo '<h1>' . $post['post_title'] . '</h1>';
