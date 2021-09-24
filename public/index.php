@@ -54,7 +54,7 @@
       //outputPostList($conn, $postList);
 
       foreach ($postList as $post) {
-        echo $post['post_title'];
+        echo $post['post_title'] . '\n';
     }
     ?>
 
