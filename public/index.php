@@ -51,16 +51,16 @@
 
   <div class="posts">
     <?php
-      //outputPostList($conn, $postList);
+      outputPostList($conn, $postList);
 
-      foreach ($postList as $post) {
-        echo '<h5>PostID: ' . $post['post_ID']. '</h5>';
-        echo '<h5>Title: ' . $post['post_title'] . ' (' . outputContentDateTime($conn, $post['post_date_created']) . ')</h5>';
-        echo '<h5>Author: [' . $post['post_author_ID'] . '], ' . $post['user_role']. ', ' . $post['user_username'] . '</h5>';
-        echo '<p>Likes: ' . $post['post_no_likes'] . '</p>';
-        echo '<p>Comments: ' . $post['post_no_comments'] . '</p>';
-        echo '<img class="card-img-top post-img" src="image.php?postID=' . $post['post_ID'] . '" alt="Post image">';
-      }
+      // foreach ($postList as $post) {
+      //   echo '<h5>PostID: ' . $post['post_ID']. '</h5>';
+      //   echo '<h5>Title: ' . $post['post_title'] . ' (' . outputContentDateTime($conn, $post['post_date_created']) . ')</h5>';
+      //   echo '<h5>Author: [' . $post['post_author_ID'] . '], ' . $post['user_role']. ', ' . $post['user_username'] . '</h5>';
+      //   echo '<p>Likes: ' . $post['post_no_likes'] . '</p>';
+      //   echo '<p>Comments: ' . $post['post_no_comments'] . '</p>';
+      //   echo '<img class="card-img-top post-img" src="image.php?postID=' . $post['post_ID'] . '" alt="Post image">';
+      // }
     ?>
 
   </div>
