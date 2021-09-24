@@ -136,7 +136,6 @@ input::-webkit-input-placeholder {
 	z-index: 2;
 }
 
-
 .container.right-panel-active .sign-in-container {
 	transform: translateX(100%);
 }
@@ -289,7 +288,6 @@ footer a {
 }
 
 @media screen and (max-width: 950px) {
-
 	.desktop {
 		display: none;
 	}

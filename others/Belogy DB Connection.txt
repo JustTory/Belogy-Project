@@ -1,0 +1,36 @@
+//000webhost
+<?php
+    $host = "localhost";
+    $user = "id16961938_justtory";
+    $pw = "Fm<Tqh41cMDyu~/R";
+    $db = "id16961938_belogydb";
+
+    $conn = new mysqli($host, $user, $pw, $db);
+?>
+
+
+
+
+//infinityfree
+<?php
+    $host = "sql306.epizy.com";
+    $user = "epiz_28749996";
+    $pw = "vxPnSDViC4sAY";
+    $db = "epiz_28749996_belogy";
+
+    $conn = new mysqli($host, $user, $pw, $db);
+?>
+
+
+
+
+
+//local host
+<?php
+    $host = "localhost";
+    $user = "root";
+    $pw = "";
+    $db = "belogy";
+
+    $conn = new mysqli($host, $user, $pw, $db);
+?>
