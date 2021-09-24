@@ -52,7 +52,8 @@
 
   <div class="posts">
     <?php
-      outputPostList($conn, $postList);
+      //outputPostList($conn, $postList);
+      echo "TESTTTT";
     ?>
 
   </div>
