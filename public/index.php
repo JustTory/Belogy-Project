@@ -54,6 +54,7 @@
       //outputPostList($conn, $postList);
 
       foreach ($postList as $post) {
+        echo '<h5>PostID: ' . $post['post_ID']. '</h5>';
         echo '<h1>' . $post['post_title'] . '</h1>';
     }
     ?>
