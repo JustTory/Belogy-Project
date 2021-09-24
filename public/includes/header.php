@@ -4,7 +4,7 @@
       $_SESSION['signedIn'] = false;
     }
 
-    include "includes/db.php";
+    //include "includes/db.php";
     include "func/linkFunc.php";
 
     $PHPName = basename($_SERVER['SCRIPT_NAME'], ".php");
