@@ -8,8 +8,8 @@
 
     $conn = new mysqli($server, $username, $password, $db);
 
-    // if ($mysqli -> connect_errno) {
-    //     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-    //     exit();
-    // }
+    if ($conn -> connect_errno) {
+        echo "Failed to connect to MySQL";
+        exit();
+    }
 ?>
