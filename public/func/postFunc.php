@@ -199,7 +199,13 @@
                                     <img class="avatar-post mr-2" src="image.php?userID=' . $post['post_author_ID'] . '&avatar" alt="">'
                                     . $post['user_username'] . '
                                 </a>
-                                <p class="font-weight-light my-2 post-info ml-auto">' . outputContentDateTime($conn, $post['post_date_created']) . '</p>
+                                <p class="font-weight-light my-2 post-info ml-auto">
+
+
+
+
+
+                                </p>
                             </div>
                             <div class="no-like-cmt d-flex mt-2">
                                 <p class="post-info post-no-likes mb-0 mr-3"><i class="bi bi-heart-fill text-danger"></i> ' . $post['post_no_likes'] . '</p>
