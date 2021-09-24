@@ -7,9 +7,9 @@
     $db = "heroku_ac967c3a31d7ed8";
 
     $conn = new mysqli($server, $username, $password, $db);
-    
-    if ($mysqli -> connect_errno) {
-        echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-        exit();
-    }
+
+    // if ($mysqli -> connect_errno) {
+    //     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+    //     exit();
+    // }
 ?>
