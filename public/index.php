@@ -51,7 +51,11 @@
 
   <div class="posts">
     <?php
-      var_dump($postList);
+      //outputPostList($conn, $postList);
+
+      foreach ($postList as $post) {
+        echo $post['post_title'];
+    }
     ?>
 
   </div>
