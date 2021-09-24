@@ -12,10 +12,4 @@
         echo "Failed to connect to MySQL";
         exit();
     }
-    else {
-        echo "connect sucess";
-        $result = $conn->query("SELECT * FROM posts");
-        echo "Returned rows are: " . $result->num_rows;
-        exit();
-    }
 ?>
