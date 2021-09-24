@@ -12,4 +12,8 @@
         echo "Failed to connect to MySQL";
         exit();
     }
+    else {
+        echo "connect sucess";
+        exit();
+    }
 ?>

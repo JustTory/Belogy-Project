@@ -11,8 +11,7 @@
     //include "func/timeFunc.php";
     //$postList = getPostList($conn, 8);
 
-    //include "includes/db.php";
-    echo "TESTING";
+    include "includes/db.php";
 
 ?>
 
